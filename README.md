@@ -59,24 +59,24 @@
 
 ### `search_listings`
 
-- **What it does:**
-- **Inputs:** <!-- name and type each: `max_price` (float), not "a price" -->
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** search_listings searched the listings file for entries that match the description, and optionally the size and maximum price.
+- **Inputs:** The inputs are description (string), size (optional, string) and max_price (optional, float)
+- **Returns:** The return item is a list of dicts which are the returned clothing items from the listings file. Each dict has the fields id, title, description, color, category, style_tags, size, condition, price, colors, brand and platform.
+- **When it has nothing:** When the search_listings function does not have anything to return it send an empty list.
 
 ### `suggest_outfit`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** suggest_outfit takes a new item and the user's existing wardrobe and suggests outfits to wear.
+- **Inputs:** The inputs to suggest_outfit are new_item (dict) and wardrobe (dict). The wardrobe dict items have fields id, name, category, colors, style_tags and notes. The new_item dict has all of the same fields as the returned items from the search_listings function.
+- **Returns:** suggest_outfit returns a non-empty string with outfit suggestions based on the user's existing wardrobe and the potential new item.
+- **When it has nothing:** When the function is provided with an empty wardrobe, it will return a string with general styling advice.
 
 ### `create_fit_card`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** create_fit_card takes the suggested outfit and the new item and writes a caption based on the outfit and discovered item that a user would post to social media.
+- **Inputs:** The inputs to create_fit_card are outfit (string), and new_item (dict), with the dict being of the same structure as the suggest_outfit functoni.
+- **Returns:** create_fit_card returns a two to four sentence post containing the item description, price and platform written as if it were a real user making the post.
+- **When it has nothing:** When the tool has nothing to return it should send back an empty string.
 
 ---
 
