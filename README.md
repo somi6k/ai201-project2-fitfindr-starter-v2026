@@ -41,8 +41,7 @@
 
 <!-- Three or four sentences: what a user asks for, and what they get back. -->
 
-
-
+FitFindr is a thrift-shopping assistant. You describe in plain English what you are looking for, including size, price, colors or material, and it searches for listings meeting your criteria. It then takes the best match and suggests a few outfits incorporating items already in your wardrobe, or gives general advice if you have yet to build out your wardrobe. Finally, it writes a short, casual description you can post as a caption for your new thrifty find. If nothing matches, it stops before suggesting anything and tells you what to adjust, such as the price, size or description.
 ---
 
 ## Tool Inventory
@@ -167,15 +166,17 @@ Scored these vintage Levi's on depop for $38 and I honestly might never take the
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I asked Claude to implement `search_listings` using `load_listings()`. It should filter by size and max_price when they're given, score what's left by keyword overlap with the description, drop zero scores, sort highest first, cap the results at `config.SEARCH_RESULT_LIMIT`, and return `[]` when nothing matches.
+- *What came back:* A working version that matches sizes by whole token instead of substring, so "S" doesn't match "US 9" and "L" doesn't match "XL". It scores keywords against the title, category, tags and colors as well as the listing's description. Testing showed that when two listings score the same, they stay in the order of the data file, so "graphic tee" ranked the Y2K Baby Tee above the actual "Graphic Tee — 2003 Tour Bootleg Style".
+- *What I changed:* My Tool Inventory didn't say what counts as a size match, so I added the size rule with examples of matches and non-matches. I also removed a `color` field from my Returns line, because listings only have `colors`.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I asked Claude to implement `create_fit_card` following the docstring: a caption that reads like a real post, mentions the item, price and platform once each, and handles an empty outfit.
+- *What came back:* Captions that read naturally and came out differently on each run with the cache off. But given the outfit "jeans and white sneakers", one caption mentioned a "white tee" that wasn't in the outfit.
+- *What I changed:* I added a rule to the prompt that the caption may only mention pieces from the outfit it was given, then re-ran the same input to confirm the invented piece was gone. 4 out of 4 re-runs mentioned only the jeans and sneakers.
+
+
 
 <!-- ═══════════════════════ UNIT 4 — THE TEST ═══════════════════════
 

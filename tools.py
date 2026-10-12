@@ -279,6 +279,8 @@ def create_fit_card(outfit: str, new_item: dict) -> str:
         f"- Mention the item, the price ({price_text}) and the platform ({platform}) "
         "exactly once each.\n"
         "- Be specific about the vibe of the outfit — name a piece or two from it.\n"
+        "- Only mention clothing and accessories that appear in the outfit above "
+        "or the item itself. Don't add pieces that aren't there.\n"
         "- Don't repeat the listing description, and don't list condition or "
         "measurements.\n"
         "- At most two emojis and two hashtags. Return only the caption."
