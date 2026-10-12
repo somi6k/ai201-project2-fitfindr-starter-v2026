@@ -60,8 +60,9 @@
 ### `search_listings`
 
 - **What it does:** search_listings searched the listings file for entries that match the description, and optionally the size and maximum price.
-- **Inputs:** The inputs are description (string), size (optional, string) and max_price (optional, float)
-- **Returns:** The return item is a list of dicts which are the returned clothing items from the listings file. Each dict has the fields id, title, description, color, category, style_tags, size, condition, price, colors, brand and platform.
+- **Inputs:** The inputs are description (string), size (optional, string) and max_price (optional, float, inclusive).
+  - **Size rule:** Sizes are compared whole word by whole word, ignoring case, never by substring. Both the requested size and the listing's size are split on spaces, slashes and parentheses (so "S/M" becomes S and M, and "US 8.5" becomes US and 8.5). A listing matches if every part of the requested size appears in the listing's size. So "M" matches "M", "S/M" and "M/L"; "S" does not match "US 9"; "L" does not match "XL"; and "US 8" does not match "US 8.5". If size is None, sizes aren't filtered.
+- **Returns:** The return item is a list of dicts which are the returned clothing items from the listings file, sorted by keyword-overlap score, highest first, at most 10 (config.SEARCH_RESULT_LIMIT); listings scoring 0 are dropped. Each dict has the fields id, title, description, category, style_tags, size, condition, price, colors, brand and platform.
 - **When it has nothing:** When the search_listings function does not have anything to return it send an empty list.
 
 ### `suggest_outfit`
@@ -69,7 +70,7 @@
 - **What it does:** suggest_outfit takes a new item and the user's existing wardrobe and suggests outfits to wear.
 - **Inputs:** The inputs to suggest_outfit are new_item (dict) and wardrobe (dict). The wardrobe dict items have fields id, name, category, colors, style_tags and notes. The new_item dict has all of the same fields as the returned items from the search_listings function.
 - **Returns:** suggest_outfit returns a non-empty string with outfit suggestions based on the user's existing wardrobe and the potential new item.
-- **When it has nothing:** When the function is provided with an empty wardrobe, it will return a string with general styling advice.
+- **When it has nothing:** When the function is provided with an empty wardrobe, it will return a string with general styling advice involving the selected item.
 
 ### `create_fit_card`
 
@@ -110,7 +111,7 @@
      1. One FULL query and its output, pasted as text.
      2. Your three per-tool terminal tests — the command and what it printed. -->
 
-**One full query**
+**One full query** 
 
 ```
 $ python app.py ask '...'
@@ -122,15 +123,24 @@ $ python app.py ask '...'
 ```
 $ python -c "from tools import search_listings; print(search_listings('graphic tee', max_price=30))"
 
-```
-
-```
-$ python -c "from tools import suggest_outfit; ..."
+[{'id': 'lst_002', 'title': 'Y2K Baby Tee — Butterfly Print', 'description': 'Super cute early 2000s baby tee with butterfly graphic. Fitted crop length. Tag says medium but fits like a small.', 'category': 'tops', 'style_tags': ['y2k', 'vintage', 'graphic tee', 'cottagecore'], 'size': 'S/M', 'condition': 'excellent', 'price': 18.0, 'colors': ['white', 'pink', 'purple'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_006', 'title': 'Graphic Tee — 2003 Tour Bootleg Style', 'description': 'Vintage-style bootleg tee with faded graphic. Slightly boxy fit. 100% cotton, soft and worn-in.', 'category': 'tops', 'style_tags': ['graphic tee', 'vintage', 'grunge', 'streetwear', 'band tee'], 'size': 'L', 'condition': 'good', 'price': 24.0, 'colors': ['black'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_017', 'title': 'Mesh Long-Sleeve Top — Black', 'description': 'Sheer black mesh long-sleeve. Great for layering under a graphic tee or over a bralette. Stretchy material, fits true to size.', 'category': 'tops', 'style_tags': ['y2k', 'grunge', 'goth', 'layering'], 'size': 'S/M', 'condition': 'excellent', 'price': 15.0, 'colors': ['black'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_033', 'title': 'Vintage Band Tee — Faded Grey', 'description': 'Faded grey band-style tee with distressed graphic. Crew neck. Fits boxy. Well-loved but no holes or major damage.', 'category': 'tops', 'style_tags': ['vintage', 'grunge', 'band tee', 'graphic tee', 'streetwear'], 'size': 'L', 'condition': 'fair', 'price': 19.0, 'colors': ['grey', 'charcoal'], 'brand': None, 'platform': 'depop'}, {'id': 'lst_011', 'title': 'Low-Rise Cargo Pants — Khaki', 'description': 'Y2K era low-rise cargo pants. Lots of pockets. Khaki color, slightly distressed at the hems. Great for layering with a long tee.', 'category': 'bottoms', 'style_tags': ['y2k', 'cargo', '2000s', 'streetwear'], 'size': 'W29', 'condition': 'fair', 'price': 27.0, 'colors': ['khaki', 'tan'], 'brand': None, 'platform': 'poshmark'}, {'id': 'lst_015', 'title': 'Vintage Graphic Hoodie — Faded Black', 'description': 'Faded black pullover hoodie with barely-visible vintage graphic on the chest. Cozy interior. Some pilling but adds to the worn-in look.', 'category': 'tops', 'style_tags': ['vintage', 'grunge', 'graphic', 'streetwear'], 'size': 'L', 'condition': 'fair', 'price': 26.0, 'colors': ['black', 'charcoal'], 'brand': None, 'platform': 'depop'}]
 
 ```
 
 ```
-$ python -c "from tools import create_fit_card; ..."
+$ python -c "from tools import suggest_outfit; from utils.data_loader import get_example_wardrobe, load_listings; print(suggest_outfit(load_listings()[0], get_example_wardrobe()))"
+
+Outfit One: Casual Everyday
+Pair the Vintage Levi's 501 Jeans with the white ribbed tank top tucked in. Add the brown leather belt to define the waist. Throw on the oversized grey crewneck sweatshirt for a relaxed layer, and finish with the chunky white sneakers and the black crossbody bag.
+
+Outfit Two: Streetwear Edge
+Wear the Vintage Levi's 501 Jeans with the black cropped zip hoodie. Layer the vintage black denim jacket on top for a double-denim look. Ground the outfit with the black combat boots and complete the look with the black crossbody bag.
+
+```
+
+```
+$ python -c "from tools import create_fit_card; from utils.data_loader import load_listings; print(create_fit_card('jeans and white sneakers', load_listings()[0]))"
+Scored these vintage Levi's on depop for $38 and I honestly might never take them off. Paired them with my beaten-up white sneakers for the easiest everyday uniform. Love how broken-in they feel right out of the box 👖✨ #thrifty #denim
 
 ```
 
