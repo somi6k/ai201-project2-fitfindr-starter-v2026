@@ -94,13 +94,13 @@
      The grader checks your code against what you claim here, so the file and
      function have to be real. -->
 
-**Branch rule:** If search_lists returns an empty list, update the session and stop, otherwise take the first result from the list and call suggest_outfit.
+**Branch rule:** If search_listings returns an empty list, update the session and stop, otherwise take the first result from the list and call suggest_outfit.
 
 **Where it lives:** `agent.py::run_agent`
 
-**How the query is parsed:** <!-- regex, string splitting, or asking the model — say which -->
+**How the query is parsed:** regex in agent.py::parse_query
 
-**What moves through the session:** <!-- which fields, in what order -->
+**What moves through the session:** query → parsed → search_results → selected_item → outfit_suggestion → fit_card. error is set only on the empty-search path.
 
 ---
 
@@ -114,7 +114,17 @@
 **One full query** 
 
 ```
-$ python app.py ask '...'
+$ python app.py ask 'some tan boots size 8.5'                             
+
+  Found:    Suede Chelsea Boots — Tan — $44.0 on poshmark
+
+  Outfit:   Outfit One: The Relaxed Everyday
+Pair the Suede Chelsea Boots — Tan with the baggy straight-leg jeans, dark wash. Tuck in the white ribbed tank top, and add the brown leather belt. Layer the slightly cropped vintage black denim jacket on top, and carry the black crossbody bag. 
+
+Outfit Two: The Tonal Minimalist
+Wear the Suede Chelsea Boots — Tan with the wide-leg khaki trousers. Layer the white ribbed tank top underneath the oversized grey crewneck sweatshirt, letting the tank hem peek out slightly. Finish the look with the black crossbody bag for a casual daytime errand outfit.
+
+  Fit card: Scored these tan suede Chelsea boots on Poshmark for $44 and they immediately became my go-to with wide-leg trousers and a cozy crewneck. Love the little bit of western edge they add to everyday errands. 🤎 #thriftyfinds #ootd
 
 ```
 

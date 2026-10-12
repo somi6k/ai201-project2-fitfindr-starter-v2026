@@ -13,6 +13,8 @@ Build and test your three tools in `tools.py` first. Then come here.
     python agent.py          runs both example paths below
 """
 
+import re
+
 import config
 import trace
 from tools import search_listings, suggest_outfit, create_fit_card
@@ -107,9 +109,112 @@ def run_agent(query: str, wardrobe: dict) -> dict:
     """
     session = new_session(query, wardrobe)
 
-    # TODO: delete these two lines and build the loop.
-    session["error"] = "The planning loop isn't built yet — see the TODO in agent.py."
-    return session
+    # Each pass looks at what the session holds so far and picks the next step.
+    count = 0
+    while True:
+        count += 1
+        trace.check_iterations(count)
+
+        if not session["parsed"]:
+            session["parsed"] = parse_query(query)
+
+        elif session["selected_item"] is None:
+            parsed = session["parsed"]
+            session["search_results"] = search_listings(
+                parsed["description"], parsed["size"], parsed["max_price"]
+            )
+
+            # THE BRANCH: nothing found → explain what to change and stop here.
+            if not session["search_results"]:
+                session["error"] = _no_results_message(parsed)
+                return session
+
+            session["selected_item"] = session["search_results"][0]
+
+        elif session["outfit_suggestion"] is None:
+            session["outfit_suggestion"] = suggest_outfit(
+                session["selected_item"], session["wardrobe"]
+            )
+
+        elif session["fit_card"] is None:
+            session["fit_card"] = create_fit_card(
+                session["outfit_suggestion"], session["selected_item"]
+            )
+
+        else:
+            return session
+
+
+# ── query parsing (regex) ─────────────────────────────────────────────────────
+
+# "under $30", "below 30", "less than $30", "max $30", "up to $30", "<$30", or a bare "$30"
+_PRICE_RE = re.compile(
+    r"(?:\b(?:under|below|less than|max|up to)\s*|<\s*)\$?\s*(\d+(?:\.\d+)?)|\$\s*(\d+(?:\.\d+)?)",
+    re.IGNORECASE,
+)
+
+# "size M", "size S/M", "size US 8.5", "size 8", "size W30", "size one size"
+_SIZE_RE = re.compile(
+    r"\b(?:in\s+)?size\s+("
+    r"one size|us\s*\d+(?:\.\d+)?|w\d+(?:\s*l\d+)?|"
+    r"(?:xxs|xs|s|m|l|xl|xxl)(?:/(?:xs|s|m|l|xl|xxl))?|\d+(?:\.\d+)?"
+    r")\b",
+    re.IGNORECASE,
+)
+
+# Conversational lead-ins that aren't part of what the user wants.
+_FILLER_RE = re.compile(
+    r"\b(?:i'?m\s+)?(?:looking for|searching for|i want|i need|find me|show me|"
+    r"do you have|any|some)\b",
+    re.IGNORECASE,
+)
+
+
+def parse_query(query: str) -> dict:
+    """
+    Pull a description, size and max_price out of a plain-language query with
+    regex. Whatever is left after removing the price, size and filler phrases
+    is the description.
+
+        "vintage graphic tee under $30, size M"
+        → {"description": "vintage graphic tee", "size": "M", "max_price": 30.0}
+    """
+    text = query
+
+    max_price = None
+    price_match = _PRICE_RE.search(text)
+    if price_match:
+        max_price = float(price_match.group(1) or price_match.group(2))
+        text = text[: price_match.start()] + " " + text[price_match.end():]
+
+    size = None
+    size_match = _SIZE_RE.search(text)
+    if size_match:
+        size = size_match.group(1).upper()
+        text = text[: size_match.start()] + " " + text[size_match.end():]
+
+    text = _FILLER_RE.sub(" ", text)
+    description = " ".join(re.sub(r"[,.!?;]", " ", text).split())
+
+    return {"description": description, "size": size, "max_price": max_price}
+
+
+def _no_results_message(parsed: dict) -> str:
+    """Say what was searched for and what the user could loosen."""
+    searched = f"'{parsed['description']}'" if parsed["description"] else "an empty description"
+    if parsed["size"]:
+        searched += f" in size {parsed['size']}"
+    if parsed["max_price"] is not None:
+        searched += f" under ${parsed['max_price']:g}"
+
+    tips = []
+    if parsed["max_price"] is not None:
+        tips.append("raise your price limit")
+    if parsed["size"]:
+        tips.append("drop the size")
+    tips.append("use fewer or more general words (e.g. 'jacket' instead of 'designer ballgown')")
+
+    return f"Nothing matched {searched}. Try to " + ", or ".join(tips) + "."
 
 
 # ── running it directly ───────────────────────────────────────────────────────
