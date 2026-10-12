@@ -24,7 +24,7 @@ data earns credit; *"80% seemed reasonable"* does not.
 Given a query that matches at least one listing, the agent completes all three
 tool calls and returns a fit card — in at least 4 of 5 tries.
 
-**Why this target:**
+**Why this target:** Some searches may result in a listing but no outfits to pair with given a user's wardrobe so a perfect 5/5 isn't expected.
 <!-- Why 4 of 5 and not 5 of 5? Something about your search, probably —
      "my search is a plain keyword match and some phrasings will miss" is a
      real answer. -->
@@ -36,13 +36,15 @@ tool calls and returns a fit card — in at least 4 of 5 tries.
 Given a query that matches no listings, the agent stops before calling
 `suggest_outfit` and returns a message naming what to change — 5 of 5 tries.
 
-**Why this target:**
+**Why this target:** A query that results in no search matches should be deterministic, and therefore return a friendly error message to user every time.
 <!-- Why is 5 of 5 reasonable here when criterion 1 isn't? What's different
      about this path? -->
 
 ---
 
 ## 3. Something about state
+
+Given a query that returns at least one listing, the state session["selected_item"] field will be referenced in the session["outfit_suggestion"] field - in 5 out of 5 tries.
 
 <!-- YOU WRITE THIS ONE.
 
@@ -56,13 +58,15 @@ Given a query that matches no listings, the agent stops before calling
 
 
 
-**Why this target:**
+**Why this target:** If there is a successful search result, than the selected item will always be sent to suggest_outfit which should either return an outfit utilizing the selected item, or general styling advice incorporating the selected item, in every instance.
 
 
 
 ---
 
 ## 4. Something about the fit card
+
+The fit card should contain the incorporated item's title, price and platform in 5 out of 5 tries.
 
 <!-- YOU WRITE THIS ONE.
 
@@ -77,13 +81,16 @@ Given a query that matches no listings, the agent stops before calling
 
 
 
-**Why this target:**
+**Why this target:** To be useful to the user, the fit card should identify relevant information in order to facilitate the actual purchase.
 
 
 
 ---
 
 ## 5. Your choice
+
+An empty wardrobe results in descriptive general fashion advice in 5 out of 5 tries.
+
 
 <!-- YOU WRITE THIS ONE TOO.
 
@@ -94,7 +101,7 @@ Given a query that matches no listings, the agent stops before calling
 
 
 
-**Why this target:**
+**Why this target:** A user should be able to use this tool when just starting out building their wardrobe, and not encounter failure messages and instead receive the general advice provided by suggest_outfit.
 
 
 

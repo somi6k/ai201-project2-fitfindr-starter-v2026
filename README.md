@@ -76,7 +76,7 @@
 - **What it does:** create_fit_card takes the suggested outfit and the new item and writes a caption based on the outfit and discovered item that a user would post to social media.
 - **Inputs:** The inputs to create_fit_card are outfit (string), and new_item (dict), with the dict being of the same structure as the suggest_outfit functoni.
 - **Returns:** create_fit_card returns a two to four sentence post containing the item description, price and platform written as if it were a real user making the post.
-- **When it has nothing:** When the tool has nothing to return it should send back an empty string.
+- **When it has nothing:** When the tool has nothing to return it should send back a descriptive message instead of an empty string.
 
 ---
 
@@ -93,7 +93,7 @@
      The grader checks your code against what you claim here, so the file and
      function have to be real. -->
 
-**Branch rule:**
+**Branch rule:** If search_lists returns an empty list, update the session and stop, otherwise take the first result from the list and call suggest_outfit.
 
 **Where it lives:** `agent.py::run_agent`
 
