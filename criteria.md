@@ -60,6 +60,8 @@ Given a query that returns at least one listing, the state session["selected_ite
 
 **Why this target:** If there is a successful search result, than the selected item will always be sent to suggest_outfit which should either return an outfit utilizing the selected item, or general styling advice incorporating the selected item, in every instance.
 
+**How I'm scoring it (set before the first run):** A try passes when the item named in `session["outfit_suggestion"]` is the one in `session["selected_item"]` — the outfit text is clearly about that item, not another piece.
+
 
 
 ---
@@ -83,6 +85,7 @@ The fit card should contain the incorporated item's title, price and platform in
 
 **Why this target:** To be useful to the user, the fit card should identify relevant information in order to facilitate the actual purchase.
 
+**How I'm scoring it (set before the first run):** "Title" means the item is named recognisably (e.g. "platform sneakers"), not the verbatim listing title. The price can be numeric ($48) or spelled out ("forty-eight bucks"). The platform must be named.
 
 
 ---
