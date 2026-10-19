@@ -384,26 +384,48 @@ python app.py ask 'designer ballgown in XXS' --trace
 
      `python run_eval.py --label after` -->
 
-**What I changed:**
+**What I changed:** One line added to the caption prompt in `tools.py::create_fit_card`:
+`- Write the price exactly as {price_text}, in digits with the dollar sign — never spelled out (not "eighteen bucks").`
+Nothing else changed — same scenarios, same caching-off settings, same temperature (0.9).
 
-**Which failure it was meant to fix:**
+**Which failure it was meant to fix:** The spelled-out price from my diagnoses. In the before run,
+4 of 5 captions for the Y2K Baby Tee wrote the price as "eighteen bucks" instead of "$18". The
+prompt already gave the price as `$18` and said to mention it, but it also asked for a casual voice,
+and the model resolved that by writing the number out. The fix makes the format explicit instead of
+leaving it to the voice instruction. It didn't cause a criterion miss, because criterion 4 allows
+spelled-out prices — but a caption you'd use to go buy something should show the actual figure.
 
 ### Run Log — After
 
+Full log: [results/run_2026-10-18_2354_after.md](results/run_2026-10-18_2354_after.md) — `python run_eval.py --label after`.
+
 | Criterion | Target | Try 1 | Try 2 | Try 3 | Try 4 | Try 5 | Verdict |
 |---|---|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |  |  |
+| 1. A matching query completes all three tools | 4 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 2. An impossible query stops before the second tool | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 3. Same listing id at every hand-off (revised) | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 4. Fit card names the item, price and platform | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 5. Empty wardrobe gets general styling advice | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
 
-**Did it help, and how do I know:**
+**Did it help, and how do I know:** Yes, for the thing it targeted. Counting captions that show the
+price as a "$" figure, across all four scenarios that reach the fit card:
 
-<!-- If it made things worse, say that. Honestly reported, that earns full
-     credit and is more interesting than one that worked. -->
+| Scenario (item) | Before | After |
+|---|---|---|
+| Y2K Baby Tee ($18) | 1 / 5 | 5 / 5 |
+| 90s Track Jacket ($45) | 5 / 5 | 5 / 5 |
+| Platform Sneakers ($48) | 5 / 5 | 5 / 5 |
+| Denim Jacket ($42) | 5 / 5 | 5 / 5 |
 
+Every after-run Baby Tee caption reads "$18" ("Scored this little butterfly tee on depop for just $18
+and I'm obsessed…"). Nothing regressed: all five criteria are still 5/5, the ids still match at
+every hand-off, and the empty-wardrobe outfits are still generic.
 
+Two honest limits. First, the criteria table can't show this improvement — every row was already
+MET, so the evidence is the price count above, not the verdicts. Second, the sneaker captions changed
+wording: "chunky velcro sneakers" (3 of 5 before) became "chunky platforms" / "chunky white
+platforms" (3 of 5 after), which still names the item but drops "sneakers". I can't tell from five
+tries at temperature 0.9 whether the new line caused that or it's run-to-run variation.
 
 ---
 

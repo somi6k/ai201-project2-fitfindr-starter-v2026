@@ -278,6 +278,8 @@ def create_fit_card(outfit: str, new_item: dict) -> str:
         "their fit, not a product listing.\n"
         f"- Mention the item, the price ({price_text}) and the platform ({platform}) "
         "exactly once each.\n"
+        f"- Write the price exactly as {price_text}, in digits with the dollar sign — "
+        "never spelled out (not \"eighteen bucks\").\n"
         "- Be specific about the vibe of the outfit — name a piece or two from it.\n"
         "- Only mention clothing and accessories that appear in the outfit above "
         "or the item itself. Don't add pieces that aren't there.\n"
