@@ -198,17 +198,58 @@ Scored these vintage Levi's on depop for $38 and I honestly might never take the
 
 | Criterion | Target | Try 1 | Try 2 | Try 3 | Try 4 | Try 5 | Verdict |
 |---|---|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |  |  |
+| 1. A matching query completes all three tools | 4 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 2. An impossible query stops before the second tool | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 3. Same listing id at every hand-off: search → selected_item → suggest_outfit → create_fit_card (revised) | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 4. Fit card names the item, price and platform | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 5. Empty wardrobe gets general styling advice | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+
+Full log: [results/run_2026-10-18_2109_before-c3-revised.md](results/run_2026-10-18_2109_before-c3-revised.md) — `python run_eval.py --label before-c3-revised`, caching off, temperature 0.9. All five rows are scored from this one run.
+
+Criterion 3 was revised before this run (see `criteria.md`): the first run ([results/run_2026-10-18_2055_before.md](results/run_2026-10-18_2055_before.md)) scored it from the outfit text, which measures the model, not the session. For this run I added the listing id at each hand-off to the trace, and re-ran every scenario so the whole table comes from the same code.
 
 **Real output from one try**, pasted as text, naming the file and function
 that produced it:
 
-```
+Criterion 4, try 2 — query `platform sneakers size 8`, example wardrobe. Loop in
+`agent.py::run_agent`; search via MCP (`mcp_server.py::search_listings`), outfit
+from `tools.py::suggest_outfit`, caption from `tools.py::create_fit_card`.
 
+```
+[1] parse_query
+      in:  'platform sneakers size 8'
+      out: description='platform sneakers', size='8', max_price=None
+[2] search_listings (via MCP)
+      in:  description='platform sneakers', size='8', max_price=None
+      out: 1 items: Platform Sneakers — White Chunky Sole
+      →    branch: found results, top result id=lst_019, selected id=lst_019 (Platform Sneakers — White Chunky Sole)
+[3] suggest_outfit
+      in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), wardrobe=10 items
+      out: Outfit 1: Skater Prep Pair the platform sneakers with the baggy straight-leg jeans, dark wash and the white ri…
+[4] create_fit_card
+      in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), outfit='Outfit 1: Skater Prep
+Pair the platfor…
+      out: Finally scored these chunky platform sneakers on Poshmark for $48 and I am obsessed with the heavy Y2K sole. H…
+
+selected_item: Platform Sneakers — White Chunky Sole ($48.0, poshmark)
+
+outfit_suggestion:
+Outfit 1: Skater Prep
+Pair the platform sneakers with the baggy straight-leg jeans, dark wash and the
+white ribbed tank top. Layer the oversized grey crewneck sweatshirt on top to lean
+into that late 90s streetwear proportion. Finish the look with the black crossbody
+bag for a casual, everyday feel.
+
+Outfit 2: Contrast Utility
+Wear the platform sneakers with the wide-leg khaki trousers and the white ribbed
+tank top tucked in. Throw on the vintage black denim jacket as a structured outer
+layer. Add the brown leather belt to tie the earth tones together and keep the
+crossbody bag.
+
+fit_card:
+Finally scored these chunky platform sneakers on Poshmark for $48 and I am obsessed
+with the heavy Y2K sole. Had to test drive them immediately with baggy straight-leg
+jeans and an oversized grey crewneck. 👟 #thrifted
 ```
 
 ---

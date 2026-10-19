@@ -138,26 +138,28 @@ def run_agent(query: str, wardrobe: dict) -> dict:
                 return session
 
             session["selected_item"] = session["search_results"][0]
+            # Ids, not titles, so criterion 3 can check each hand-off exactly.
             trace.step("search_listings (via MCP)", inputs=_fmt(arguments),
                        returned=session["search_results"],
-                       note=f"branch: found results, selected {session['selected_item']['title']}")
+                       note=f"branch: found results, top result id={session['search_results'][0]['id']}, "
+                            f"selected id={session['selected_item']['id']} "
+                            f"({session['selected_item']['title']})")
 
         elif session["outfit_suggestion"] is None:
-            session["outfit_suggestion"] = suggest_outfit(
-                session["selected_item"], session["wardrobe"]
-            )
+            # `item` is the exact object handed to the tool; the trace logs its id.
+            item = session["selected_item"]
+            session["outfit_suggestion"] = suggest_outfit(item, session["wardrobe"])
             n_items = len((session["wardrobe"] or {}).get("items") or [])
             trace.step("suggest_outfit",
-                       inputs=f"new_item={session['selected_item']['title']!r}, wardrobe={n_items} items",
+                       inputs=f"new_item.id={item['id']} ({item['title']!r}), wardrobe={n_items} items",
                        returned=session["outfit_suggestion"])
 
         elif session["fit_card"] is None:
-            session["fit_card"] = create_fit_card(
-                session["outfit_suggestion"], session["selected_item"]
-            )
+            item = session["selected_item"]
+            session["fit_card"] = create_fit_card(session["outfit_suggestion"], item)
             trace.step("create_fit_card",
-                       inputs=f"outfit={session['outfit_suggestion'][:40]!r}…, "
-                              f"new_item={session['selected_item']['title']!r}",
+                       inputs=f"new_item.id={item['id']} ({item['title']!r}), "
+                              f"outfit={session['outfit_suggestion'][:40]!r}…",
                        returned=session["fit_card"])
 
         else:

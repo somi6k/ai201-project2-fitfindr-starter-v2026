@@ -62,6 +62,19 @@ Given a query that returns at least one listing, the state session["selected_ite
 
 **How I'm scoring it (set before the first run):** A try passes when the item named in `session["outfit_suggestion"]` is the one in `session["selected_item"]` — the outfit text is clearly about that item, not another piece.
 
+> **Revised in unit 4:** Given a query that returns at least one listing, the listing `id`
+> received by `suggest_outfit` and the `id` received by `create_fit_card` both equal
+> `session["selected_item"]["id"]`, and that equals `session["search_results"][0]["id"]` —
+> in 5 of 5 tries. Scored from the trace: the search step's top-result and selected ids,
+> and the `new_item.id` logged as input to `suggest_outfit` and `create_fit_card`, must
+> all match.
+>
+> **Why revised:** The original checked whether the outfit *text* mentioned the item. That
+> measures the model's output, not the session: it would still pass if the loop handed the
+> wrong listing to a tool and the model happened to describe it similarly, and it would fail
+> if the model paraphrased the item even though the right object was passed. Comparing ids
+> at each hand-off is something I can actually score from the run log.
+
 
 
 ---

@@ -29,10 +29,10 @@ SCENARIOS = [
         "criterion": 2,
     },
     {
-        # State: the item search picked is the item suggest_outfit wrote about.
-        # Criterion 3. Pass = session["outfit_suggestion"] points back to
-        # session["selected_item"] — it's clearly about the 90s Track Jacket,
-        # not some other piece.
+        # State: the item search picked is the item each later tool received.
+        # Criterion 3 (revised in unit 4). Pass = in the trace, the top-result
+        # id, the selected id, and the new_item.id passed to suggest_outfit and
+        # to create_fit_card are all the same (lst_004, the 90s Track Jacket).
         "name": "selected item reaches suggest_outfit",
         "query": "90s track jacket in size M",
         "wardrobe": "example",
