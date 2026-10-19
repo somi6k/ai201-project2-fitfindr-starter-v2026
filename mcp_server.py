@@ -59,7 +59,7 @@ works with a direct call, and **a documented failure earns the point in full.**
 
 from mcp.server.fastmcp import FastMCP
 
-from tools import search_listings as _search_listings_impl  # noqa: F401 — you'll use this below
+from tools import search_listings as _search_listings_impl
 
 # log_level="WARNING" keeps the server from printing an INFO line for every
 # request. Without it your terminal fills with "Processing request of type
@@ -67,23 +67,34 @@ from tools import search_listings as _search_listings_impl  # noqa: F401 — you
 mcp = FastMCP("fitfindr", log_level="WARNING")
 
 
-# ── TODO: uncomment and fill this in ──────────────────────────────────────────
-#
-# @mcp.tool()
-# def search_listings(
-#     description: str,
-#     size: str | None = None,
-#     max_price: float | None = None,
-# ) -> list[dict]:
-#     """
-#     <-- YOUR DESCRIPTION GOES HERE.
-#
-#         One or two sentences. What does this tool do, what does it need, and
-#         what does it give back when it finds nothing? Written for a reader
-#         who cannot see the code.
-#     """
-#     return _search_listings_impl(description, size, max_price)
-#
+# ── search_listings ───────────────────────────────────────────────────────────
+
+@mcp.tool()
+def search_listings(
+    description: str,
+    size: str | None = None,
+    max_price: float | None = None,
+) -> list[dict]:
+    """
+    Search secondhand clothing listings (Depop, ThredUp, Poshmark) by keywords,
+    optionally filtered by size and a maximum price in US dollars (inclusive,
+    decimals allowed, e.g. 30 or 29.99).
+
+    `description` is required: plain keywords such as "vintage graphic tee".
+    `size` is optional and matched whole-token, case-insensitive: "M" matches
+    "M", "S/M" and "M/L"; "L" does not match "XL"; "US 8" does not match
+    "US 8.5". Omit it (or pass null) to skip size filtering.
+
+    Returns up to 10 listing objects, best keyword match first. Each has: id,
+    title, description, category, style_tags (list of strings), size,
+    condition, price (number, US dollars), colors (list of strings), brand
+    (string, or null — most listings have no brand), platform.
+
+    Returns an empty list [] when nothing matches; it never returns null or
+    raises for a search with no results.
+    """
+    return _search_listings_impl(description, size, max_price)
+
 # ──────────────────────────────────────────────────────────────────────────────
 #
 # Two notes on the block above.

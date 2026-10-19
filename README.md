@@ -58,7 +58,7 @@ FitFindr is a thrift-shopping assistant. You describe in plain English what you 
 
 ### `search_listings`
 
-- **What it does:** search_listings searched the listings file for entries that match the description, and optionally the size and maximum price.
+- **What it does:** search_listings searches the listings file for entries that match the description, and optionally the size and maximum price.
 - **Inputs:** The inputs are description (string), size (optional, string) and max_price (optional, float, inclusive).
   - **Size rule:** Sizes are compared whole word by whole word, ignoring case, never by substring. Both the requested size and the listing's size are split on spaces, slashes and parentheses (so "S/M" becomes S and M, and "US 8.5" becomes US and 8.5). A listing matches if every part of the requested size appears in the listing's size. So "M" matches "M", "S/M" and "M/L"; "S" does not match "US 9"; "L" does not match "XL"; and "US 8" does not match "US 8.5". If size is None, sizes aren't filtered.
 - **Returns:** The return item is a list of dicts which are the returned clothing items from the listings file, sorted by keyword-overlap score, highest first, at most 10 (config.SEARCH_RESULT_LIMIT); listings scoring 0 are dropped. Each dict has the fields id, title, description, category, style_tags, size, condition, price, colors, brand and platform.
