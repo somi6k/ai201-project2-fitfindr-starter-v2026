@@ -274,14 +274,40 @@ jeans and an oversized grey crewneck. 👟 #thrifted
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | A matching query completes all three tools | 4 of 5 | MET (5/5) | A try passed if `session["error"]` was None and `session["fit_card"]` was a non-empty caption. All 5 tries of `vintage graphic tee under $30` show all four trace steps and a fit card. |
+| 2 | An impossible query stops before the second tool | 5 of 5 | MET (5/5) | A try passed if the trace ended at `search_listings (via MCP)` with `[] (empty)` and "branch: empty, stopping", `fit_card` was None, and `error` said what to change (price, size, keywords). All 5 tries match. |
+| 3 | Same listing id at every hand-off (revised) | 5 of 5 | MET (5/5) | Read off the trace: top-result id, selected id, and the `new_item.id` into `suggest_outfit` and into `create_fit_card` all had to match. All 5 tries were `lst_004` at every step. |
+| 4 | Fit card names the item, price and platform | 5 of 5 | MET (5/5) | Using my pre-run rule (item named recognisably, price numeric or spelled out, platform named), all 5 cards say "sneakers", "$48" and "Poshmark". Three said "chunky velcro sneakers" rather than "platform sneakers"; I counted those as naming the item. |
+| 5 | Empty wardrobe gets general styling advice | 5 of 5 | MET (5/5) | A try passed if there was no error and `outfit_suggestion` gave outfits built from generic pieces instead of naming wardrobe items. All 5 used generic pieces (leggings, midi dress, loafers, "a fitted ribbed white tank"). |
 
 **Diagnoses**
 
+No criterion missed, so there is no miss to diagnose. Three things came close
+enough to be worth recording, because a slightly stricter criterion would have
+caught them:
+
+- **Spelled-out prices — the model's output.** In criterion 1's scenario, 4 of
+  5 captions wrote the price as "eighteen bucks" instead of "$18". The prompt in
+  `tools.py::create_fit_card` gives the price as `$18` and says to mention it,
+  but it also asks for a casual first-person voice, and the model resolves that
+  tension by writing the number out. It only happened on the $18 item; the $42,
+  $45 and $48 items were numeric every time. Criterion 4 allows spelled-out
+  prices, so it passed — but a criterion requiring a "$" figure would have
+  missed at 1/5 on this item.
+- **Item named loosely — the model's output.** In criterion 4, 3 of 5 cards
+  called the item "chunky velcro sneakers", drawing on the listing description
+  instead of the title. Same mechanism: the prompt says to mention the item but
+  doesn't say by which name.
+- **Search picks a weaker match on ties — a tool.** `vintage graphic tee`
+  selects the Y2K Baby Tee rather than "Graphic Tee — 2003 Tour Bootleg Style",
+  because both score 3 keyword hits in `tools.py::search_listings` and ties keep
+  their order from `listings.json`, where the baby tee comes first. No criterion
+  checks *which* item is chosen, so this passes everything, but it's the most
+  visible quality problem in the run.
+
+The first version of criterion 3 was also a measurement problem rather than a
+miss: it scored the outfit *text*, so it was measuring the model rather than the
+session. That is why it was revised before the run above.
 
 
 ---
