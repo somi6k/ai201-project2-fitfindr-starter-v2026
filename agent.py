@@ -18,7 +18,7 @@ import re
 import config
 import trace
 from mcp_client import call_tool
-from tools import search_listings, suggest_outfit, create_fit_card
+from tools import suggest_outfit, create_fit_card
 from generate import ModelUnavailable
 
 
@@ -109,6 +109,7 @@ def run_agent(query: str, wardrobe: dict) -> dict:
         than a stack trace. The import is already at the top of this file.
     """
     session = new_session(query, wardrobe)
+    trace.start_trace()
 
     # Each pass looks at what the session holds so far and picks the next step.
     count = 0
@@ -118,34 +119,54 @@ def run_agent(query: str, wardrobe: dict) -> dict:
 
         if not session["parsed"]:
             session["parsed"] = parse_query(query)
+            trace.step("parse_query", inputs=repr(query), returned=_fmt(session["parsed"]))
 
         elif session["selected_item"] is None:
             parsed = session["parsed"]
-            session["search_results"] = call_tool("search_listings", {
+            arguments = {
                 "description": parsed["description"],
                 "size": parsed["size"],
                 "max_price": parsed["max_price"],
-            })
+            }
+            session["search_results"] = call_tool("search_listings", arguments)
 
             # THE BRANCH: nothing found → explain what to change and stop here.
             if not session["search_results"]:
                 session["error"] = _no_results_message(parsed)
+                trace.step("search_listings (via MCP)", inputs=_fmt(arguments),
+                           returned=session["search_results"], note="branch: empty, stopping")
                 return session
 
             session["selected_item"] = session["search_results"][0]
+            trace.step("search_listings (via MCP)", inputs=_fmt(arguments),
+                       returned=session["search_results"],
+                       note=f"branch: found results, selected {session['selected_item']['title']}")
 
         elif session["outfit_suggestion"] is None:
             session["outfit_suggestion"] = suggest_outfit(
                 session["selected_item"], session["wardrobe"]
             )
+            n_items = len((session["wardrobe"] or {}).get("items") or [])
+            trace.step("suggest_outfit",
+                       inputs=f"new_item={session['selected_item']['title']!r}, wardrobe={n_items} items",
+                       returned=session["outfit_suggestion"])
 
         elif session["fit_card"] is None:
             session["fit_card"] = create_fit_card(
                 session["outfit_suggestion"], session["selected_item"]
             )
+            trace.step("create_fit_card",
+                       inputs=f"outfit={session['outfit_suggestion'][:40]!r}…, "
+                              f"new_item={session['selected_item']['title']!r}",
+                       returned=session["fit_card"])
 
         else:
             return session
+
+
+def _fmt(d: dict) -> str:
+    """key=value pairs for the trace — trace._short only prints a plain dict's keys."""
+    return ", ".join(f"{k}={v!r}" for k, v in d.items())
 
 
 # ── query parsing (regex) ─────────────────────────────────────────────────────
