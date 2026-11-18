@@ -474,3 +474,34 @@ tries at temperature 0.9 whether the new line caused that or it's run-to-run var
 ---
 
 📖 **How to run this project: [RUNNING.md](RUNNING.md)**
+
+
+---
+
+## Capstone
+
+**What This Extends**
+
+This extends FitFindr, my project 2 agent. You describe a thrift find in plain English. It searches listings over MCP (`search_listings`), suggests an outfit from your wardrobe (`suggest_outfit`), and writes a caption (`create_fit_card`). Until now it only ran from the command line on my laptop (`python app.py ask ...` and `python run_eval.py`). Each run printed to the terminal and was gone when the window closed.
+
+What's new: FitFindr runs as a hosted web service (`serve.py` behind `gunicorn`, with a public URL). Every request writes a structured log record with a timestamp, the query, the outcome or error, which tools ran, the tokens used, and how long it took. That gives me a measured cost and latency per run instead of a guess.
+
+**The Shape**
+
+Shape A, deploy and instrument. The extension is the operational layer around the agent I already have:
+
+- the hosted run path (`gunicorn serve:app` on a free host)
+- structured logging in `serve.py` that records successful and failed requests, so failures don't disappear
+- per-request timing and token counts, which I'll use to measure cost and latency
+
+The agent itself doesn't change. `serve.py` calls the same `run_agent()` that the CLI does.
+
+Out of scope, things I considered and decided not to do:
+
+- **No new tools or agent behavior.** I'm not adding a fourth tool, changing the planning loop in `agent.py`, or rewriting the prompts in `tools.py`. If a request fails because of the agent's reasoning, I'll log it and diagnose it, but fixing it is the agent's job, not this unit's.
+- **No concurrency.** `serve.py` handles one request at a time on purpose. Each MCP call starts a second Python process, and the free tier's 512 MB has no room for two at once. I'm keeping the lock rather than adding a queue or more workers.
+- **No front end or database.** No web UI, no auth, no log storage service. Logs go to a JSON-lines file, and I copy entries into this README in the same session, because the free host wipes its disk when it sleeps.
+
+**Running It**
+
+Path A, hosted. The URL, platform, and start command are in [RUNNING.md](RUNNING.md). *(To be filled in during Milestone 3.)*
