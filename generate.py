@@ -215,6 +215,11 @@ def _explain(exc: Exception) -> str:
             f"AI201_MODEL in your .env, put it back. Otherwise post in the help "
             f"channel — this is not something you caused."
         )
+    if "timed out" in message or "deadline" in message:
+        return (
+            f"The model didn't answer within {config.MODEL_TIMEOUT_S:.0f} s, so this "
+            f"request stopped instead of hanging. Try again in a moment."
+        )
     if "connection" in message or "timeout" in message or "network" in message:
         return "Couldn't reach the model. Check your internet connection and try again."
     return f"Couldn't reach the model: {exc}"
@@ -253,7 +258,13 @@ def _get_client():
                 "Copy .env.example to .env and paste your key in, then try "
                 "again. `python test.py` will confirm it's working."
             )
-        _client = genai.Client(api_key=key)
+        from google.genai import types
+
+        # Deadline per call, in milliseconds. See MODEL_TIMEOUT_S in config.py.
+        _client = genai.Client(
+            api_key=key,
+            http_options=types.HttpOptions(timeout=int(config.MODEL_TIMEOUT_S * 1000)),
+        )
     return _client
 
 

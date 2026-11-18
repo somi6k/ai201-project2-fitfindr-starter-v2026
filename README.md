@@ -672,3 +672,29 @@ Warm-up: GET /health -> 200 in 243 ms (client)
 - PASS 'platform sneakers': 6 sentences, status 200, wardrobe items on server=[], error=None
     advice: 'Outfit One: Cargo pants in army green or beige, a fitted black baby tee, and a nylon shoulder bag. The chunky white sneakers balance the utility pockets of the pants, and the fitted top keeps the silhouette from looking too bulky. Add silver hoop earrings to finish the Y2K look.\n\nOutfit Two: An oversized grey graphic hoodie worn as a dress with sheer black tights. The platform sneakers anchor the '
 ```
+
+**Diagnoses**
+
+*Criterion 1, MISSED (9/10 in run 1).*
+- **Stage:** the model call inside `create_fit_card` (`generate.py::generate` → `google.genai`), combined with where `serve.py::ask` writes its record.
+- **Mechanism:** the Gemini client had no timeout, so a slow response held the request open with no limit. gunicorn's sync worker has a 30 s timeout. At 30 s it killed the worker. Render shows `WORKER TIMEOUT (pid:58)` followed by "was sent SIGKILL! Perhaps out of memory?" That second message is gunicorn's generic wording, not a memory problem: the traceback shows the worker sitting in `ssl.read`, waiting for Gemini's response headers. `serve.py::ask` writes the log record only after `run_agent()` returns, so a request killed mid-run never reaches that line. My instrumentation logs every failure that raises, but not one that takes the whole process down.
+
+*Criterion 2, MISSED (2/10, 7/10, 10/10).*
+- **Stage:** the two Gemini calls, `suggest_outfit` and `create_fit_card`.
+- **Mechanism:** the run splits into a fixed part and a variable part.
+  - The fixed part is parsing plus MCP search, which starts a fresh `mcp_server.py` process every call. The no-match runs, which stop after search, took 4.7 s, 3.9 s and 4.4 s across the three runs, so this part is a steady ~4 s.
+  - The variable part is the model. Median `ok` duration was 14.5 s in run 1, then 7.2 s in run 2 and 7.2 s in run 3. Run 1 was slow from its first request to its last (6.7–25.3 s), and run 2's first three were slow (14–17 s) before dropping to about 6.5 s.
+  - Nothing in my system changed between runs, so the swing is Gemini's response time varying over a few minutes. With a 4 s floor, the 10 s target leaves only 6 s for two model calls. That holds when Gemini is quick and fails when it isn't.
+- **What my criterion assumed:** that latency is a property of my system. It mostly belongs to the upstream service.
+
+*Criterion 4, MISSED (4/5, 5/5, 4/5). Two different causes.*
+- **Run 1, "90s slip dress":** no fit card at all. This is the same timeout as criterion 1.
+- **Run 3, "low-rise cargo pants":** the card says "Scored these on Poshmark for just $27…" and never names the item.
+  - **Stage:** the caption prompt in `tools.py::create_fit_card`.
+  - **Mechanism:** the prompt says "Mention the item, the price and the platform". The price and platform are given as literal values to copy, but "the item" has no wording to copy. At temperature 0.9, the model sometimes meets "mention the item" with a pronoun.
+
+**The pattern:** three of the four misses come from one place, the Gemini call:
+- the criterion 1 miss and the run 1 criterion 4 miss are the same timed-out request
+- criterion 2 is Gemini's latency variance
+
+Only the run 3 cargo-pants caption has a separate cause, the prompt. The Gemini call is the one stage I don't control, and my system had no limit on how long it waited for it.

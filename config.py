@@ -86,6 +86,15 @@ REQUESTS_PER_MINUTE = 15
 SESSION_REQUEST_BUDGET = 300
 MAX_RETRIES = 5
 
+# Capstone improvement: a deadline on every model call. Without one, a slow
+# Gemini response blocks until gunicorn's 30 s worker timeout kills the whole
+# request, and the worker dies before serve.py can write its log record (trial 1,
+# "90s slip dress size M"). Budget: ~4 s of parse + MCP search, plus two model
+# calls at most MODEL_TIMEOUT_S each = 28 s, under gunicorn's 30. Gemini refuses
+# deadlines under 10 s. One attempt, no hidden SDK retry (checked against a
+# server that never answers: ReadTimeout at 12.01 s, one connection).
+MODEL_TIMEOUT_S = float(os.getenv("AI201_MODEL_TIMEOUT", "12"))
+
 CACHE_DIR = ROOT / ".cache"
 
 
