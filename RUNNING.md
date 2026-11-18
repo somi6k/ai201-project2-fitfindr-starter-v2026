@@ -63,6 +63,10 @@ python request_log.py tail 10     # last 10 log records
 python request_log.py summary     # outcomes, latency percentiles, tokens per run
 ```
 
+These are Git Bash commands. In PowerShell, activate with `.venv\Scripts\Activate.ps1`, and set the variable on its own line before starting the server: `$env:AI201_CACHE = "0"` then `python serve.py`.
+
+Tested from a fresh clone on 2026-11-18 (Windows, Git Bash, Python 3.13.15): `test.py` passed 10/10, `serve.py` started, and one `/ask` request was logged.
+
 ---
 
 ## Before your first class

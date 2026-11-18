@@ -504,4 +504,65 @@ Out of scope, things I considered and decided not to do:
 
 **Running It**
 
-Path A, hosted. The URL, platform, and start command are in [RUNNING.md](RUNNING.md). *(To be filled in during Milestone 3.)*
+Path A, hosted on Render: https://ai201-project2-fitfindr-v2026.onrender.com (`GET /health`, `POST /ask`, `GET /logs?n=20`). It redeploys from `main` on every push and starts with `gunicorn serve:app`. Build settings, env vars, curl examples and the local run commands are in [RUNNING.md](RUNNING.md). I tested the local instructions from a fresh clone in a separate folder: venv on 3.13, install, `test.py` 10/10, `serve.py`, and one request logged.
+
+**Instrumentation**
+
+Every `POST /ask` writes one JSON record to `logs/requests.jsonl` through `request_log.py::write`, called from `serve.py::ask`. That includes requests that were rejected or crashed. The same line goes to stdout with a `[request]` prefix, so it shows in Render's Logs tab. `GET /logs?n=N` returns the latest records over HTTP, which matters because Render wipes its disk when the service sleeps or redeploys.
+
+Fields in each record:
+
+| Field | Meaning |
+|---|---|
+| `ts`, `request_id` | UTC arrival time; short random id |
+| `query` / `body_preview` | What came in. `body_preview` holds the first 200 raw characters, only when the body was rejected |
+| `status`, `outcome` | HTTP status. Outcome is one of `ok`, `no_results`, `agent_error`, `exception`, `bad_request` |
+| `error` | `session["error"]` or the exception text; `null` on success |
+| `tools_run`, `n_results`, `selected_id` | How far the agent got, how many listings came back, which listing was used |
+| `fit_card` | What came out: the caption |
+| `wait_ms`, `duration_ms` | Time queued behind another request; total time from arrival to response |
+| `api_calls`, `cache_hits` | Live model calls (retries included); answers served from the local cache |
+| `prompt_tokens`, `output_tokens` | Token counts the service reported for this request only |
+
+These 12 records are from the live Render service on 2026-11-18. I sent 9 queries that should match, 1 that shouldn't, and 2 malformed bodies (`{not json` and `{"query": "   "}`). I pulled them with `GET /logs?n=50`. The full file is [results/capstone_render_2026-11-18.jsonl](results/capstone_render_2026-11-18.jsonl).
+
+```jsonl
+{"ts": "2026-11-18T21:04:04.412+00:00", "request_id": "01686bb5", "route": "/ask", "query": "vintage graphic tee under $30", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 10, "selected_id": "lst_002", "fit_card": "Scored this butterfly baby tee on depop for only $18 and I'm obsessed with the pink and purple print. Paired it with wide-leg khaki trousers and a black cropped zip hoodie for a fun little grunge moment today. 🦋✨ #y2k #thrifted", "wait_ms": 1, "duration_ms": 17668, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 814, "output_tokens": 172}
+{"ts": "2026-11-18T21:04:22.419+00:00", "request_id": "27bdfb18", "route": "/ask", "query": "oversized flannel shirt", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 7, "selected_id": "lst_003", "fit_card": "Scored this vintage Woolrich flannel for $22 on thredUp and haven't taken it off since. Obsessed with wearing it unbuttoned over a white ribbed tank and baggy dark wash jeans. 🖤✨ #grunge #thrifted", "wait_ms": 0, "duration_ms": 7321, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 824, "output_tokens": 175}
+{"ts": "2026-11-18T21:04:29.976+00:00", "request_id": "10c1d8bb", "route": "/ask", "query": "leather belt under $15", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_014", "fit_card": "Found this vintage braided belt on thredUp for only $12 and I'm obsessed with how it looks cinching these khaki trousers. It just ties the whole earth-tone minimal vibe together so well with my black combat boots. 🤎✨ #thrifted #secondhandstyle", "wait_ms": 0, "duration_ms": 7077, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 818, "output_tokens": 199}
+{"ts": "2026-11-18T21:04:37.362+00:00", "request_id": "5a38cb11", "route": "/ask", "query": "90s slip dress size M", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_013", "fit_card": "Scored this floral silk slip dress on depop for just $30 and I’m obsessed. Layered it over a white ribbed tank with my chunky combat boots for an easy ninety-inspired vibe. 🌸✨ #thrifted #90sfashion", "wait_ms": 0, "duration_ms": 8500, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 818, "output_tokens": 154}
+{"ts": "2026-11-18T21:04:46.166+00:00", "request_id": "63ec613d", "route": "/ask", "query": "low-rise cargo pants", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_011", "fit_card": "Scored these low-rise khaki cargo pants on Poshmark for $27 and I'm obsessed with the fit. Threw them on with my chunky white sneakers and a black cropped zip hoodie for a super easy daily look. 👖✨ #Y2K #thrifted", "wait_ms": 0, "duration_ms": 6974, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 831, "output_tokens": 177}
+{"ts": "2026-11-18T21:04:53.441+00:00", "request_id": "1d160deb", "route": "/ask", "query": "mesh long-sleeve top size S/M", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_017", "fit_card": "Scored this mesh long-sleeve top on depop for only $15 and I’m obsessed with how it looks under my grey crewneck. Just added wide-leg khaki trousers and chunky white sneakers to pull the whole earth-tone vibe together. 🖤 #y2k #thrifted", "wait_ms": 0, "duration_ms": 9804, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 820, "output_tokens": 183}
+{"ts": "2026-11-18T21:05:03.548+00:00", "request_id": "c6bbe16e", "route": "/ask", "query": "crewneck sweatshirt under $25", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_012", "fit_card": "Scored this faded navy crewneck on thredUp for just $20 and it’s basically been my whole personality this week. Love how it looks thrown over baggy straight-leg jeans with a peek of white tank underneath. 🌊 #thriftfind #ootd", "wait_ms": 0, "duration_ms": 7002, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 805, "output_tokens": 171}
+{"ts": "2026-11-18T21:05:10.769+00:00", "request_id": "c3366dd8", "route": "/ask", "query": "faded band tee", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 9, "selected_id": "lst_006", "fit_card": "Scored this faded graphic tee on depop for only $24 and I'm obsessed with the boxy fit. Threw it on over a white ribbed tank with my dark wash jeans and black combat boots for the ultimate grunge look. 🖤✨ #thriftfind #streetwear", "wait_ms": 0, "duration_ms": 10565, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 808, "output_tokens": 169}
+{"ts": "2026-11-18T21:05:21.534+00:00", "request_id": "8f0bad25", "route": "/ask", "query": "graphic hoodie size L", "status": 200, "outcome": "ok", "error": null, "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_015", "fit_card": "Scored this faded black hoodie on depop for $26 and I'm obsessed with how soft it is. Paired it with baggy straight-leg jeans and chunky white sneakers for the ultimate grunge streetwear fit. 🖤 #thrifted #streetwear", "wait_ms": 0, "duration_ms": 7448, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 809, "output_tokens": 174}
+{"ts": "2026-11-18T21:05:29.186+00:00", "request_id": "8cf62653", "route": "/ask", "query": "ballgown size XXS under $2", "status": 200, "outcome": "no_results", "error": "Nothing matched 'ballgown' in size XXS under $2. Try to raise your price limit, or drop the size, or use fewer or more general words (e.g. 'jacket' instead of 'designer ballgown').", "tools_run": ["parse_query", "search_listings"], "n_results": 0, "selected_id": null, "fit_card": null, "wait_ms": 0, "duration_ms": 3962, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0}
+{"ts": "2026-11-18T21:05:33.481+00:00", "request_id": "a1f873f7", "route": "/ask", "query": null, "body_preview": "{not json", "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "duration_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0}
+{"ts": "2026-11-18T21:05:33.780+00:00", "request_id": "f19d9d73", "route": "/ask", "query": null, "body_preview": "{\"query\": \"   \"}", "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "duration_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0}
+```
+
+Failed runs: records 11 and 12 above are rejected inputs (400, `bad_request`), and record 10 is the planned stop when nothing matches (`no_results`). Below is a real crash, which I caught by accident while testing locally. Gemini returned 503 "high demand" and `generate.py` doesn't retry 503s, so the request returned a 500. It still left a record:
+
+```json
+{"ts": "2026-11-18T20:03:46.112+00:00", "request_id": "50b87e06", "route": "/ask", "query": "vintage graphic tee under $30", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 1, "api_calls": 1, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 500, "outcome": "exception", "error": "ModelUnavailable: Couldn't reach the model: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}", "duration_ms": 5596}
+```
+
+**What It Costs**
+
+The real cost of one run is Gemini API spend: two model calls, `suggest_outfit` and `create_fit_card`. Search and parsing don't call the model.
+
+How I measured it: Render runs with `AI201_CACHE=0`, so every request is a real model call. For each request, `serve.py` takes a snapshot of `generate.token_counts()` before and after `run_agent()` and logs the difference. Those counts come from the API's `usage_metadata`, not an estimate. I checked that Flash-Lite reports no separate thinking tokens (`thoughts_token_count` is `None`, and total equals prompt plus output), so the logged counts are the whole bill. I averaged the 9 successful runs in the log above. All 9 had `cache_hits: 0` and `api_calls: 2`.
+
+| | Mean per successful run (n=9) | Range |
+|---|---|---|
+| Prompt tokens | 816.3 | 805 – 831 |
+| Output tokens | 174.9 | 154 – 199 |
+| Duration | 9.15 s | 6.97 – 17.67 s |
+
+At the Gemini API paid-tier price for `gemini-3.5-flash-lite` ($0.30 per 1M input tokens, $2.50 per 1M output tokens):
+
+- input: 816.3 × $0.30 / 1,000,000 = $0.000245
+- output: 174.9 × $2.50 / 1,000,000 = $0.000437
+- **≈ $0.00068 per run**
+
+**100 people a day, one query each:** 100 × $0.00068 = **$0.068 per day**, about $2.05 per 30-day month. Output is 64% of that cost even though it's only 18% of the tokens. On the Gemini free tier, input tokens are free, so this is the paid-tier cost. No-match and rejected requests cost $0 in API spend because they never reach the model. Hosting is $0 on Render's free tier.
