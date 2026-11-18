@@ -1,0 +1,892 @@
+2026-11-18T21:43:09.067979444Z ==> Your service is live 🎉
+2026-11-18T21:43:09.1434713Z 127.0.0.1 - - [18/Nov/2026:21:43:09 +0000] "GET / HTTP/1.1" 404 207 "-" "Go-http-client/2.0"
+2026-11-18T21:43:09.201967039Z ==> 
+2026-11-18T21:43:09.20639287Z ==> ///////////////////////////////////////////////////////////
+2026-11-18T21:43:09.210837122Z ==> 
+2026-11-18T21:43:09.216061638Z ==> Available at your primary URL https://ai201-project2-fitfindr-v2026.onrender.com
+2026-11-18T21:43:09.221896064Z ==> 
+2026-11-18T21:43:09.228649288Z ==> ///////////////////////////////////////////////////////////
+2026-11-18T21:44:11.958468265Z 127.0.0.1 - - [18/Nov/2026:21:44:11 +0000] "GET /health HTTP/1.1" 200 16 "-" "curl/8.19.0"
+2026-11-18T21:48:09.762740925Z ==> Detected service running on port 10000
+2026-11-18T21:48:09.921245999Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+2026-11-18T21:49:40.787196077Z 127.0.0.1 - - [18/Nov/2026:21:49:40 +0000] "GET /health HTTP/1.1" 200 16 "-" "Python-urllib/3.13"
+2026-11-18T21:49:40.919688302Z [1] parse_query
+2026-11-18T21:49:40.919709313Z       in:  'vintage graphic tee under $30'
+2026-11-18T21:49:40.919742535Z       out: description='vintage graphic tee', size=None, max_price=30.0
+2026-11-18T21:49:50.982999512Z [2] search_listings (via MCP)
+2026-11-18T21:49:50.983027513Z       in:  description='vintage graphic tee', size=None, max_price=30.0
+2026-11-18T21:49:50.983033113Z       out: 10 items: Y2K Baby Tee — Butterfly Print, Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey … +7 more
+2026-11-18T21:49:50.983039263Z       →    branch: found results, top result id=lst_002, selected id=lst_002 (Y2K Baby Tee — Butterfly Print)
+2026-11-18T21:49:59.923179428Z [3] suggest_outfit
+2026-11-18T21:49:59.923208569Z       in:  new_item.id=lst_002 ('Y2K Baby Tee — Butterfly Print'), wardrobe=10 items
+2026-11-18T21:49:59.923214359Z       out: Outfit One: Streetwear Contrast Pair the Y2K Baby Tee with the baggy straight-leg jeans, dark wash. Add the bl…
+2026-11-18T21:50:00.741144105Z [4] create_fit_card
+2026-11-18T21:50:00.741170586Z       in:  new_item.id=lst_002 ('Y2K Baby Tee — Butterfly Print'), outfit='Outfit One: Streetwear Contrast\nPair the'…
+2026-11-18T21:50:00.741175896Z       out: Scored this butterfly baby tee on depop for only $18 and I’m obsessed. Wearing it today under a cropped black …
+2026-11-18T21:50:00.741192217Z [request] {"ts": "2026-11-18T21:49:40.918+00:00", "request_id": "660920ac", "route": "/ask", "query": "vintage graphic tee under $30", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 10, "selected_id": "lst_002", "fit_card": "Scored this butterfly baby tee on depop for only $18 and I’m obsessed. Wearing it today under a cropped black zip hoodie with baggy dark wash jeans and chunky sneakers. 🦋✨ #y2k #thrifthaul", "wait_ms": 1, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 803, "output_tokens": 152, "status": 200, "outcome": "ok", "error": null, "duration_ms": 19823}
+2026-11-18T21:50:00.742259303Z 127.0.0.1 - - [18/Nov/2026:21:50:00 +0000] "POST /ask HTTP/1.1" 200 6878 "-" "Python-urllib/3.13"
+2026-11-18T21:50:00.903641055Z 127.0.0.1 - - [18/Nov/2026:21:50:00 +0000] "GET /logs?n=20 HTTP/1.1" 200 635 "-" "Python-urllib/3.13"
+2026-11-18T21:50:01.035346772Z [1] parse_query
+2026-11-18T21:50:01.035367693Z       in:  'oversized flannel shirt'
+2026-11-18T21:50:01.035374844Z       out: description='oversized flannel shirt', size=None, max_price=None
+2026-11-18T21:50:04.981803073Z [2] search_listings (via MCP)
+2026-11-18T21:50:04.981828274Z       in:  description='oversized flannel shirt', size=None, max_price=None
+2026-11-18T21:50:04.981832464Z       out: 7 items: Oversized Flannel Shirt — Plaid Red/Black, Knit Cardigan — Chunky Brown, Oversized Crewneck Sweatshirt — Vintage Navy … +4 more
+2026-11-18T21:50:04.981846775Z       →    branch: found results, top result id=lst_003, selected id=lst_003 (Oversized Flannel Shirt — Plaid Red/Black)
+2026-11-18T21:50:10.652876514Z [3] suggest_outfit
+2026-11-18T21:50:10.652904576Z       in:  new_item.id=lst_003 ('Oversized Flannel Shirt — Plaid Red/Black'), wardrobe=10 items
+2026-11-18T21:50:10.652910426Z       out: Outfit One: 90s Grunge Layering Wear the white ribbed tank top as a base tucked into the baggy straight-leg je…
+2026-11-18T21:50:11.497962574Z [4] create_fit_card
+2026-11-18T21:50:11.497985665Z       in:  new_item.id=lst_003 ('Oversized Flannel Shirt — Plaid Red/Black'), outfit='Outfit One: 90s Grunge Layering\nWe…
+2026-11-18T21:50:11.497991865Z       out: Scored this vintage Woolrich flannel for $22 on thredUp and it’s basically been my jacket all week. Tossed it …
+2026-11-18T21:50:11.498012716Z [request] {"ts": "2026-11-18T21:50:01.034+00:00", "request_id": "83c93b5f", "route": "/ask", "query": "oversized flannel shirt", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 7, "selected_id": "lst_003", "fit_card": "Scored this vintage Woolrich flannel for $22 on thredUp and it’s basically been my jacket all week. Tossed it on over a white ribbed tank and straight-leg jeans with some combat boots for a total 90s grunge vibe. 🖤🪵 #thrifted #grunge", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 810, "output_tokens": 171, "status": 200, "outcome": "ok", "error": null, "duration_ms": 10463}
+2026-11-18T21:50:11.498704492Z 127.0.0.1 - - [18/Nov/2026:21:50:11 +0000] "POST /ask HTTP/1.1" 200 5846 "-" "Python-urllib/3.13"
+2026-11-18T21:50:11.666078286Z 127.0.0.1 - - [18/Nov/2026:21:50:11 +0000] "GET /logs?n=20 HTTP/1.1" 200 1282 "-" "Python-urllib/3.13"
+2026-11-18T21:50:11.789528804Z [1] parse_query
+2026-11-18T21:50:11.789548155Z       in:  'leather belt under $15'
+2026-11-18T21:50:11.789554155Z       out: description='leather belt', size=None, max_price=15.0
+2026-11-18T21:50:15.979356123Z [2] search_listings (via MCP)
+2026-11-18T21:50:15.979377895Z       in:  description='leather belt', size=None, max_price=15.0
+2026-11-18T21:50:15.979382185Z       out: 1 items: Leather Belt — Brown, Braided
+2026-11-18T21:50:15.979386185Z       →    branch: found results, top result id=lst_014, selected id=lst_014 (Leather Belt — Brown, Braided)
+2026-11-18T21:50:17.20939751Z [3] suggest_outfit
+2026-11-18T21:50:17.209425941Z       in:  new_item.id=lst_014 ('Leather Belt — Brown, Braided'), wardrobe=10 items
+2026-11-18T21:50:17.209431311Z       out: Outfit One: Casual Streetwear Pair the Leather Belt with the baggy straight-leg jeans, dark wash, tucked into …
+2026-11-18T21:50:18.489322193Z [4] create_fit_card
+2026-11-18T21:50:18.489343524Z       in:  new_item.id=lst_014 ('Leather Belt — Brown, Braided'), outfit='Outfit One: Casual Streetwear\nPair the L'…
+2026-11-18T21:50:18.489349705Z       out: Found this braided leather belt on thredUp for only $12 and it instantly pulled my baggy jeans and white tank …
+2026-11-18T21:50:18.489376526Z [request] {"ts": "2026-11-18T21:50:11.789+00:00", "request_id": "467682af", "route": "/ask", "query": "leather belt under $15", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_014", "fit_card": "Found this braided leather belt on thredUp for only $12 and it instantly pulled my baggy jeans and white tank look together. It adds just the right western touch to break up the denim-on-denim vibe. 🤎 #thriftfind", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 812, "output_tokens": 186, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6700}
+2026-11-18T21:50:18.490049621Z 127.0.0.1 - - [18/Nov/2026:21:50:18 +0000] "POST /ask HTTP/1.1" 200 3509 "-" "Python-urllib/3.13"
+2026-11-18T21:50:18.631416743Z 127.0.0.1 - - [18/Nov/2026:21:50:18 +0000] "GET /logs?n=20 HTTP/1.1" 200 1890 "-" "Python-urllib/3.13"
+2026-11-18T21:50:18.74676478Z [1] parse_query
+2026-11-18T21:50:18.74677944Z       in:  '90s slip dress size M'
+2026-11-18T21:50:18.746782491Z       out: description='90s slip dress', size='M', max_price=None
+2026-11-18T21:50:22.781037418Z [2] search_listings (via MCP)
+2026-11-18T21:50:22.78106701Z       in:  description='90s slip dress', size='M', max_price=None
+2026-11-18T21:50:22.78107128Z       out: 3 items: 90s Silk Slip Dress — Floral, Midi Length, 90s Track Jacket — Navy/White Stripe, 90s Leather Bomber — Black
+2026-11-18T21:50:22.78107545Z       →    branch: found results, top result id=lst_013, selected id=lst_013 (90s Silk Slip Dress — Floral, Midi Length)
+2026-11-18T21:50:25.021561086Z [3] suggest_outfit
+2026-11-18T21:50:25.021580907Z       in:  new_item.id=lst_013 ('90s Silk Slip Dress — Floral, Midi Length'), wardrobe=10 items
+2026-11-18T21:50:25.021584407Z       out: Outfit One: Grunge Contrast Layer the 90s Silk Slip Dress over the white ribbed tank top to tone down the neck…
+2026-11-18T21:50:49.529595316Z [2026-11-18 21:50:49 +0000] [57] [CRITICAL] WORKER TIMEOUT (pid:58)
+2026-11-18T21:50:49.535745626Z [2026-11-18 21:50:49 +0000] [58] [ERROR] Error handling request /ask
+2026-11-18T21:50:49.535764578Z Traceback (most recent call last):
+2026-11-18T21:50:49.535769428Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 134, in handle
+2026-11-18T21:50:49.535774988Z     self.handle_request(listener, req, client, addr)
+2026-11-18T21:50:49.535778558Z     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-18T21:50:49.535785119Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+2026-11-18T21:50:49.535788739Z     respiter = self.wsgi(environ, resp.start_response)
+2026-11-18T21:50:49.535792739Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 1536, in __call__
+2026-11-18T21:50:49.535796469Z     return self.wsgi_app(environ, start_response)
+2026-11-18T21:50:49.53579996Z            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-18T21:50:49.53580348Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-11-18T21:50:49.53580734Z     response = self.full_dispatch_request()
+2026-11-18T21:50:49.53581086Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-11-18T21:50:49.53581486Z     rv = self.dispatch_request()
+2026-11-18T21:50:49.535819241Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+2026-11-18T21:50:49.535823331Z     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-11-18T21:50:49.535826951Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+2026-11-18T21:50:49.535830421Z   File "/opt/render/project/src/serve.py", line 187, in ask
+2026-11-18T21:50:49.535833901Z     session = run_agent(query, wardrobe)
+2026-11-18T21:50:49.535837371Z   File "/opt/render/project/src/agent.py", line 159, in run_agent
+2026-11-18T21:50:49.535840742Z     session["fit_card"] = create_fit_card(session["outfit_suggestion"], item)
+2026-11-18T21:50:49.535844122Z                           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-18T21:50:49.535847492Z   File "/opt/render/project/src/tools.py", line 291, in create_fit_card
+2026-11-18T21:50:49.535850902Z     response = generate(prompt, system=_CAPTION_SYSTEM)
+2026-11-18T21:50:49.535865443Z   File "/opt/render/project/src/generate.py", line 315, in generate
+2026-11-18T21:50:49.535867883Z     response = client.models.generate_content(**kwargs)
+2026-11-18T21:50:49.535870273Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/google/genai/models.py", line 6331, in generate_content
+2026-11-18T21:50:49.535872993Z     response = self._generate_content(
+2026-11-18T21:50:49.535876824Z         model=model, contents=contents, config=parsed_config
+2026-11-18T21:50:49.535880694Z     )
+2026-11-18T21:50:49.535884674Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/google/genai/models.py", line 4767, in _generate_content
+2026-11-18T21:50:49.535888224Z     response = self._api_client.request(
+2026-11-18T21:50:49.535892014Z         'post', path, request_dict, http_options
+2026-11-18T21:50:49.535895705Z     )
+2026-11-18T21:50:49.535899485Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/google/genai/_api_client.py", line 1605, in request
+2026-11-18T21:50:49.535903155Z     response = self._request(http_request, http_options, stream=False)
+2026-11-18T21:50:49.535907125Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/google/genai/_api_client.py", line 1398, in _request
+2026-11-18T21:50:49.535911835Z     return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]
+2026-11-18T21:50:49.535914435Z            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-18T21:50:49.535916795Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/tenacity/__init__.py", line 470, in __call__
+2026-11-18T21:50:49.535919076Z     do = self.iter(retry_state=retry_state)
+2026-11-18T21:50:49.535921366Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/tenacity/__init__.py", line 371, in iter
+2026-11-18T21:50:49.535923646Z     result = action(retry_state)
+2026-11-18T21:50:49.535925916Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/tenacity/__init__.py", line 393, in <lambda>
+2026-11-18T21:50:49.535928276Z     self._add_action_func(lambda rs: rs.outcome.result())
+2026-11-18T21:50:49.535929936Z 127.0.0.1 - - [18/Nov/2026:21:50:49 +0000] "POST /ask HTTP/1.1" 500 0 "-" "-"
+2026-11-18T21:50:49.535930596Z                                      ~~~~~~~~~~~~~~~~~^^
+2026-11-18T21:50:49.535940407Z   File "/opt/render/project/python/Python-3.13.18/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+2026-11-18T21:50:49.535944487Z     return self.__get_result()
+2026-11-18T21:50:49.535947847Z            ~~~~~~~~~~~~~~~~~^^
+2026-11-18T21:50:49.535951277Z   File "/opt/render/project/python/Python-3.13.18/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+2026-11-18T21:50:49.535954988Z     raise self._exception
+2026-11-18T21:50:49.535958398Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/tenacity/__init__.py", line 473, in __call__
+2026-11-18T21:50:49.535971508Z     result = fn(*args, **kwargs)
+2026-11-18T21:50:49.535975989Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/google/genai/_api_client.py", line 1374, in _request_once
+2026-11-18T21:50:49.535980579Z     response = self._httpx_client.send(httpx_request, stream=stream)  # type: ignore[union-attr]
+2026-11-18T21:50:49.535989989Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpx/_client.py", line 914, in send
+2026-11-18T21:50:49.53599365Z     response = self._send_handling_auth(
+2026-11-18T21:50:49.53599782Z         request,
+2026-11-18T21:50:49.53600184Z     ...<2 lines>...
+2026-11-18T21:50:49.53600514Z         history=[],
+2026-11-18T21:50:49.53600838Z     )
+2026-11-18T21:50:49.536020031Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+2026-11-18T21:50:49.536024011Z     response = self._send_handling_redirects(
+2026-11-18T21:50:49.536027581Z         request,
+2026-11-18T21:50:49.536031292Z         follow_redirects=follow_redirects,
+2026-11-18T21:50:49.536034982Z         history=history,
+2026-11-18T21:50:49.536038352Z     )
+2026-11-18T21:50:49.536041722Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+2026-11-18T21:50:49.536045712Z     response = self._send_single_request(request)
+2026-11-18T21:50:49.536049313Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1014, in _send_single_request
+2026-11-18T21:50:49.536052803Z     response = transport.handle_request(request)
+2026-11-18T21:50:49.536056463Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 250, in handle_request
+2026-11-18T21:50:49.536060043Z     resp = self._pool.handle_request(req)
+2026-11-18T21:50:49.536064623Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+2026-11-18T21:50:49.536066993Z     raise exc from None
+2026-11-18T21:50:49.536069323Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+2026-11-18T21:50:49.536071654Z     response = connection.handle_request(
+2026-11-18T21:50:49.536073904Z         pool_request.request
+2026-11-18T21:50:49.536077224Z     )
+2026-11-18T21:50:49.536080954Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+2026-11-18T21:50:49.536084614Z     return self._connection.handle_request(request)
+2026-11-18T21:50:49.536088115Z            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+2026-11-18T21:50:49.536091725Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+2026-11-18T21:50:49.536095135Z     raise exc
+2026-11-18T21:50:49.536101165Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+2026-11-18T21:50:49.536104665Z     ) = self._receive_response_headers(**kwargs)
+2026-11-18T21:50:49.536108045Z         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+2026-11-18T21:50:49.536111246Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+2026-11-18T21:50:49.536114366Z     event = self._receive_event(timeout=timeout)
+2026-11-18T21:50:49.536117416Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+2026-11-18T21:50:49.536121046Z     data = self._network_stream.read(
+2026-11-18T21:50:49.536124386Z         self.READ_NUM_BYTES, timeout=timeout
+2026-11-18T21:50:49.536128037Z     )
+2026-11-18T21:50:49.536131617Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/httpcore/_backends/sync.py", line 128, in read
+2026-11-18T21:50:49.536135177Z     return self._sock.recv(max_bytes)
+2026-11-18T21:50:49.536138587Z            ~~~~~~~~~~~~~~~^^^^^^^^^^^
+2026-11-18T21:50:49.536142117Z   File "/opt/render/project/python/Python-3.13.18/lib/python3.13/ssl.py", line 1296, in recv
+2026-11-18T21:50:49.536145367Z     return self.read(buflen)
+2026-11-18T21:50:49.536148728Z            ~~~~~~~~~^^^^^^^^
+2026-11-18T21:50:49.536152448Z   File "/opt/render/project/python/Python-3.13.18/lib/python3.13/ssl.py", line 1151, in read
+2026-11-18T21:50:49.536166788Z     return self._sslobj.read(len)
+2026-11-18T21:50:49.536170269Z            ~~~~~~~~~~~~~~~~~^^^^^
+2026-11-18T21:50:49.536173749Z   File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+2026-11-18T21:50:49.536177269Z     sys.exit(1)
+2026-11-18T21:50:49.536180579Z     ~~~~~~~~^^^
+2026-11-18T21:50:49.536183849Z SystemExit: 1
+2026-11-18T21:50:49.536240332Z [2026-11-18 21:50:49 +0000] [58] [INFO] Worker exiting (pid: 58)
+2026-11-18T21:50:50.574918107Z [2026-11-18 21:50:50 +0000] [57] [ERROR] Worker (pid:58) was sent SIGKILL! Perhaps out of memory?
+2026-11-18T21:50:50.664320502Z [2026-11-18 21:50:50 +0000] [72] [INFO] Booting worker with pid: 72
+2026-11-18T21:50:50.672957003Z 127.0.0.1 - - [18/Nov/2026:21:50:50 +0000] "GET /logs?n=20 HTTP/1.1" 200 1890 "-" "Python-urllib/3.13"
+2026-11-18T21:50:50.804335289Z [1] parse_query
+2026-11-18T21:50:50.80434726Z       in:  'low-rise cargo pants'
+2026-11-18T21:50:50.804350129Z       out: description='low-rise cargo pants', size=None, max_price=None
+2026-11-18T21:50:57.88252814Z [2] search_listings (via MCP)
+2026-11-18T21:50:57.882555491Z       in:  description='low-rise cargo pants', size=None, max_price=None
+2026-11-18T21:50:57.882559911Z       out: 3 items: Low-Rise Cargo Pants — Khaki, Corduroy Wide-Leg Pants — Rust, Low-Top Canvas Sneakers — Off-White
+2026-11-18T21:50:57.882562121Z       →    branch: found results, top result id=lst_011, selected id=lst_011 (Low-Rise Cargo Pants — Khaki)
+2026-11-18T21:51:03.115332239Z [3] suggest_outfit
+2026-11-18T21:51:03.115354031Z       in:  new_item.id=lst_011 ('Low-Rise Cargo Pants — Khaki'), wardrobe=10 items
+2026-11-18T21:51:03.115358011Z       out: Outfit One: Off-Duty Streetwear Pair the low-rise cargo pants with the white ribbed tank top. Layer the vintag…
+2026-11-18T21:51:04.327602312Z [4] create_fit_card
+2026-11-18T21:51:04.327621103Z       in:  new_item.id=lst_011 ('Low-Rise Cargo Pants — Khaki'), outfit='Outfit One: Off-Duty Streetwear\nPair the'…
+2026-11-18T21:51:04.327624383Z       out: Scored these low-rise cargo pants on Poshmark for $27 and I'm obsessed with the pockets. Threw them on with a …
+2026-11-18T21:51:04.327629634Z [request] {"ts": "2026-11-18T21:50:50.803+00:00", "request_id": "cf1245b6", "route": "/ask", "query": "low-rise cargo pants", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_011", "fit_card": "Scored these low-rise cargo pants on Poshmark for $27 and I'm obsessed with the pockets. Threw them on with a white ribbed tank top and chunky white sneakers for an easy streetwear vibe. 👖✨ #thrifted #y2kstyle", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 800, "output_tokens": 144, "status": 200, "outcome": "ok", "error": null, "duration_ms": 13523}
+2026-11-18T21:51:04.341624813Z 127.0.0.1 - - [18/Nov/2026:21:51:04 +0000] "POST /ask HTTP/1.1" 200 4025 "-" "Python-urllib/3.13"
+2026-11-18T21:51:04.534584486Z 127.0.0.1 - - [18/Nov/2026:21:51:04 +0000] "GET /logs?n=20 HTTP/1.1" 200 2499 "-" "Python-urllib/3.13"
+2026-11-18T21:51:04.653443749Z [1] parse_query
+2026-11-18T21:51:04.65346417Z       in:  'mesh long-sleeve top size S/M'
+2026-11-18T21:51:04.653468401Z       out: description='mesh long-sleeve top', size='S/M', max_price=None
+2026-11-18T21:51:08.974492528Z [2] search_listings (via MCP)
+2026-11-18T21:51:08.97453642Z       in:  description='mesh long-sleeve top', size='S/M', max_price=None
+2026-11-18T21:51:08.974543761Z       out: 2 items: Mesh Long-Sleeve Top — Black, Crochet Halter Top — Cream
+2026-11-18T21:51:08.974548491Z       →    branch: found results, top result id=lst_017, selected id=lst_017 (Mesh Long-Sleeve Top — Black)
+2026-11-18T21:51:09.730585043Z [3] suggest_outfit
+2026-11-18T21:51:09.730640946Z       in:  new_item.id=lst_017 ('Mesh Long-Sleeve Top — Black'), wardrobe=10 items
+2026-11-18T21:51:09.730645486Z       out: Outfit One: Grunge Contrast Wear the mesh long-sleeve top over the white ribbed tank top. Pair it with the bag…
+2026-11-18T21:51:12.017470586Z [4] create_fit_card
+2026-11-18T21:51:12.017497077Z       in:  new_item.id=lst_017 ('Mesh Long-Sleeve Top — Black'), outfit='Outfit One: Grunge Contrast\nWear the mes'…
+2026-11-18T21:51:12.017499847Z       out: Scored this sheer mesh long-sleeve on depop for just $15 and I’ve been layering it under everything. Today I t…
+2026-11-18T21:51:12.017505338Z [request] {"ts": "2026-11-18T21:51:04.652+00:00", "request_id": "6a14e35b", "route": "/ask", "query": "mesh long-sleeve top size S/M", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_017", "fit_card": "Scored this sheer mesh long-sleeve on depop for just $15 and I’ve been layering it under everything. Today I threw it on beneath a white ribbed tank with baggy straight-leg jeans and combat boots for a little grunge moment. 🖤 #thrifted #y2kstyle", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 808, "output_tokens": 171, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7365}
+2026-11-18T21:51:12.018259337Z 127.0.0.1 - - [18/Nov/2026:21:51:12 +0000] "POST /ask HTTP/1.1" 200 3747 "-" "Python-urllib/3.13"
+2026-11-18T21:51:12.272699494Z 127.0.0.1 - - [18/Nov/2026:21:51:12 +0000] "GET /logs?n=20 HTTP/1.1" 200 3152 "-" "Python-urllib/3.13"
+2026-11-18T21:51:12.409737984Z [1] parse_query
+2026-11-18T21:51:12.409758965Z       in:  'crewneck sweatshirt under $25'
+2026-11-18T21:51:12.409762985Z       out: description='crewneck sweatshirt', size=None, max_price=25.0
+2026-11-18T21:51:16.975944996Z [2] search_listings (via MCP)
+2026-11-18T21:51:16.975974257Z       in:  description='crewneck sweatshirt', size=None, max_price=25.0
+2026-11-18T21:51:16.975979897Z       out: 2 items: Oversized Crewneck Sweatshirt — Vintage Navy, Oversized College Crewneck — Faded Red
+2026-11-18T21:51:16.975984507Z       →    branch: found results, top result id=lst_012, selected id=lst_012 (Oversized Crewneck Sweatshirt — Vintage Navy)
+2026-11-18T21:51:20.077107774Z [3] suggest_outfit
+2026-11-18T21:51:20.077130555Z       in:  new_item.id=lst_012 ('Oversized Crewneck Sweatshirt — Vintage Navy'), wardrobe=10 items
+2026-11-18T21:51:20.077137876Z       out: Outfit 1: The Casual Streetwear Look Layer the Oversized Crewneck Sweatshirt — Vintage Navy over the White rib…
+2026-11-18T21:51:25.646359136Z [4] create_fit_card
+2026-11-18T21:51:25.646385148Z       in:  new_item.id=lst_012 ('Oversized Crewneck Sweatshirt — Vintage Navy'), outfit='Outfit 1: The Casual Streetwear …
+2026-11-18T21:51:25.646402388Z       out: Scored this vintage navy crewneck on thredUp for only $20 and I’m honestly never taking it off. Looks so good …
+2026-11-18T21:51:25.646408349Z [request] {"ts": "2026-11-18T21:51:12.409+00:00", "request_id": "a791c1ec", "route": "/ask", "query": "crewneck sweatshirt under $25", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_012", "fit_card": "Scored this vintage navy crewneck on thredUp for only $20 and I’m honestly never taking it off. Looks so good layered over a white ribbed tank with baggy dark wash jeans and chunky white sneakers. 💙 #thriftyfinds #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 826, "output_tokens": 193, "status": 200, "outcome": "ok", "error": null, "duration_ms": 13237}
+2026-11-18T21:51:25.647567739Z 127.0.0.1 - - [18/Nov/2026:21:51:25 +0000] "POST /ask HTTP/1.1" 200 3952 "-" "Python-urllib/3.13"
+2026-11-18T21:51:25.805983135Z 127.0.0.1 - - [18/Nov/2026:21:51:25 +0000] "GET /logs?n=20 HTTP/1.1" 200 3785 "-" "Python-urllib/3.13"
+2026-11-18T21:51:26.035686561Z [request] {"ts": "2026-11-18T21:51:26.035+00:00", "request_id": "cedd8daa", "route": "/ask", "query": null, "body_preview": "{not json", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "duration_ms": 0}
+2026-11-18T21:51:26.036304293Z 127.0.0.1 - - [18/Nov/2026:21:51:26 +0000] "POST /ask HTTP/1.1" 400 96 "-" "Python-urllib/3.13"
+2026-11-18T21:51:26.27080485Z 127.0.0.1 - - [18/Nov/2026:21:51:26 +0000] "GET /logs?n=20 HTTP/1.1" 200 4194 "-" "Python-urllib/3.13"
+2026-11-18T21:51:26.506025243Z [request] {"ts": "2026-11-18T21:51:26.505+00:00", "request_id": "3287ffa8", "route": "/ask", "query": null, "body_preview": "{\"query\": \"   \"}", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "duration_ms": 0}
+2026-11-18T21:51:26.50653961Z 127.0.0.1 - - [18/Nov/2026:21:51:26 +0000] "POST /ask HTTP/1.1" 400 96 "-" "Python-urllib/3.13"
+2026-11-18T21:51:26.639382902Z 127.0.0.1 - - [18/Nov/2026:21:51:26 +0000] "GET /logs?n=20 HTTP/1.1" 200 4614 "-" "Python-urllib/3.13"
+2026-11-18T21:51:26.766738747Z [1] parse_query
+2026-11-18T21:51:26.766754298Z       in:  'ballgown size XXS under $2'
+2026-11-18T21:51:26.766758418Z       out: description='ballgown', size='XXS', max_price=2.0
+2026-11-18T21:51:31.480533992Z [2] search_listings (via MCP)
+2026-11-18T21:51:31.480559013Z       in:  description='ballgown', size='XXS', max_price=2.0
+2026-11-18T21:51:31.480563483Z       out: [] (empty)
+2026-11-18T21:51:31.480566904Z       →    branch: empty, stopping
+2026-11-18T21:51:31.480575804Z [request] {"ts": "2026-11-18T21:51:26.766+00:00", "request_id": "7a6410aa", "route": "/ask", "query": "ballgown size XXS under $2", "tools_run": ["parse_query", "search_listings"], "n_results": 0, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 200, "outcome": "no_results", "error": "Nothing matched 'ballgown' in size XXS under $2. Try to raise your price limit, or drop the size, or use fewer or more general words (e.g. 'jacket' instead of 'designer ballgown').", "duration_ms": 4714}
+2026-11-18T21:51:31.481581866Z 127.0.0.1 - - [18/Nov/2026:21:51:31 +0000] "POST /ask HTTP/1.1" 200 2036 "-" "Python-urllib/3.13"
+2026-11-18T21:51:31.778847038Z 127.0.0.1 - - [18/Nov/2026:21:51:31 +0000] "GET /logs?n=20 HTTP/1.1" 200 5147 "-" "Python-urllib/3.13"
+2026-11-18T21:51:32.028997121Z [1] parse_query
+2026-11-18T21:51:32.029016982Z       in:  'faded band tee'
+2026-11-18T21:51:32.029023022Z       out: description='faded band tee', size=None, max_price=None
+2026-11-18T21:51:36.171688402Z [2] search_listings (via MCP)
+2026-11-18T21:51:36.171713843Z       in:  description='faded band tee', size=None, max_price=None
+2026-11-18T21:51:36.171719423Z       out: 9 items: Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey, Y2K Baby Tee — Butterfly Print … +6 more
+2026-11-18T21:51:36.171724524Z       →    branch: found results, top result id=lst_006, selected id=lst_006 (Graphic Tee — 2003 Tour Bootleg Style)
+2026-11-18T21:51:50.639666976Z [3] suggest_outfit
+2026-11-18T21:51:50.639694767Z       in:  new_item.id=lst_006 ('Graphic Tee — 2003 Tour Bootleg Style'), wardrobe=10 items
+2026-11-18T21:51:50.639713038Z       out: Outfit 1: The Graphic Tee Wear the Graphic Tee tucked into the Baggy straight-leg jeans, dark wash. Add the Br…
+2026-11-18T21:51:57.289251136Z [4] create_fit_card
+2026-11-18T21:51:57.289271857Z       in:  new_item.id=lst_006 ('Graphic Tee — 2003 Tour Bootleg Style'), outfit='Outfit 1: The Graphic Tee\nWear the Gra…
+2026-11-18T21:51:57.289275537Z       out: Scored this bootleg tour tee on depop for $24 and it's already my new favorite thing. Throwing it on with bagg…
+2026-11-18T21:51:57.291093272Z [request] {"ts": "2026-11-18T21:51:32.028+00:00", "request_id": "dbd037cc", "route": "/ask", "query": "faded band tee", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 9, "selected_id": "lst_006", "fit_card": "Scored this bootleg tour tee on depop for $24 and it's already my new favorite thing. Throwing it on with baggy jeans, chunky white sneakers, and a black crossbody bag makes getting dressed way too easy. 🖤 #streetwear #thriftfind", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 809, "output_tokens": 168, "status": 200, "outcome": "ok", "error": null, "duration_ms": 25262}
+2026-11-18T21:51:57.291832071Z 127.0.0.1 - - [18/Nov/2026:21:51:57 +0000] "POST /ask HTTP/1.1" 200 6441 "-" "Python-urllib/3.13"
+2026-11-18T21:51:57.456316107Z [1] parse_query
+2026-11-18T21:51:57.456333579Z       in:  'graphic hoodie size L'
+2026-11-18T21:51:57.45635344Z       out: description='graphic hoodie', size='L', max_price=None
+2026-11-18T21:52:01.582437621Z [2] search_listings (via MCP)
+2026-11-18T21:52:01.582464132Z       in:  description='graphic hoodie', size='L', max_price=None
+2026-11-18T21:52:01.582469342Z       out: 3 items: Vintage Graphic Hoodie — Faded Black, Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey
+2026-11-18T21:52:01.582473723Z       →    branch: found results, top result id=lst_015, selected id=lst_015 (Vintage Graphic Hoodie — Faded Black)
+2026-11-18T21:52:06.210277286Z [3] suggest_outfit
+2026-11-18T21:52:06.210295886Z       in:  new_item.id=lst_015 ('Vintage Graphic Hoodie — Faded Black'), wardrobe=10 items
+2026-11-18T21:52:06.210301397Z       out: Outfit One: The Grunge Streetwear Look Pair the vintage graphic hoodie with baggy straight-leg jeans, dark was…
+2026-11-18T21:52:12.410612832Z [4] create_fit_card
+2026-11-18T21:52:12.410647644Z       in:  new_item.id=lst_015 ('Vintage Graphic Hoodie — Faded Black'), outfit='Outfit One: The Grunge Streetwear Look\n…
+2026-11-18T21:52:12.410653005Z       out: Scored this faded hoodie on depop for $26 and it’s already my go-to. Paired it with baggy dark wash jeans and …
+2026-11-18T21:52:12.410667315Z [request] {"ts": "2026-11-18T21:51:57.453+00:00", "request_id": "149739f3", "route": "/ask", "query": "graphic hoodie size L", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_015", "fit_card": "Scored this faded hoodie on depop for $26 and it’s already my go-to. Paired it with baggy dark wash jeans and black combat boots for full grunge mode, but it looks just as good dressed down with khaki trousers. 🖤 #thrifted #streetwear", "wait_ms": 1, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 819, "output_tokens": 191, "status": 200, "outcome": "ok", "error": null, "duration_ms": 14957}
+2026-11-18T21:52:12.411434906Z 127.0.0.1 - - [18/Nov/2026:21:52:12 +0000] "POST /ask HTTP/1.1" 200 4321 "-" "Python-urllib/3.13"
+2026-11-18T21:52:12.584936843Z [1] parse_query
+2026-11-18T21:52:12.584952844Z       in:  'suede chelsea boots'
+2026-11-18T21:52:12.584957004Z       out: description='suede chelsea boots', size=None, max_price=None
+2026-11-18T21:52:16.770780124Z [2] search_listings (via MCP)
+2026-11-18T21:52:16.770819846Z       in:  description='suede chelsea boots', size=None, max_price=None
+2026-11-18T21:52:16.770823776Z       out: 1 items: Suede Chelsea Boots — Tan
+2026-11-18T21:52:16.770827487Z       →    branch: found results, top result id=lst_028, selected id=lst_028 (Suede Chelsea Boots — Tan)
+2026-11-18T21:52:22.625710522Z [3] suggest_outfit
+2026-11-18T21:52:22.625732204Z       in:  new_item.id=lst_028 ('Suede Chelsea Boots — Tan'), wardrobe=10 items
+2026-11-18T21:52:22.625735994Z       out: Outfit one balances the baggy silhouette with fitted basics. Pair the tan suede Chelsea boots with the baggy s…
+2026-11-18T21:52:29.020893144Z [4] create_fit_card
+2026-11-18T21:52:29.020918436Z       in:  new_item.id=lst_028 ('Suede Chelsea Boots — Tan'), outfit='Outfit one balances the baggy silhouette'…
+2026-11-18T21:52:29.020923286Z       out: Scored these tan suede Chelsea boots on Poshmark for $44 and I'm obsessed with how they look with baggy dark-w…
+2026-11-18T21:52:29.020930026Z [request] {"ts": "2026-11-18T21:52:12.584+00:00", "request_id": "0c64dfae", "route": "/ask", "query": "suede chelsea boots", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_028", "fit_card": "Scored these tan suede Chelsea boots on Poshmark for $44 and I'm obsessed with how they look with baggy dark-wash jeans and a black denim jacket. They add the best western touch to a basic white tank fit. 🤠✨ #thriftfind #ootd", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 811, "output_tokens": 175, "status": 200, "outcome": "ok", "error": null, "duration_ms": 16436}
+2026-11-18T21:52:29.021497656Z 127.0.0.1 - - [18/Nov/2026:21:52:29 +0000] "POST /ask HTTP/1.1" 200 3474 "-" "Python-urllib/3.13"
+2026-11-18T21:52:29.190734315Z [1] parse_query
+2026-11-18T21:52:29.190755056Z       in:  'velvet blazer'
+2026-11-18T21:52:29.190759776Z       out: description='velvet blazer', size=None, max_price=None
+2026-11-18T21:52:33.664553417Z [2] search_listings (via MCP)
+2026-11-18T21:52:33.66461214Z       in:  description='velvet blazer', size=None, max_price=None
+2026-11-18T21:52:33.66461772Z       out: 2 items: Velvet Blazer — Emerald Green, Vintage Linen Blazer — Cream
+2026-11-18T21:52:33.66462138Z       →    branch: found results, top result id=lst_036, selected id=lst_036 (Velvet Blazer — Emerald Green)
+2026-11-18T21:52:39.955115088Z [3] suggest_outfit
+2026-11-18T21:52:39.955137719Z       in:  new_item.id=lst_036 ('Velvet Blazer — Emerald Green'), wardrobe=10 items
+2026-11-18T21:52:39.955143179Z       out: Outfit One: Downtown Casual Layer the velvet blazer over the white ribbed tank top. Pair with the baggy straig…
+2026-11-18T21:52:45.57336769Z [4] create_fit_card
+2026-11-18T21:52:45.573387021Z       in:  new_item.id=lst_036 ('Velvet Blazer — Emerald Green'), outfit='Outfit One: Downtown Casual\nLayer the ve'…
+2026-11-18T21:52:45.573391622Z       out: Scored this emerald green velvet blazer on depop for $52 and I’m obsessed. I dressed it down today with a whit…
+2026-11-18T21:52:45.573433094Z [request] {"ts": "2026-11-18T21:52:29.190+00:00", "request_id": "0e633b97", "route": "/ask", "query": "velvet blazer", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_036", "fit_card": "Scored this emerald green velvet blazer on depop for $52 and I’m obsessed. I dressed it down today with a white ribbed tank top and baggy straight-leg jeans for an effortless high-low mix. ✨ #thrifted #vintage", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 788, "output_tokens": 174, "status": 200, "outcome": "ok", "error": null, "duration_ms": 16383}
+2026-11-18T21:52:45.574113629Z 127.0.0.1 - - [18/Nov/2026:21:52:45 +0000] "POST /ask HTTP/1.1" 200 3850 "-" "Python-urllib/3.13"
+2026-11-18T21:52:45.738537735Z [1] parse_query
+2026-11-18T21:52:45.738556906Z       in:  'vintage polo shirt'
+2026-11-18T21:52:45.738561196Z       out: description='vintage polo shirt', size=None, max_price=None
+2026-11-18T21:52:50.080898981Z [2] search_listings (via MCP)
+2026-11-18T21:52:50.080922362Z       in:  description='vintage polo shirt', size=None, max_price=None
+2026-11-18T21:52:50.080926222Z       out: 10 items: Vintage Polo Shirt — Forest Green, Oversized Flannel Shirt — Plaid Red/Black, Vintage Levi's 501 Jeans — Medium Wash … +7 more
+2026-11-18T21:52:50.080929352Z       →    branch: found results, top result id=lst_024, selected id=lst_024 (Vintage Polo Shirt — Forest Green)
+2026-11-18T21:52:53.912631075Z [3] suggest_outfit
+2026-11-18T21:52:53.912656177Z       in:  new_item.id=lst_024 ('Vintage Polo Shirt — Forest Green'), wardrobe=0 items
+2026-11-18T21:52:53.912660777Z       out: Outfit one: Pair the forest green polo with straight-leg light wash jeans. Tuck the polo in loosely. Add a sim…
+2026-11-18T21:53:00.215685828Z [4] create_fit_card
+2026-11-18T21:53:00.215712509Z       in:  new_item.id=lst_024 ('Vintage Polo Shirt — Forest Green'), outfit='Outfit one: Pair the forest green polo w'…
+2026-11-18T21:53:00.215717279Z       out: Scored this forest green Ralph Lauren polo on thredUp for only $18 and haven't stopped wearing it. Love it pai…
+2026-11-18T21:53:00.21573581Z [request] {"ts": "2026-11-18T21:52:45.738+00:00", "request_id": "a2d2f675", "route": "/ask", "query": "vintage polo shirt", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 10, "selected_id": "lst_024", "fit_card": "Scored this forest green Ralph Lauren polo on thredUp for only $18 and haven't stopped wearing it. Love it paired casually with straight-leg light wash jeans and a brown leather belt, or layered over a white tee with pleated beige chinos. 🌿 #thrifted", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 581, "output_tokens": 168, "status": 200, "outcome": "ok", "error": null, "duration_ms": 14477}
+2026-11-18T21:53:00.216368543Z 127.0.0.1 - - [18/Nov/2026:21:53:00 +0000] "POST /ask HTTP/1.1" 200 5384 "-" "Python-urllib/3.13"
+2026-11-18T21:53:00.37426714Z [1] parse_query
+2026-11-18T21:53:00.374287671Z       in:  'platform sneakers'
+2026-11-18T21:53:00.374291981Z       out: description='platform sneakers', size=None, max_price=None
+2026-11-18T21:53:04.764891561Z [2] search_listings (via MCP)
+2026-11-18T21:53:04.764910042Z       in:  description='platform sneakers', size=None, max_price=None
+2026-11-18T21:53:04.764914022Z       out: 3 items: Platform Sneakers — White Chunky Sole, Platform Mary Janes — Black Patent, Low-Top Canvas Sneakers — Off-White
+2026-11-18T21:53:04.764917953Z       →    branch: found results, top result id=lst_019, selected id=lst_019 (Platform Sneakers — White Chunky Sole)
+2026-11-18T21:53:10.158033129Z [3] suggest_outfit
+2026-11-18T21:53:10.15805621Z       in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), wardrobe=0 items
+2026-11-18T21:53:10.15806157Z       out: Outfit One: Pair the sneakers with baggy light-wash denim carpenter jeans and a fitted ribbed black baby tee. …
+2026-11-18T21:53:16.010692654Z [4] create_fit_card
+2026-11-18T21:53:16.010713565Z       in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), outfit='Outfit One: Pair the sneakers with bagg…
+2026-11-18T21:53:16.010718065Z       out: Scored these on Poshmark for $48 and I am so obsessed. They complete the vibe with my baggy light-wash denim c…
+2026-11-18T21:53:16.013673979Z [request] {"ts": "2026-11-18T21:53:00.373+00:00", "request_id": "84b2baa5", "route": "/ask", "query": "platform sneakers", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_019", "fit_card": "Scored these on Poshmark for $48 and I am so obsessed. They complete the vibe with my baggy light-wash denim carpenter jeans and a fitted ribbed black baby tee. 👟✨ #y2k #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 573, "output_tokens": 139, "status": 200, "outcome": "ok", "error": null, "duration_ms": 15636}
+2026-11-18T21:53:16.014370696Z 127.0.0.1 - - [18/Nov/2026:21:53:16 +0000] "POST /ask HTTP/1.1" 200 2385 "-" "Python-urllib/3.13"
+2026-11-18T21:53:16.258441688Z [1] parse_query
+2026-11-18T21:53:16.258464149Z       in:  'linen blazer'
+2026-11-18T21:53:16.258468409Z       out: description='linen blazer', size=None, max_price=None
+2026-11-18T21:53:20.278186526Z [2] search_listings (via MCP)
+2026-11-18T21:53:20.278206827Z       in:  description='linen blazer', size=None, max_price=None
+2026-11-18T21:53:20.278211877Z       out: 3 items: Vintage Linen Blazer — Cream, Wide-Leg Linen Trousers — Natural, Velvet Blazer — Emerald Green
+2026-11-18T21:53:20.278215717Z       →    branch: found results, top result id=lst_018, selected id=lst_018 (Vintage Linen Blazer — Cream)
+2026-11-18T21:53:26.31523347Z [3] suggest_outfit
+2026-11-18T21:53:26.315256781Z       in:  new_item.id=lst_018 ('Vintage Linen Blazer — Cream'), wardrobe=0 items
+2026-11-18T21:53:26.315262152Z       out: Outfit One: Casual Weekend. Pair the blazer with a ribbed white cotton tank top, relaxed-fit medium wash blue …
+2026-11-18T21:53:32.307708824Z [4] create_fit_card
+2026-11-18T21:53:32.307725255Z       in:  new_item.id=lst_018 ('Vintage Linen Blazer — Cream'), outfit='Outfit One: Casual Weekend. Pair the bla'…
+2026-11-18T21:53:32.307727995Z       out: Scored this vintage cream linen blazer on thredUp for just $38 and I’m obsessed. Tossed it on over a ribbed wh…
+2026-11-18T21:53:32.307732275Z [request] {"ts": "2026-11-18T21:53:16.258+00:00", "request_id": "d9dc2205", "route": "/ask", "query": "linen blazer", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_018", "fit_card": "Scored this vintage cream linen blazer on thredUp for just $38 and I’m obsessed. Tossed it on over a ribbed white tank with some medium wash jeans for running errands, but it looks just as good layered over a simple black slip dress for dinner. 🤍🧺\n\n#thredup #vintagefashion", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 581, "output_tokens": 181, "status": 200, "outcome": "ok", "error": null, "duration_ms": 16049}
+2026-11-18T21:53:32.308346497Z 127.0.0.1 - - [18/Nov/2026:21:53:32 +0000] "POST /ask HTTP/1.1" 200 2698 "-" "Python-urllib/3.13"
+2026-11-18T21:53:32.448129615Z [1] parse_query
+2026-11-18T21:53:32.448151126Z       in:  'tie-dye long sleeve'
+2026-11-18T21:53:32.448155166Z       out: description='tie-dye long sleeve', size=None, max_price=None
+2026-11-18T21:53:36.578559876Z [2] search_listings (via MCP)
+2026-11-18T21:53:36.578589418Z       in:  description='tie-dye long sleeve', size=None, max_price=None
+2026-11-18T21:53:36.578594358Z       out: 6 items: Tie-Dye Long Sleeve — Pastel, Mesh Long-Sleeve Top — Black, Henley Long Sleeve — Washed Burgundy … +3 more
+2026-11-18T21:53:36.57863137Z       →    branch: found results, top result id=lst_040, selected id=lst_040 (Tie-Dye Long Sleeve — Pastel)
+2026-11-18T21:53:41.514184267Z [3] suggest_outfit
+2026-11-18T21:53:41.514215418Z       in:  new_item.id=lst_040 ('Tie-Dye Long Sleeve — Pastel'), wardrobe=0 items
+2026-11-18T21:53:41.514220578Z       out: Outfit One: Streetwear Contrast. Pair the pastel tie-dye top with baggy carpenter denim in a worn charcoal gre…
+2026-11-18T21:53:46.02169198Z [4] create_fit_card
+2026-11-18T21:53:46.021734062Z       in:  new_item.id=lst_040 ('Tie-Dye Long Sleeve — Pastel'), outfit='Outfit One: Streetwear Contrast. Pair th'…
+2026-11-18T21:53:46.021737872Z       out: Scored this pastel tie-dye long sleeve on depop for just $17 and I'm obsessed. Paired it with some baggy charc…
+2026-11-18T21:53:46.021755873Z [request] {"ts": "2026-11-18T21:53:32.447+00:00", "request_id": "a729c506", "route": "/ask", "query": "tie-dye long sleeve", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 6, "selected_id": "lst_040", "fit_card": "Scored this pastel tie-dye long sleeve on depop for just $17 and I'm obsessed. Paired it with some baggy charcoal carpenter denim and chunky white skate sneakers to toughen up the soft colors a bit. ☁️✨ #thrifted #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 587, "output_tokens": 161, "status": 200, "outcome": "ok", "error": null, "duration_ms": 13574}
+2026-11-18T21:53:46.022401847Z 127.0.0.1 - - [18/Nov/2026:21:53:46 +0000] "POST /ask HTTP/1.1" 200 3651 "-" "Python-urllib/3.13"
+2026-11-18T21:53:46.177360334Z [1] parse_query
+2026-11-18T21:53:46.177377765Z       in:  'corduroy wide-leg pants'
+2026-11-18T21:53:46.177381855Z       out: description='corduroy wide-leg pants', size=None, max_price=None
+2026-11-18T21:53:50.083308112Z [2] search_listings (via MCP)
+2026-11-18T21:53:50.083327343Z       in:  description='corduroy wide-leg pants', size=None, max_price=None
+2026-11-18T21:53:50.083330604Z       out: 5 items: Corduroy Wide-Leg Pants — Rust, Wide-Leg Linen Trousers — Natural, Low-Rise Cargo Pants — Khaki … +2 more
+2026-11-18T21:53:50.083334254Z       →    branch: found results, top result id=lst_005, selected id=lst_005 (Corduroy Wide-Leg Pants — Rust)
+2026-11-18T21:53:54.1729749Z [3] suggest_outfit
+2026-11-18T21:53:54.172998761Z       in:  new_item.id=lst_005 ('Corduroy Wide-Leg Pants — Rust'), wardrobe=0 items
+2026-11-18T21:53:54.173003512Z       out: Outfit one is for everyday. Tuck a fitted black ribbed turtleneck into the pants. Add brown leather ankle boot…
+2026-11-18T21:53:59.010418866Z [4] create_fit_card
+2026-11-18T21:53:59.010445858Z       in:  new_item.id=lst_005 ('Corduroy Wide-Leg Pants — Rust'), outfit='Outfit one is for everyday. Tuck a fitte'…
+2026-11-18T21:53:59.010449398Z       out: Scored these rust cords on depop for $32 and I’m obsessed. Paired them with my favorite black ribbed turtlenec…
+2026-11-18T21:53:59.010455438Z [request] {"ts": "2026-11-18T21:53:46.177+00:00", "request_id": "8b7864cb", "route": "/ask", "query": "corduroy wide-leg pants", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 5, "selected_id": "lst_005", "fit_card": "Scored these rust cords on depop for $32 and I’m obsessed. Paired them with my favorite black ribbed turtleneck and a cropped denim jacket for today. 🍂 #vintage #thrifty", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 583, "output_tokens": 149, "status": 200, "outcome": "ok", "error": null, "duration_ms": 12833}
+2026-11-18T21:53:59.011089421Z 127.0.0.1 - - [18/Nov/2026:21:53:59 +0000] "POST /ask HTTP/1.1" 200 3285 "-" "Python-urllib/3.13"
+2026-11-18T21:53:59.157605906Z 127.0.0.1 - - [18/Nov/2026:21:53:59 +0000] "GET /logs?n=200 HTTP/1.1" 200 10714 "-" "Python-urllib/3.13"
+2026-11-18T21:53:59.625115281Z 127.0.0.1 - - [18/Nov/2026:21:53:59 +0000] "GET /health HTTP/1.1" 200 16 "-" "Python-urllib/3.13"
+2026-11-18T21:53:59.77840438Z [1] parse_query
+2026-11-18T21:53:59.778427521Z       in:  'vintage graphic tee under $30'
+2026-11-18T21:53:59.778431732Z       out: description='vintage graphic tee', size=None, max_price=30.0
+2026-11-18T21:54:03.98057573Z [2] search_listings (via MCP)
+2026-11-18T21:54:03.980600812Z       in:  description='vintage graphic tee', size=None, max_price=30.0
+2026-11-18T21:54:03.980619853Z       out: 10 items: Y2K Baby Tee — Butterfly Print, Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey … +7 more
+2026-11-18T21:54:03.980623973Z       →    branch: found results, top result id=lst_002, selected id=lst_002 (Y2K Baby Tee — Butterfly Print)
+2026-11-18T21:54:08.583252849Z [3] suggest_outfit
+2026-11-18T21:54:08.58327195Z       in:  new_item.id=lst_002 ('Y2K Baby Tee — Butterfly Print'), wardrobe=10 items
+2026-11-18T21:54:08.583276691Z       out: Outfit One: Everyday Y2K Streetwear  Wear the Y2K Baby Tee — Butterfly Print tucked into the baggy straight-le…
+2026-11-18T21:54:16.682222507Z [4] create_fit_card
+2026-11-18T21:54:16.682241678Z       in:  new_item.id=lst_002 ('Y2K Baby Tee — Butterfly Print'), outfit='Outfit One: Everyday Y2K Streetwear\n\nWea'…
+2026-11-18T21:54:16.682246018Z       out: Scored this cute little baby tee on depop for only $18 and I am obsessed. Paired it with some baggy straight-l…
+2026-11-18T21:54:16.682256329Z [request] {"ts": "2026-11-18T21:53:59.777+00:00", "request_id": "e535967b", "route": "/ask", "query": "vintage graphic tee under $30", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 10, "selected_id": "lst_002", "fit_card": "Scored this cute little baby tee on depop for only $18 and I am obsessed. Paired it with some baggy straight-leg jeans and my favorite chunky white sneakers for the ultimate early 2000s street fit. 🦋✨ #y2k #thrifted", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 832, "output_tokens": 190, "status": 200, "outcome": "ok", "error": null, "duration_ms": 16904}
+2026-11-18T21:54:16.682914593Z 127.0.0.1 - - [18/Nov/2026:21:54:16 +0000] "POST /ask HTTP/1.1" 200 7052 "-" "Python-urllib/3.13"
+2026-11-18T21:54:16.829720374Z 127.0.0.1 - - [18/Nov/2026:21:54:16 +0000] "GET /logs?n=20 HTTP/1.1" 200 11339 "-" "Python-urllib/3.13"
+2026-11-18T21:54:17.052731622Z [1] parse_query
+2026-11-18T21:54:17.052754403Z       in:  'oversized flannel shirt'
+2026-11-18T21:54:17.052760434Z       out: description='oversized flannel shirt', size=None, max_price=None
+2026-11-18T21:54:21.671690254Z [2] search_listings (via MCP)
+2026-11-18T21:54:21.671709235Z       in:  description='oversized flannel shirt', size=None, max_price=None
+2026-11-18T21:54:21.671712775Z       out: 7 items: Oversized Flannel Shirt — Plaid Red/Black, Knit Cardigan — Chunky Brown, Oversized Crewneck Sweatshirt — Vintage Navy … +4 more
+2026-11-18T21:54:21.671716225Z       →    branch: found results, top result id=lst_003, selected id=lst_003 (Oversized Flannel Shirt — Plaid Red/Black)
+2026-11-18T21:54:27.715603268Z [3] suggest_outfit
+2026-11-18T21:54:27.715621758Z       in:  new_item.id=lst_003 ('Oversized Flannel Shirt — Plaid Red/Black'), wardrobe=10 items
+2026-11-18T21:54:27.715626829Z       out: Outfit 1: The 90s Grunge Layer  Put on the white ribbed tank top as your base layer. Tuck it into the baggy st…
+2026-11-18T21:54:32.505411366Z [4] create_fit_card
+2026-11-18T21:54:32.505429477Z       in:  new_item.id=lst_003 ('Oversized Flannel Shirt — Plaid Red/Black'), outfit='Outfit 1: The 90s Grunge Layer\n\nP…
+2026-11-18T21:54:32.505433977Z       out: Found this Woolrich flannel on thredUp for $22 and I’m obsessed with how it looks thrown open over a ribbed ta…
+2026-11-18T21:54:32.505438537Z [request] {"ts": "2026-11-18T21:54:17.052+00:00", "request_id": "6f0f0965", "route": "/ask", "query": "oversized flannel shirt", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 7, "selected_id": "lst_003", "fit_card": "Found this Woolrich flannel on thredUp for $22 and I’m obsessed with how it looks thrown open over a ribbed tank and baggy jeans. Total 90s grunge mode with these combat boots. 🖤 #thrifted #90sstyle", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 853, "output_tokens": 206, "status": 200, "outcome": "ok", "error": null, "duration_ms": 15347}
+2026-11-18T21:54:32.505452938Z 127.0.0.1 - - [18/Nov/2026:21:54:32 +0000] "POST /ask HTTP/1.1" 200 5992 "-" "Python-urllib/3.13"
+2026-11-18T21:54:32.74310721Z 127.0.0.1 - - [18/Nov/2026:21:54:32 +0000] "GET /logs?n=20 HTTP/1.1" 200 11940 "-" "Python-urllib/3.13"
+2026-11-18T21:54:32.826600097Z [1] parse_query
+2026-11-18T21:54:32.826618769Z       in:  'leather belt under $15'
+2026-11-18T21:54:32.826622469Z       out: description='leather belt', size=None, max_price=15.0
+2026-11-18T21:54:37.178475573Z [2] search_listings (via MCP)
+2026-11-18T21:54:37.178502244Z       in:  description='leather belt', size=None, max_price=15.0
+2026-11-18T21:54:37.178505555Z       out: 1 items: Leather Belt — Brown, Braided
+2026-11-18T21:54:37.178538686Z       →    branch: found results, top result id=lst_014, selected id=lst_014 (Leather Belt — Brown, Braided)
+2026-11-18T21:54:42.811706817Z [3] suggest_outfit
+2026-11-18T21:54:42.811731789Z       in:  new_item.id=lst_014 ('Leather Belt — Brown, Braided'), wardrobe=10 items
+2026-11-18T21:54:42.811736599Z       out: Outfit 1: Relaxed Streetwear  Put on the white ribbed tank top tucked into the baggy straight-leg jeans, dark …
+2026-11-18T21:54:47.147452272Z [4] create_fit_card
+2026-11-18T21:54:47.147503524Z       in:  new_item.id=lst_014 ('Leather Belt — Brown, Braided'), outfit='Outfit 1: Relaxed Streetwear\n\nPut on the'…
+2026-11-18T21:54:47.147559657Z       out: Found this braided leather belt on thredUp for only $12 and it instantly pulled my wide-leg khaki trousers and…
+2026-11-18T21:54:47.147702485Z [request] {"ts": "2026-11-18T21:54:32.825+00:00", "request_id": "b90ca01d", "route": "/ask", "query": "leather belt under $15", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_014", "fit_card": "Found this braided leather belt on thredUp for only $12 and it instantly pulled my wide-leg khaki trousers and black combat boots together. Such an easy little detail to tie an earth tone fit together. 🤎🤠 #thrifted #streetstyle", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 820, "output_tokens": 195, "status": 200, "outcome": "ok", "error": null, "duration_ms": 14322}
+2026-11-18T21:54:47.148470615Z 127.0.0.1 - - [18/Nov/2026:21:54:47 +0000] "POST /ask HTTP/1.1" 200 3569 "-" "Python-urllib/3.13"
+2026-11-18T21:54:47.32006392Z 127.0.0.1 - - [18/Nov/2026:21:54:47 +0000] "GET /logs?n=20 HTTP/1.1" 200 11972 "-" "Python-urllib/3.13"
+2026-11-18T21:54:47.457287361Z [1] parse_query
+2026-11-18T21:54:47.457317372Z       in:  '90s slip dress size M'
+2026-11-18T21:54:47.457321772Z       out: description='90s slip dress', size='M', max_price=None
+2026-11-18T21:54:51.463904895Z [2] search_listings (via MCP)
+2026-11-18T21:54:51.463938477Z       in:  description='90s slip dress', size='M', max_price=None
+2026-11-18T21:54:51.463948717Z       out: 3 items: 90s Silk Slip Dress — Floral, Midi Length, 90s Track Jacket — Navy/White Stripe, 90s Leather Bomber — Black
+2026-11-18T21:54:51.463956878Z       →    branch: found results, top result id=lst_013, selected id=lst_013 (90s Silk Slip Dress — Floral, Midi Length)
+2026-11-18T21:54:52.810951503Z [3] suggest_outfit
+2026-11-18T21:54:52.810970124Z       in:  new_item.id=lst_013 ('90s Silk Slip Dress — Floral, Midi Length'), wardrobe=10 items
+2026-11-18T21:54:52.810973884Z       out: Outfit One: 90s Grunge Layer the floral silk slip dress right over the baggy straight-leg jeans in dark wash. …
+2026-11-18T21:54:53.713590108Z [4] create_fit_card
+2026-11-18T21:54:53.713638231Z       in:  new_item.id=lst_013 ('90s Silk Slip Dress — Floral, Midi Length'), outfit='Outfit One: 90s Grunge\nLayer the f…
+2026-11-18T21:54:53.713641701Z       out: Scored this vintage silk slip dress on depop for only $30 and I’m obsessed. Layered it under my baggy dark was…
+2026-11-18T21:54:53.713652162Z [request] {"ts": "2026-11-18T21:54:47.456+00:00", "request_id": "07e90de7", "route": "/ask", "query": "90s slip dress size M", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_013", "fit_card": "Scored this vintage silk slip dress on depop for only $30 and I’m obsessed. Layered it under my baggy dark wash jeans and a chunky grey crewneck for that classic grungy 90s look 🥀✨ #thrifthaul #9style", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 848, "output_tokens": 187, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6257}
+2026-11-18T21:54:53.714326557Z 127.0.0.1 - - [18/Nov/2026:21:54:53 +0000] "POST /ask HTTP/1.1" 200 4366 "-" "Python-urllib/3.13"
+2026-11-18T21:54:53.89087273Z 127.0.0.1 - - [18/Nov/2026:21:54:53 +0000] "GET /logs?n=20 HTTP/1.1" 200 11930 "-" "Python-urllib/3.13"
+2026-11-18T21:54:54.133724514Z [1] parse_query
+2026-11-18T21:54:54.133741755Z       in:  'low-rise cargo pants'
+2026-11-18T21:54:54.133745125Z       out: description='low-rise cargo pants', size=None, max_price=None
+2026-11-18T21:54:58.281165275Z [2] search_listings (via MCP)
+2026-11-18T21:54:58.281183436Z       in:  description='low-rise cargo pants', size=None, max_price=None
+2026-11-18T21:54:58.281189056Z       out: 3 items: Low-Rise Cargo Pants — Khaki, Corduroy Wide-Leg Pants — Rust, Low-Top Canvas Sneakers — Off-White
+2026-11-18T21:54:58.281192516Z       →    branch: found results, top result id=lst_011, selected id=lst_011 (Low-Rise Cargo Pants — Khaki)
+2026-11-18T21:54:59.553379578Z [3] suggest_outfit
+2026-11-18T21:54:59.553408079Z       in:  new_item.id=lst_011 ('Low-Rise Cargo Pants — Khaki'), wardrobe=10 items
+2026-11-18T21:54:59.553412639Z       out: Outfit One: Streetwear Y2K Pair the low-rise cargo pants with the white ribbed tank top fitted tucked in. Thro…
+2026-11-18T21:55:00.686120352Z [4] create_fit_card
+2026-11-18T21:55:00.686153223Z       in:  new_item.id=lst_011 ('Low-Rise Cargo Pants — Khaki'), outfit='Outfit One: Streetwear Y2K\nPair the low-'…
+2026-11-18T21:55:00.686156854Z       out: Scored these khaki cargos on Poshmark for $27 and I’m obsessed with the Y2K streetwear vibe. Throwing on a whi…
+2026-11-18T21:55:00.686167924Z [request] {"ts": "2026-11-18T21:54:54.133+00:00", "request_id": "1d018957", "route": "/ask", "query": "low-rise cargo pants", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_011", "fit_card": "Scored these khaki cargos on Poshmark for $27 and I’m obsessed with the Y2K streetwear vibe. Throwing on a white ribbed tank, black denim jacket, and chunky sneakers makes them look so effortless. 👖✨ #thrifted #y2kstyle", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 813, "output_tokens": 159, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6553}
+2026-11-18T21:55:00.68704632Z 127.0.0.1 - - [18/Nov/2026:21:55:00 +0000] "POST /ask HTTP/1.1" 200 4110 "-" "Python-urllib/3.13"
+2026-11-18T21:55:00.818899411Z 127.0.0.1 - - [18/Nov/2026:21:55:00 +0000] "GET /logs?n=20 HTTP/1.1" 200 11945 "-" "Python-urllib/3.13"
+2026-11-18T21:55:00.959159241Z [1] parse_query
+2026-11-18T21:55:00.959179132Z       in:  'mesh long-sleeve top size S/M'
+2026-11-18T21:55:00.959183112Z       out: description='mesh long-sleeve top', size='S/M', max_price=None
+2026-11-18T21:55:05.06409267Z [2] search_listings (via MCP)
+2026-11-18T21:55:05.064113391Z       in:  description='mesh long-sleeve top', size='S/M', max_price=None
+2026-11-18T21:55:05.064130332Z       out: 2 items: Mesh Long-Sleeve Top — Black, Crochet Halter Top — Cream
+2026-11-18T21:55:05.064133652Z       →    branch: found results, top result id=lst_017, selected id=lst_017 (Mesh Long-Sleeve Top — Black)
+2026-11-18T21:55:06.588037913Z [3] suggest_outfit
+2026-11-18T21:55:06.588060224Z       in:  new_item.id=lst_017 ('Mesh Long-Sleeve Top — Black'), wardrobe=10 items
+2026-11-18T21:55:06.588064624Z       out: Outfit One: The Grunge Contrast Layer the mesh top directly over the white ribbed tank top so the white contra…
+2026-11-18T21:55:08.189112672Z [4] create_fit_card
+2026-11-18T21:55:08.189132273Z       in:  new_item.id=lst_017 ('Mesh Long-Sleeve Top — Black'), outfit='Outfit One: The Grunge Contrast\nLayer th'…
+2026-11-18T21:55:08.189135984Z       out: Scored this sheer mesh top on depop for only $15 and I'm obsessed with how it looks layered over a white ribbe…
+2026-11-18T21:55:08.189159495Z [request] {"ts": "2026-11-18T21:55:00.958+00:00", "request_id": "c3085b8e", "route": "/ask", "query": "mesh long-sleeve top size S/M", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_017", "fit_card": "Scored this sheer mesh top on depop for only $15 and I'm obsessed with how it looks layered over a white ribbed tank. Paired it with baggy dark wash jeans and combat boots for a super easy streetwear vibe. 🖤 #thrifted #y2k", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 824, "output_tokens": 182, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7230}
+2026-11-18T21:55:08.189822379Z 127.0.0.1 - - [18/Nov/2026:21:55:08 +0000] "POST /ask HTTP/1.1" 200 3802 "-" "Python-urllib/3.13"
+2026-11-18T21:55:08.332686585Z 127.0.0.1 - - [18/Nov/2026:21:55:08 +0000] "GET /logs?n=20 HTTP/1.1" 200 11961 "-" "Python-urllib/3.13"
+2026-11-18T21:55:08.583373028Z [1] parse_query
+2026-11-18T21:55:08.583394709Z       in:  'crewneck sweatshirt under $25'
+2026-11-18T21:55:08.58340078Z       out: description='crewneck sweatshirt', size=None, max_price=25.0
+2026-11-18T21:55:12.974118219Z [2] search_listings (via MCP)
+2026-11-18T21:55:12.974151041Z       in:  description='crewneck sweatshirt', size=None, max_price=25.0
+2026-11-18T21:55:12.974154771Z       out: 2 items: Oversized Crewneck Sweatshirt — Vintage Navy, Oversized College Crewneck — Faded Red
+2026-11-18T21:55:12.974157531Z       →    branch: found results, top result id=lst_012, selected id=lst_012 (Oversized Crewneck Sweatshirt — Vintage Navy)
+2026-11-18T21:55:14.006799144Z [3] suggest_outfit
+2026-11-18T21:55:14.006819945Z       in:  new_item.id=lst_012 ('Oversized Crewneck Sweatshirt — Vintage Navy'), wardrobe=10 items
+2026-11-18T21:55:14.006824085Z       out: Outfit One  Tuck the white ribbed tank top into the wide-leg khaki trousers, add the brown leather belt, and p…
+2026-11-18T21:55:15.241752626Z [4] create_fit_card
+2026-11-18T21:55:15.241779417Z       in:  new_item.id=lst_012 ('Oversized Crewneck Sweatshirt — Vintage Navy'), outfit='Outfit One\n\nTuck the white rib…
+2026-11-18T21:55:15.241783357Z       out: Scored this faded navy crewneck on thredUp for just $20, and I've basically been living in it. Paired it with …
+2026-11-18T21:55:15.241795218Z [request] {"ts": "2026-11-18T21:55:08.582+00:00", "request_id": "03a312c5", "route": "/ask", "query": "crewneck sweatshirt under $25", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_012", "fit_card": "Scored this faded navy crewneck on thredUp for just $20, and I've basically been living in it. Paired it with my baggy straight-leg jeans and black combat boots for an easy streetwear vibe today. 🤌✨ #thriftfind #ootd", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 806, "output_tokens": 174, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6659}
+2026-11-18T21:55:15.242465223Z 127.0.0.1 - - [18/Nov/2026:21:55:15 +0000] "POST /ask HTTP/1.1" 200 3899 "-" "Python-urllib/3.13"
+2026-11-18T21:55:15.37559243Z 127.0.0.1 - - [18/Nov/2026:21:55:15 +0000] "GET /logs?n=20 HTTP/1.1" 200 11932 "-" "Python-urllib/3.13"
+2026-11-18T21:55:15.518986954Z [request] {"ts": "2026-11-18T21:55:15.518+00:00", "request_id": "7da4f4af", "route": "/ask", "query": null, "body_preview": "{not json", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "duration_ms": 0}
+2026-11-18T21:55:15.519581415Z 127.0.0.1 - - [18/Nov/2026:21:55:15 +0000] "POST /ask HTTP/1.1" 400 96 "-" "Python-urllib/3.13"
+2026-11-18T21:55:15.745173379Z 127.0.0.1 - - [18/Nov/2026:21:55:15 +0000] "GET /logs?n=20 HTTP/1.1" 200 11708 "-" "Python-urllib/3.13"
+2026-11-18T21:55:15.96669731Z [request] {"ts": "2026-11-18T21:55:15.966+00:00", "request_id": "4a226307", "route": "/ask", "query": null, "body_preview": "{\"query\": \"   \"}", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "duration_ms": 0}
+2026-11-18T21:55:15.967184025Z 127.0.0.1 - - [18/Nov/2026:21:55:15 +0000] "POST /ask HTTP/1.1" 400 96 "-" "Python-urllib/3.13"
+2026-11-18T21:55:16.094437747Z 127.0.0.1 - - [18/Nov/2026:21:55:16 +0000] "GET /logs?n=20 HTTP/1.1" 200 11719 "-" "Python-urllib/3.13"
+2026-11-18T21:55:16.200770556Z [1] parse_query
+2026-11-18T21:55:16.200789567Z       in:  'ballgown size XXS under $2'
+2026-11-18T21:55:16.200793677Z       out: description='ballgown', size='XXS', max_price=2.0
+2026-11-18T21:55:20.082074842Z [2] search_listings (via MCP)
+2026-11-18T21:55:20.082094654Z       in:  description='ballgown', size='XXS', max_price=2.0
+2026-11-18T21:55:20.082100054Z       out: [] (empty)
+2026-11-18T21:55:20.082104244Z       →    branch: empty, stopping
+2026-11-18T21:55:20.082127375Z [request] {"ts": "2026-11-18T21:55:16.200+00:00", "request_id": "1827e4f9", "route": "/ask", "query": "ballgown size XXS under $2", "tools_run": ["parse_query", "search_listings"], "n_results": 0, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 200, "outcome": "no_results", "error": "Nothing matched 'ballgown' in size XXS under $2. Try to raise your price limit, or drop the size, or use fewer or more general words (e.g. 'jacket' instead of 'designer ballgown').", "duration_ms": 3882}
+2026-11-18T21:55:20.166574055Z 127.0.0.1 - - [18/Nov/2026:21:55:20 +0000] "POST /ask HTTP/1.1" 200 2036 "-" "Python-urllib/3.13"
+2026-11-18T21:55:20.233489149Z 127.0.0.1 - - [18/Nov/2026:21:55:20 +0000] "GET /logs?n=20 HTTP/1.1" 200 11832 "-" "Python-urllib/3.13"
+2026-11-18T21:55:20.47174254Z [1] parse_query
+2026-11-18T21:55:20.471765961Z       in:  'faded band tee'
+2026-11-18T21:55:20.471796283Z       out: description='faded band tee', size=None, max_price=None
+2026-11-18T21:55:25.070620499Z [2] search_listings (via MCP)
+2026-11-18T21:55:25.07064625Z       in:  description='faded band tee', size=None, max_price=None
+2026-11-18T21:55:25.07065208Z       out: 9 items: Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey, Y2K Baby Tee — Butterfly Print … +6 more
+2026-11-18T21:55:25.07065817Z       →    branch: found results, top result id=lst_006, selected id=lst_006 (Graphic Tee — 2003 Tour Bootleg Style)
+2026-11-18T21:55:26.333907424Z [3] suggest_outfit
+2026-11-18T21:55:26.333924914Z       in:  new_item.id=lst_006 ('Graphic Tee — 2003 Tour Bootleg Style'), wardrobe=10 items
+2026-11-18T21:55:26.333928615Z       out: Outfit One: Streetwear Grunge Wear the Graphic Tee — 2003 Tour Bootleg Style tucked loosely into the Baggy str…
+2026-11-18T21:55:26.925861174Z [4] create_fit_card
+2026-11-18T21:55:26.925882015Z       in:  new_item.id=lst_006 ('Graphic Tee — 2003 Tour Bootleg Style'), outfit='Outfit One: Streetwear Grunge\nWear the…
+2026-11-18T21:55:26.925885365Z       out: Scored this bootleg tour tee on depop for $24 and I'm obsessed with how soft it is. Paired it with my baggy st…
+2026-11-18T21:55:26.925889795Z [request] {"ts": "2026-11-18T21:55:20.471+00:00", "request_id": "ee09686a", "route": "/ask", "query": "faded band tee", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 9, "selected_id": "lst_006", "fit_card": "Scored this bootleg tour tee on depop for $24 and I'm obsessed with how soft it is. Paired it with my baggy straight-leg jeans and a cropped zip hoodie for a grunge vibe. 🖤 \n\n#thrifted #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 840, "output_tokens": 198, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6454}
+2026-11-18T21:55:26.926601053Z 127.0.0.1 - - [18/Nov/2026:21:55:26 +0000] "POST /ask HTTP/1.1" 200 6543 "-" "Python-urllib/3.13"
+2026-11-18T21:55:27.085343251Z [1] parse_query
+2026-11-18T21:55:27.085357162Z       in:  'graphic hoodie size L'
+2026-11-18T21:55:27.085360772Z       out: description='graphic hoodie', size='L', max_price=None
+2026-11-18T21:55:31.770449723Z [2] search_listings (via MCP)
+2026-11-18T21:55:31.770467324Z       in:  description='graphic hoodie', size='L', max_price=None
+2026-11-18T21:55:31.770471094Z       out: 3 items: Vintage Graphic Hoodie — Faded Black, Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey
+2026-11-18T21:55:31.770474324Z       →    branch: found results, top result id=lst_015, selected id=lst_015 (Vintage Graphic Hoodie — Faded Black)
+2026-11-18T21:55:33.278018824Z [3] suggest_outfit
+2026-11-18T21:55:33.278041975Z       in:  new_item.id=lst_015 ('Vintage Graphic Hoodie — Faded Black'), wardrobe=10 items
+2026-11-18T21:55:33.278047135Z       out: Outfit One: Streetwear Grunge  Layer the vintage graphic hoodie over the white ribbed tank top so the white he…
+2026-11-18T21:55:35.129024767Z [4] create_fit_card
+2026-11-18T21:55:35.129041848Z       in:  new_item.id=lst_015 ('Vintage Graphic Hoodie — Faded Black'), outfit='Outfit One: Streetwear Grunge\n\nLayer t…
+2026-11-18T21:55:35.129045338Z       out: Scored this faded black vintage graphic hoodie on depop for $26 and I’m obsessed with how soft it is. Paired i…
+2026-11-18T21:55:35.129055239Z [request] {"ts": "2026-11-18T21:55:27.084+00:00", "request_id": "51b3fadb", "route": "/ask", "query": "graphic hoodie size L", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_015", "fit_card": "Scored this faded black vintage graphic hoodie on depop for $26 and I’m obsessed with how soft it is. Paired it over my white ribbed tank with some baggy dark wash jeans and chunky white sneakers for an easy streetwear look. 🖤 #thriftfind #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 828, "output_tokens": 199, "status": 200, "outcome": "ok", "error": null, "duration_ms": 8044}
+2026-11-18T21:55:35.129756825Z 127.0.0.1 - - [18/Nov/2026:21:55:35 +0000] "POST /ask HTTP/1.1" 200 4346 "-" "Python-urllib/3.13"
+2026-11-18T21:55:35.342762638Z [1] parse_query
+2026-11-18T21:55:35.34278948Z       in:  'suede chelsea boots'
+2026-11-18T21:55:35.34279258Z       out: description='suede chelsea boots', size=None, max_price=None
+2026-11-18T21:55:39.682614989Z [2] search_listings (via MCP)
+2026-11-18T21:55:39.68263214Z       in:  description='suede chelsea boots', size=None, max_price=None
+2026-11-18T21:55:39.68263592Z       out: 1 items: Suede Chelsea Boots — Tan
+2026-11-18T21:55:39.68263933Z       →    branch: found results, top result id=lst_028, selected id=lst_028 (Suede Chelsea Boots — Tan)
+2026-11-18T21:55:41.017966559Z [3] suggest_outfit
+2026-11-18T21:55:41.017995521Z       in:  new_item.id=lst_028 ('Suede Chelsea Boots — Tan'), wardrobe=10 items
+2026-11-18T21:55:41.018001121Z       out: Outfit One Start with the wide-leg khaki trousers and tuck in the white ribbed tank top. Add the brown leather…
+2026-11-18T21:55:42.011260309Z [4] create_fit_card
+2026-11-18T21:55:42.011290971Z       in:  new_item.id=lst_028 ('Suede Chelsea Boots — Tan'), outfit='Outfit One\nStart with the wide-leg khaki'…
+2026-11-18T21:55:42.011295901Z       out: Scored these tan suede Chelsea boots on Poshmark for $44 and they immediately became my favorite shoe to pair …
+2026-11-18T21:55:42.011300831Z [request] {"ts": "2026-11-18T21:55:35.342+00:00", "request_id": "8b0731b9", "route": "/ask", "query": "suede chelsea boots", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_028", "fit_card": "Scored these tan suede Chelsea boots on Poshmark for $44 and they immediately became my favorite shoe to pair with baggy straight-leg jeans and a vintage black denim jacket. 🤎✨ #thriftfind #ootd", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 796, "output_tokens": 148, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6669}
+2026-11-18T21:55:42.012063661Z 127.0.0.1 - - [18/Nov/2026:21:55:42 +0000] "POST /ask HTTP/1.1" 200 3348 "-" "Python-urllib/3.13"
+2026-11-18T21:55:42.250932957Z [1] parse_query
+2026-11-18T21:55:42.250952638Z       in:  'vintage polo shirt'
+2026-11-18T21:55:42.250956109Z       out: description='vintage polo shirt', size=None, max_price=None
+2026-11-18T21:55:46.791446774Z [2] search_listings (via MCP)
+2026-11-18T21:55:46.791472456Z       in:  description='vintage polo shirt', size=None, max_price=None
+2026-11-18T21:55:46.791476186Z       out: 10 items: Vintage Polo Shirt — Forest Green, Oversized Flannel Shirt — Plaid Red/Black, Vintage Levi's 501 Jeans — Medium Wash … +7 more
+2026-11-18T21:55:46.791479496Z       →    branch: found results, top result id=lst_024, selected id=lst_024 (Vintage Polo Shirt — Forest Green)
+2026-11-18T21:55:47.789316243Z [3] suggest_outfit
+2026-11-18T21:55:47.789338905Z   [rate limit] 15 requests used this minute. Waiting 4s. This is normal.
+2026-11-18T21:55:47.789344405Z       in:  new_item.id=lst_024 ('Vintage Polo Shirt — Forest Green'), wardrobe=0 items
+2026-11-18T21:55:47.789348805Z       out: Outfit 1: Casual Streetwear Pair the forest green polo with loose-fitting light wash straight-leg jeans. Tuck …
+2026-11-18T21:55:52.174962218Z [4] create_fit_card
+2026-11-18T21:55:52.17498877Z       in:  new_item.id=lst_024 ('Vintage Polo Shirt — Forest Green'), outfit='Outfit 1: Casual Streetwear\nPair the for'…
+2026-11-18T21:55:52.1749926Z       out: Found this Ralph Lauren polo on thredUp for only $18 and I’m obsessed with the color. Paired it with loose lig…
+2026-11-18T21:55:52.17500191Z [request] {"ts": "2026-11-18T21:55:42.250+00:00", "request_id": "ce55951f", "route": "/ask", "query": "vintage polo shirt", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 10, "selected_id": "lst_024", "fit_card": "Found this Ralph Lauren polo on thredUp for only $18 and I’m obsessed with the color. Paired it with loose light wash jeans and retro canvas sneakers for an easy everyday vibe. 🌿 #thrifted", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 587, "output_tokens": 162, "status": 200, "outcome": "ok", "error": null, "duration_ms": 9924}
+2026-11-18T21:55:52.175695456Z 127.0.0.1 - - [18/Nov/2026:21:55:52 +0000] "POST /ask HTTP/1.1" 200 5356 "-" "Python-urllib/3.13"
+2026-11-18T21:55:52.322831888Z [1] parse_query
+2026-11-18T21:55:52.322850249Z       in:  'platform sneakers'
+2026-11-18T21:55:52.32285442Z       out: description='platform sneakers', size=None, max_price=None
+2026-11-18T21:55:56.371251342Z [2] search_listings (via MCP)
+2026-11-18T21:55:56.371268723Z       in:  description='platform sneakers', size=None, max_price=None
+2026-11-18T21:55:56.371272464Z       out: 3 items: Platform Sneakers — White Chunky Sole, Platform Mary Janes — Black Patent, Low-Top Canvas Sneakers — Off-White
+2026-11-18T21:55:56.371275193Z       →    branch: found results, top result id=lst_019, selected id=lst_019 (Platform Sneakers — White Chunky Sole)
+2026-11-18T21:55:57.975500119Z [3] suggest_outfit
+2026-11-18T21:55:57.975560353Z       in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), wardrobe=0 items
+2026-11-18T21:55:57.975563913Z       out: Outfit One: Cargo pants in army green or beige, a fitted black baby tee, and a nylon shoulder bag. The chunky …
+2026-11-18T21:55:59.530367255Z [4] create_fit_card
+2026-11-18T21:55:59.530390976Z       in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), outfit='Outfit One: Cargo pants in army green o…
+2026-11-18T21:55:59.530394646Z       out: Finally scored these platform sneakers on Poshmark for $48 and I am so obsessed with the chunky soles. Wearing…
+2026-11-18T21:55:59.530439759Z [request] {"ts": "2026-11-18T21:55:52.322+00:00", "request_id": "1e82c283", "route": "/ask", "query": "platform sneakers", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_019", "fit_card": "Finally scored these platform sneakers on Poshmark for $48 and I am so obsessed with the chunky soles. Wearing them today with army green cargo pants and a black baby tee to lean all the way into the Y2K vibe. 👟✨ #thrifted #y2k", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 593, "output_tokens": 169, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7207}
+2026-11-18T21:55:59.547206355Z 127.0.0.1 - - [18/Nov/2026:21:55:59 +0000] "POST /ask HTTP/1.1" 200 2505 "-" "Python-urllib/3.13"
+2026-11-18T21:55:59.723234088Z [1] parse_query
+2026-11-18T21:55:59.72327052Z       in:  'linen blazer'
+2026-11-18T21:55:59.72327496Z       out: description='linen blazer', size=None, max_price=None
+2026-11-18T21:56:03.883121129Z [2] search_listings (via MCP)
+2026-11-18T21:56:03.88314272Z       in:  description='linen blazer', size=None, max_price=None
+2026-11-18T21:56:03.88314687Z       out: 3 items: Vintage Linen Blazer — Cream, Wide-Leg Linen Trousers — Natural, Velvet Blazer — Emerald Green
+2026-11-18T21:56:03.883150291Z       →    branch: found results, top result id=lst_018, selected id=lst_018 (Vintage Linen Blazer — Cream)
+2026-11-18T21:56:05.118589207Z [3] suggest_outfit
+2026-11-18T21:56:05.118611618Z       in:  new_item.id=lst_018 ('Vintage Linen Blazer — Cream'), wardrobe=0 items
+2026-11-18T21:56:05.118615978Z       out: Outfit one: Pair the blazer with relaxed white cotton trousers for a tonal, breezy summer look. Layer it over …
+2026-11-18T21:56:06.16861791Z [4] create_fit_card
+2026-11-18T21:56:06.168636981Z       in:  new_item.id=lst_018 ('Vintage Linen Blazer — Cream'), outfit='Outfit one: Pair the blazer with relaxed'…
+2026-11-18T21:56:06.168640572Z       out: Scored this vintage linen blazer on thredUp for just $38 and immediately threw it on over a striped long-sleev…
+2026-11-18T21:56:06.168666673Z [request] {"ts": "2026-11-18T21:55:59.722+00:00", "request_id": "5957ee17", "route": "/ask", "query": "linen blazer", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_018", "fit_card": "Scored this vintage linen blazer on thredUp for just $38 and immediately threw it on over a striped long-sleeve and straight-leg denim. Honestly obsessed with how it pulls together a lazy weekend errands fit. 🧺✨ #thriftfind #vintage style", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 580, "output_tokens": 168, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6446}
+2026-11-18T21:56:06.169309367Z 127.0.0.1 - - [18/Nov/2026:21:56:06 +0000] "POST /ask HTTP/1.1" 200 2626 "-" "Python-urllib/3.13"
+2026-11-18T21:56:06.316988917Z [1] parse_query
+2026-11-18T21:56:06.317005898Z       in:  'tie-dye long sleeve'
+2026-11-18T21:56:06.317010718Z       out: description='tie-dye long sleeve', size=None, max_price=None
+2026-11-18T21:56:10.471500697Z [2] search_listings (via MCP)
+2026-11-18T21:56:10.471573941Z       in:  description='tie-dye long sleeve', size=None, max_price=None
+2026-11-18T21:56:10.471580041Z       out: 6 items: Tie-Dye Long Sleeve — Pastel, Mesh Long-Sleeve Top — Black, Henley Long Sleeve — Washed Burgundy … +3 more
+2026-11-18T21:56:10.471584431Z       →    branch: found results, top result id=lst_040, selected id=lst_040 (Tie-Dye Long Sleeve — Pastel)
+2026-11-18T21:56:11.681299087Z [3] suggest_outfit
+2026-11-18T21:56:11.681326098Z       in:  new_item.id=lst_040 ('Tie-Dye Long Sleeve — Pastel'), wardrobe=0 items
+2026-11-18T21:56:11.681331069Z       out: Outfit one leans into streetwear. Pair the pastel tie-dye long sleeve with baggy, high-waisted medium-wash den…
+2026-11-18T21:56:11.68135001Z   [rate limit] 15 requests used this minute. Waiting 1s. This is normal.
+2026-11-18T21:56:14.22268267Z [4] create_fit_card
+2026-11-18T21:56:14.222728512Z       in:  new_item.id=lst_040 ('Tie-Dye Long Sleeve — Pastel'), outfit='Outfit one leans into streetwear. Pair t'…
+2026-11-18T21:56:14.222734113Z       out: Scored this dreamy pastel tie-dye long sleeve on depop for only $17 and I’m obsessed. Grounded it with some ba…
+2026-11-18T21:56:14.222738953Z [request] {"ts": "2026-11-18T21:56:06.316+00:00", "request_id": "48814e57", "route": "/ask", "query": "tie-dye long sleeve", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 6, "selected_id": "lst_040", "fit_card": "Scored this dreamy pastel tie-dye long sleeve on depop for only $17 and I’m obsessed. Grounded it with some baggy denim and my scuffed white sneakers so it doesn't feel *too* sweet. ☁️✨ #thriftfinds #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 595, "output_tokens": 171, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7905}
+2026-11-18T21:56:14.222944274Z 127.0.0.1 - - [18/Nov/2026:21:56:14 +0000] "POST /ask HTTP/1.1" 200 3689 "-" "Python-urllib/3.13"
+2026-11-18T21:56:14.364216687Z [1] parse_query
+2026-11-18T21:56:14.364240528Z       in:  'corduroy wide-leg pants'
+2026-11-18T21:56:14.364246068Z       out: description='corduroy wide-leg pants', size=None, max_price=None
+2026-11-18T21:56:18.684065659Z [2] search_listings (via MCP)
+2026-11-18T21:56:18.68408867Z       in:  description='corduroy wide-leg pants', size=None, max_price=None
+2026-11-18T21:56:18.684095791Z       out: 5 items: Corduroy Wide-Leg Pants — Rust, Wide-Leg Linen Trousers — Natural, Low-Rise Cargo Pants — Khaki … +2 more
+2026-11-18T21:56:18.684101741Z       →    branch: found results, top result id=lst_005, selected id=lst_005 (Corduroy Wide-Leg Pants — Rust)
+2026-11-18T21:56:20.010593578Z [3] suggest_outfit
+2026-11-18T21:56:20.010614639Z   [rate limit] 15 requests used this minute. Waiting 5s. This is normal.
+2026-11-18T21:56:20.010617749Z       in:  new_item.id=lst_005 ('Corduroy Wide-Leg Pants — Rust'), wardrobe=0 items
+2026-11-18T21:56:20.010626739Z       out: Outfit one: Tuck a plain cream ribbed turtleneck into the pants. Add a vintage brown leather belt and chunky b…
+2026-11-18T21:56:26.167063563Z [4] create_fit_card
+2026-11-18T21:56:26.167084594Z       in:  new_item.id=lst_005 ('Corduroy Wide-Leg Pants — Rust'), outfit='Outfit one: Tuck a plain cream ribbed tu'…
+2026-11-18T21:56:26.167087544Z       out: Scored these rust cords on depop for $32 and I'm obsessed with the whole 70s vibe. Wore them today with my cre…
+2026-11-18T21:56:26.167099655Z [request] {"ts": "2026-11-18T21:56:14.363+00:00", "request_id": "03314746", "route": "/ask", "query": "corduroy wide-leg pants", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 5, "selected_id": "lst_005", "fit_card": "Scored these rust cords on depop for $32 and I'm obsessed with the whole 70s vibe. Wore them today with my cream ribbed turtleneck and an oversized plaid blazer. 🍂 #vintage #thrifted", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 573, "output_tokens": 144, "status": 200, "outcome": "ok", "error": null, "duration_ms": 11803}
+2026-11-18T21:56:26.167829353Z 127.0.0.1 - - [18/Nov/2026:21:56:26 +0000] "POST /ask HTTP/1.1" 200 3244 "-" "Python-urllib/3.13"
+2026-11-18T21:56:26.416731729Z 127.0.0.1 - - [18/Nov/2026:21:56:26 +0000] "GET /logs?n=200 HTTP/1.1" 200 21272 "-" "Python-urllib/3.13"
+2026-11-18T21:56:26.894931873Z 127.0.0.1 - - [18/Nov/2026:21:56:26 +0000] "GET /health HTTP/1.1" 200 16 "-" "Python-urllib/3.13"
+2026-11-18T21:56:27.025599271Z [1] parse_query
+2026-11-18T21:56:27.025616642Z       in:  'vintage graphic tee under $30'
+2026-11-18T21:56:27.025621152Z       out: description='vintage graphic tee', size=None, max_price=30.0
+2026-11-18T21:56:30.976319377Z [2] search_listings (via MCP)
+2026-11-18T21:56:30.976344218Z       in:  description='vintage graphic tee', size=None, max_price=30.0
+2026-11-18T21:56:30.976348079Z       out: 10 items: Y2K Baby Tee — Butterfly Print, Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey … +7 more
+2026-11-18T21:56:30.976353039Z       →    branch: found results, top result id=lst_002, selected id=lst_002 (Y2K Baby Tee — Butterfly Print)
+2026-11-18T21:56:31.912103864Z [3] suggest_outfit
+2026-11-18T21:56:31.912130886Z       in:  new_item.id=lst_002 ('Y2K Baby Tee — Butterfly Print'), wardrobe=10 items
+2026-11-18T21:56:31.912136116Z       out: Outfit one balances the tight Y2K tee with streetwear pieces. Pair the Y2K Baby Tee — Butterfly Print with Bag…
+2026-11-18T21:56:32.667924447Z [4] create_fit_card
+2026-11-18T21:56:32.667947398Z       in:  new_item.id=lst_002 ('Y2K Baby Tee — Butterfly Print'), outfit='Outfit one balances the tight Y2K tee wi'…
+2026-11-18T21:56:32.667951419Z       out: Found this little butterfly tee on depop for just $18 and I'm obsessed. Paired it with baggy dark wash jeans a…
+2026-11-18T21:56:32.667961139Z [request] {"ts": "2026-11-18T21:56:27.025+00:00", "request_id": "232581fa", "route": "/ask", "query": "vintage graphic tee under $30", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 10, "selected_id": "lst_002", "fit_card": "Found this little butterfly tee on depop for just $18 and I'm obsessed. Paired it with baggy dark wash jeans and chunky white sneakers for an easy streetwear vibe today. 🦋 #thrifted", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 817, "output_tokens": 159, "status": 200, "outcome": "ok", "error": null, "duration_ms": 5643}
+2026-11-18T21:56:32.668735769Z 127.0.0.1 - - [18/Nov/2026:21:56:32 +0000] "POST /ask HTTP/1.1" 200 6933 "-" "Python-urllib/3.13"
+2026-11-18T21:56:32.917615581Z 127.0.0.1 - - [18/Nov/2026:21:56:32 +0000] "GET /logs?n=20 HTTP/1.1" 200 11748 "-" "Python-urllib/3.13"
+2026-11-18T21:56:33.052752255Z [1] parse_query
+2026-11-18T21:56:33.052775616Z       in:  'oversized flannel shirt'
+2026-11-18T21:56:33.052780676Z       out: description='oversized flannel shirt', size=None, max_price=None
+2026-11-18T21:56:37.376981115Z [2] search_listings (via MCP)
+2026-11-18T21:56:37.377004076Z       in:  description='oversized flannel shirt', size=None, max_price=None
+2026-11-18T21:56:37.377007787Z       out: 7 items: Oversized Flannel Shirt — Plaid Red/Black, Knit Cardigan — Chunky Brown, Oversized Crewneck Sweatshirt — Vintage Navy … +4 more
+2026-11-18T21:56:37.377011097Z       →    branch: found results, top result id=lst_003, selected id=lst_003 (Oversized Flannel Shirt — Plaid Red/Black)
+2026-11-18T21:56:38.804997056Z [3] suggest_outfit
+2026-11-18T21:56:38.805022028Z       in:  new_item.id=lst_003 ('Oversized Flannel Shirt — Plaid Red/Black'), wardrobe=10 items
+2026-11-18T21:56:38.805027218Z       out: Outfit One: 90s Grunge Wear the white ribbed tank top as a fitted base layer with the baggy straight-leg jeans…
+2026-11-18T21:56:40.662956457Z [4] create_fit_card
+2026-11-18T21:56:40.662977408Z       in:  new_item.id=lst_003 ('Oversized Flannel Shirt — Plaid Red/Black'), outfit='Outfit One: 90s Grunge\nWear the wh…
+2026-11-18T21:56:40.662981598Z       out: Scored this Woolrich flannel on thredUp for just $22 and I'm obsessed with how it looks over my white ribbed t…
+2026-11-18T21:56:40.662990419Z [request] {"ts": "2026-11-18T21:56:33.052+00:00", "request_id": "c64b6ee6", "route": "/ask", "query": "oversized flannel shirt", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 7, "selected_id": "lst_003", "fit_card": "Scored this Woolrich flannel on thredUp for just $22 and I'm obsessed with how it looks over my white ribbed tank and baggy jeans. Total 90s grunge mood with these combat boots. 🖤 #thrifted #grunge", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 819, "output_tokens": 170, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7611}
+2026-11-18T21:56:40.66378173Z 127.0.0.1 - - [18/Nov/2026:21:56:40 +0000] "POST /ask HTTP/1.1" 200 5838 "-" "Python-urllib/3.13"
+2026-11-18T21:56:40.898412635Z 127.0.0.1 - - [18/Nov/2026:21:56:40 +0000] "GET /logs?n=20 HTTP/1.1" 200 11770 "-" "Python-urllib/3.13"
+2026-11-18T21:56:41.029916529Z [1] parse_query
+2026-11-18T21:56:41.02993555Z       in:  'leather belt under $15'
+2026-11-18T21:56:41.02993974Z       out: description='leather belt', size=None, max_price=15.0
+2026-11-18T21:56:45.072777893Z [2] search_listings (via MCP)
+2026-11-18T21:56:45.072806394Z       in:  description='leather belt', size=None, max_price=15.0
+2026-11-18T21:56:45.072811125Z       out: 1 items: Leather Belt — Brown, Braided
+2026-11-18T21:56:45.072816145Z       →    branch: found results, top result id=lst_014, selected id=lst_014 (Leather Belt — Brown, Braided)
+2026-11-18T21:56:45.901368936Z [3] suggest_outfit
+2026-11-18T21:56:45.901395927Z       in:  new_item.id=lst_014 ('Leather Belt — Brown, Braided'), wardrobe=10 items
+2026-11-18T21:56:45.901402748Z       out: Outfit One: Casual Denim Put on the white ribbed tank top tucked into the baggy straight-leg jeans, dark wash.…
+2026-11-18T21:56:47.721543133Z [4] create_fit_card
+2026-11-18T21:56:47.721564514Z       in:  new_item.id=lst_014 ('Leather Belt — Brown, Braided'), outfit='Outfit One: Casual Denim\nPut on the whit'…
+2026-11-18T21:56:47.721587655Z       out: Scored this braided leather belt on thredUp for just $12 and it instantly pulled my baggy jeans and black deni…
+2026-11-18T21:56:47.721606706Z [request] {"ts": "2026-11-18T21:56:41.029+00:00", "request_id": "d25eeddb", "route": "/ask", "query": "leather belt under $15", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_014", "fit_card": "Scored this braided leather belt on thredUp for just $12 and it instantly pulled my baggy jeans and black denim jacket together. Such a good little Western touch for an everyday look. 🐎✨ #thriftyfinds #ootd", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 802, "output_tokens": 176, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6692}
+2026-11-18T21:56:47.722170395Z 127.0.0.1 - - [18/Nov/2026:21:56:47 +0000] "POST /ask HTTP/1.1" 200 3468 "-" "Python-urllib/3.13"
+2026-11-18T21:56:47.872494053Z 127.0.0.1 - - [18/Nov/2026:21:56:47 +0000] "GET /logs?n=20 HTTP/1.1" 200 11752 "-" "Python-urllib/3.13"
+2026-11-18T21:56:47.980140901Z [1] parse_query
+2026-11-18T21:56:47.980160902Z       in:  '90s slip dress size M'
+2026-11-18T21:56:47.980164742Z       out: description='90s slip dress', size='M', max_price=None
+2026-11-18T21:56:52.384392436Z [2] search_listings (via MCP)
+2026-11-18T21:56:52.384422687Z       in:  description='90s slip dress', size='M', max_price=None
+2026-11-18T21:56:52.384426777Z       out: 3 items: 90s Silk Slip Dress — Floral, Midi Length, 90s Track Jacket — Navy/White Stripe, 90s Leather Bomber — Black
+2026-11-18T21:56:52.384430488Z       →    branch: found results, top result id=lst_013, selected id=lst_013 (90s Silk Slip Dress — Floral, Midi Length)
+2026-11-18T21:56:53.402355478Z [3] suggest_outfit
+2026-11-18T21:56:53.402382549Z   [rate limit] 15 requests used this minute. Waiting 3s. This is normal.
+2026-11-18T21:56:53.40238288Z       in:  new_item.id=lst_013 ('90s Silk Slip Dress — Floral, Midi Length'), wardrobe=10 items
+2026-11-18T21:56:53.40238951Z       out: Outfit 1: The 90s Grunge Layer  Layer the 90s Silk Slip Dress over the white ribbed tank top to add structure …
+2026-11-18T21:56:57.843195111Z [4] create_fit_card
+2026-11-18T21:56:57.843219582Z       in:  new_item.id=lst_013 ('90s Silk Slip Dress — Floral, Midi Length'), outfit='Outfit 1: The 90s Grunge Layer\n\nL…
+2026-11-18T21:56:57.843222773Z       out: Scored this ivory floral silk slip on depop for just $30 and I’m obsessed. Layered it under my grey crewneck s…
+2026-11-18T21:56:57.843227293Z [request] {"ts": "2026-11-18T21:56:47.979+00:00", "request_id": "cc46582b", "route": "/ask", "query": "90s slip dress size M", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_013", "fit_card": "Scored this ivory floral silk slip on depop for just $30 and I’m obsessed. Layered it under my grey crewneck sweatshirt with chunky white sneakers for that 90s streetwear contrast. 🌸✨ #thrifted #90sfashion", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 869, "output_tokens": 206, "status": 200, "outcome": "ok", "error": null, "duration_ms": 9863}
+2026-11-18T21:56:57.845051938Z 127.0.0.1 - - [18/Nov/2026:21:56:57 +0000] "POST /ask HTTP/1.1" 200 4432 "-" "Python-urllib/3.13"
+2026-11-18T21:56:58.001986465Z 127.0.0.1 - - [18/Nov/2026:21:56:58 +0000] "GET /logs?n=20 HTTP/1.1" 200 11761 "-" "Python-urllib/3.13"
+2026-11-18T21:56:58.249668141Z [1] parse_query
+2026-11-18T21:56:58.249687332Z       in:  'low-rise cargo pants'
+2026-11-18T21:56:58.249690382Z       out: description='low-rise cargo pants', size=None, max_price=None
+2026-11-18T21:57:02.383585391Z [2] search_listings (via MCP)
+2026-11-18T21:57:02.383616113Z       in:  description='low-rise cargo pants', size=None, max_price=None
+2026-11-18T21:57:02.383635114Z       out: 3 items: Low-Rise Cargo Pants — Khaki, Corduroy Wide-Leg Pants — Rust, Low-Top Canvas Sneakers — Off-White
+2026-11-18T21:57:02.383638514Z       →    branch: found results, top result id=lst_011, selected id=lst_011 (Low-Rise Cargo Pants — Khaki)
+2026-11-18T21:57:03.805464625Z [3] suggest_outfit
+2026-11-18T21:57:03.805485876Z       in:  new_item.id=lst_011 ('Low-Rise Cargo Pants — Khaki'), wardrobe=10 items
+2026-11-18T21:57:03.805489016Z       out: Outfit 1: Streetwear Coffee Run Pair the low-rise cargo pants with the white ribbed tank top tucked in. Layer …
+2026-11-18T21:57:05.357251523Z [4] create_fit_card
+2026-11-18T21:57:05.357273034Z       in:  new_item.id=lst_011 ('Low-Rise Cargo Pants — Khaki'), outfit='Outfit 1: Streetwear Coffee Run\nPair the'…
+2026-11-18T21:57:05.357276965Z       out: Scored these on Poshmark for just $27 and I'm obsessed with the pockets. Throwing on my black combat boots and…
+2026-11-18T21:57:05.357281895Z [request] {"ts": "2026-11-18T21:56:58.249+00:00", "request_id": "05939f79", "route": "/ask", "query": "low-rise cargo pants", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_011", "fit_card": "Scored these on Poshmark for just $27 and I'm obsessed with the pockets. Throwing on my black combat boots and cropped zip hoodie makes them feel so early 2000s. 👖✨ #thrifted #y2kstyle", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 843, "output_tokens": 186, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7108}
+2026-11-18T21:57:05.357972571Z 127.0.0.1 - - [18/Nov/2026:21:57:05 +0000] "POST /ask HTTP/1.1" 200 4199 "-" "Python-urllib/3.13"
+2026-11-18T21:57:05.486304293Z 127.0.0.1 - - [18/Nov/2026:21:57:05 +0000] "GET /logs?n=20 HTTP/1.1" 200 11709 "-" "Python-urllib/3.13"
+2026-11-18T21:57:05.620802498Z [1] parse_query
+2026-11-18T21:57:05.620818329Z       in:  'mesh long-sleeve top size S/M'
+2026-11-18T21:57:05.620822849Z       out: description='mesh long-sleeve top', size='S/M', max_price=None
+2026-11-18T21:57:09.578339547Z [2] search_listings (via MCP)
+2026-11-18T21:57:09.578369238Z       in:  description='mesh long-sleeve top', size='S/M', max_price=None
+2026-11-18T21:57:09.578374488Z       out: 2 items: Mesh Long-Sleeve Top — Black, Crochet Halter Top — Cream
+2026-11-18T21:57:09.578379049Z       →    branch: found results, top result id=lst_017, selected id=lst_017 (Mesh Long-Sleeve Top — Black)
+2026-11-18T21:57:10.920779951Z [3] suggest_outfit
+2026-11-18T21:57:10.920803222Z       in:  new_item.id=lst_017 ('Mesh Long-Sleeve Top — Black'), wardrobe=10 items
+2026-11-18T21:57:10.920807243Z       out: Outfit One: Grunge Streetwear  Wear the mesh long-sleeve top over the white ribbed tank top. Pair them with th…
+2026-11-18T21:57:11.985611096Z [4] create_fit_card
+2026-11-18T21:57:11.985631497Z       in:  new_item.id=lst_017 ('Mesh Long-Sleeve Top — Black'), outfit='Outfit One: Grunge Streetwear\n\nWear the '…
+2026-11-18T21:57:11.985636267Z       out: Found this mesh long-sleeve on depop for only $15 and I’m obsessed with how it looks layered under my grey cre…
+2026-11-18T21:57:11.985646548Z [request] {"ts": "2026-11-18T21:57:05.620+00:00", "request_id": "1d8cbbd8", "route": "/ask", "query": "mesh long-sleeve top size S/M", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_017", "fit_card": "Found this mesh long-sleeve on depop for only $15 and I’m obsessed with how it looks layered under my grey crewneck with these khaki trousers. Perfect little piece for fall 🖤 #thrifted #y2k", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 814, "output_tokens": 164, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6365}
+2026-11-18T21:57:11.986311823Z 127.0.0.1 - - [18/Nov/2026:21:57:11 +0000] "POST /ask HTTP/1.1" 200 3725 "-" "Python-urllib/3.13"
+2026-11-18T21:57:12.108137505Z 127.0.0.1 - - [18/Nov/2026:21:57:12 +0000] "GET /logs?n=20 HTTP/1.1" 200 11701 "-" "Python-urllib/3.13"
+2026-11-18T21:57:12.3707143Z [1] parse_query
+2026-11-18T21:57:12.370733871Z       in:  'crewneck sweatshirt under $25'
+2026-11-18T21:57:12.370738251Z       out: description='crewneck sweatshirt', size=None, max_price=25.0
+2026-11-18T21:57:16.882401781Z [2] search_listings (via MCP)
+2026-11-18T21:57:16.882431722Z       in:  description='crewneck sweatshirt', size=None, max_price=25.0
+2026-11-18T21:57:16.882435973Z       out: 2 items: Oversized Crewneck Sweatshirt — Vintage Navy, Oversized College Crewneck — Faded Red
+2026-11-18T21:57:16.882439773Z       →    branch: found results, top result id=lst_012, selected id=lst_012 (Oversized Crewneck Sweatshirt — Vintage Navy)
+2026-11-18T21:57:17.817706761Z [3] suggest_outfit
+2026-11-18T21:57:17.817729112Z       in:  new_item.id=lst_012 ('Oversized Crewneck Sweatshirt — Vintage Navy'), wardrobe=10 items
+2026-11-18T21:57:17.817732442Z       out: Outfit 1: The Monochromatic Streetwear Look Pair the vintage navy crewneck with the baggy straight-leg jeans i…
+2026-11-18T21:57:19.544736942Z [4] create_fit_card
+2026-11-18T21:57:19.544762483Z       in:  new_item.id=lst_012 ('Oversized Crewneck Sweatshirt — Vintage Navy'), outfit='Outfit 1: The Monochromatic Stre…
+2026-11-18T21:57:19.544767144Z       out: Scored this faded navy crewneck on thredUp for only $20 and I’m obsessed with how heavy it is. Tossed it on wi…
+2026-11-18T21:57:19.544788445Z [request] {"ts": "2026-11-18T21:57:12.370+00:00", "request_id": "a22f6384", "route": "/ask", "query": "crewneck sweatshirt under $25", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 2, "selected_id": "lst_012", "fit_card": "Scored this faded navy crewneck on thredUp for only $20 and I’m obsessed with how heavy it is. Tossed it on with baggy dark wash jeans and chunky white sneakers for the easiest running-around fit. 👟💙 #thrifted #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 804, "output_tokens": 172, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7174}
+2026-11-18T21:57:19.545422598Z 127.0.0.1 - - [18/Nov/2026:21:57:19 +0000] "POST /ask HTTP/1.1" 200 3876 "-" "Python-urllib/3.13"
+2026-11-18T21:57:19.692805085Z 127.0.0.1 - - [18/Nov/2026:21:57:19 +0000] "GET /logs?n=20 HTTP/1.1" 200 11718 "-" "Python-urllib/3.13"
+2026-11-18T21:57:19.814867051Z [request] {"ts": "2026-11-18T21:57:19.814+00:00", "request_id": "473fc40a", "route": "/ask", "query": null, "body_preview": "{not json", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "duration_ms": 0}
+2026-11-18T21:57:19.815401859Z 127.0.0.1 - - [18/Nov/2026:21:57:19 +0000] "POST /ask HTTP/1.1" 400 96 "-" "Python-urllib/3.13"
+2026-11-18T21:57:19.918343885Z 127.0.0.1 - - [18/Nov/2026:21:57:19 +0000] "GET /logs?n=20 HTTP/1.1" 200 11502 "-" "Python-urllib/3.13"
+2026-11-18T21:57:20.040482384Z [request] {"ts": "2026-11-18T21:57:20.040+00:00", "request_id": "cd492b3f", "route": "/ask", "query": null, "body_preview": "{\"query\": \"   \"}", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 400, "outcome": "bad_request", "error": "Send JSON with a 'query' field, e.g. {\"query\": \"vintage graphic tee under $30\"}", "duration_ms": 0}
+2026-11-18T21:57:20.041064035Z 127.0.0.1 - - [18/Nov/2026:21:57:20 +0000] "POST /ask HTTP/1.1" 400 96 "-" "Python-urllib/3.13"
+2026-11-18T21:57:20.174973929Z 127.0.0.1 - - [18/Nov/2026:21:57:20 +0000] "GET /logs?n=20 HTTP/1.1" 200 11298 "-" "Python-urllib/3.13"
+2026-11-18T21:57:20.311247266Z [1] parse_query
+2026-11-18T21:57:20.311261147Z       in:  'ballgown size XXS under $2'
+2026-11-18T21:57:20.311264367Z       out: description='ballgown', size='XXS', max_price=2.0
+2026-11-18T21:57:24.672189514Z [2] search_listings (via MCP)
+2026-11-18T21:57:24.672206365Z       in:  description='ballgown', size='XXS', max_price=2.0
+2026-11-18T21:57:24.672210245Z       out: [] (empty)
+2026-11-18T21:57:24.672213806Z       →    branch: empty, stopping
+2026-11-18T21:57:24.672218226Z [request] {"ts": "2026-11-18T21:57:20.310+00:00", "request_id": "65cda8f6", "route": "/ask", "query": "ballgown size XXS under $2", "tools_run": ["parse_query", "search_listings"], "n_results": 0, "selected_id": null, "fit_card": null, "wait_ms": 0, "api_calls": 0, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 200, "outcome": "no_results", "error": "Nothing matched 'ballgown' in size XXS under $2. Try to raise your price limit, or drop the size, or use fewer or more general words (e.g. 'jacket' instead of 'designer ballgown').", "duration_ms": 4361}
+2026-11-18T21:57:24.672932723Z 127.0.0.1 - - [18/Nov/2026:21:57:24 +0000] "POST /ask HTTP/1.1" 200 2036 "-" "Python-urllib/3.13"
+2026-11-18T21:57:24.848961367Z 127.0.0.1 - - [18/Nov/2026:21:57:24 +0000] "GET /logs?n=20 HTTP/1.1" 200 11422 "-" "Python-urllib/3.13"
+2026-11-18T21:57:24.972810235Z [1] parse_query
+2026-11-18T21:57:24.972826466Z       in:  'faded band tee'
+2026-11-18T21:57:24.972830807Z       out: description='faded band tee', size=None, max_price=None
+2026-11-18T21:57:29.265581198Z [2] search_listings (via MCP)
+2026-11-18T21:57:29.26560711Z       in:  description='faded band tee', size=None, max_price=None
+2026-11-18T21:57:29.26561099Z       out: 9 items: Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey, Y2K Baby Tee — Butterfly Print … +6 more
+2026-11-18T21:57:29.26561618Z       →    branch: found results, top result id=lst_006, selected id=lst_006 (Graphic Tee — 2003 Tour Bootleg Style)
+2026-11-18T21:57:30.681206658Z [3] suggest_outfit
+2026-11-18T21:57:30.68123158Z       in:  new_item.id=lst_006 ('Graphic Tee — 2003 Tour Bootleg Style'), wardrobe=10 items
+2026-11-18T21:57:30.68123556Z       out: Outfit One: The Grunge Streetwear Look Wear the graphic tee with the baggy straight-leg jeans, dark wash. Tuck…
+2026-11-18T21:57:31.723034653Z [4] create_fit_card
+2026-11-18T21:57:31.723053894Z       in:  new_item.id=lst_006 ('Graphic Tee — 2003 Tour Bootleg Style'), outfit='Outfit One: The Grunge Streetwear Look\…
+2026-11-18T21:57:31.723058165Z       out: Scored this faded graphic tee on depop for only $24 and I'm obsessed with how soft it is. Paired it with wide-…
+2026-11-18T21:57:31.723071315Z [request] {"ts": "2026-11-18T21:57:24.972+00:00", "request_id": "4d7b869b", "route": "/ask", "query": "faded band tee", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 9, "selected_id": "lst_006", "fit_card": "Scored this faded graphic tee on depop for only $24 and I'm obsessed with how soft it is. Paired it with wide-leg khaki trousers and combat boots for a slouchy, utilitarian kind of vibe. 🖤 #thrifted #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 833, "output_tokens": 191, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6751}
+2026-11-18T21:57:31.723899971Z 127.0.0.1 - - [18/Nov/2026:21:57:31 +0000] "POST /ask HTTP/1.1" 200 6568 "-" "Python-urllib/3.13"
+2026-11-18T21:57:31.968029921Z [1] parse_query
+2026-11-18T21:57:31.968066403Z       in:  'graphic hoodie size L'
+2026-11-18T21:57:31.968070924Z       out: description='graphic hoodie', size='L', max_price=None
+2026-11-18T21:57:35.872052245Z [2] search_listings (via MCP)
+2026-11-18T21:57:35.872074076Z       in:  description='graphic hoodie', size='L', max_price=None
+2026-11-18T21:57:35.872077036Z       out: 3 items: Vintage Graphic Hoodie — Faded Black, Graphic Tee — 2003 Tour Bootleg Style, Vintage Band Tee — Faded Grey
+2026-11-18T21:57:35.872079666Z       →    branch: found results, top result id=lst_015, selected id=lst_015 (Vintage Graphic Hoodie — Faded Black)
+2026-11-18T21:57:37.381822053Z [3] suggest_outfit
+2026-11-18T21:57:37.381845474Z       in:  new_item.id=lst_015 ('Vintage Graphic Hoodie — Faded Black'), wardrobe=10 items
+2026-11-18T21:57:37.381850875Z       out: Outfit One: Grunge Streetwear Pair the Vintage Graphic Hoodie — Faded Black with your Baggy straight-leg jeans…
+2026-11-18T21:57:38.330739734Z [4] create_fit_card
+2026-11-18T21:57:38.330758495Z       in:  new_item.id=lst_015 ('Vintage Graphic Hoodie — Faded Black'), outfit='Outfit One: Grunge Streetwear\nPair the …
+2026-11-18T21:57:38.330762145Z       out: Scored this faded black vintage graphic hoodie on depop for $26 and it's already my favorite thing to throw on…
+2026-11-18T21:57:38.330776486Z [request] {"ts": "2026-11-18T21:57:31.967+00:00", "request_id": "77c38bd4", "route": "/ask", "query": "graphic hoodie size L", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_015", "fit_card": "Scored this faded black vintage graphic hoodie on depop for $26 and it's already my favorite thing to throw on. Wore it over some wide-leg khaki trousers with a brown leather belt and combat boots for an easy everyday look. It's got the best worn-in feel. 🖤 #thriftfind", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 799, "output_tokens": 179, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6363}
+2026-11-18T21:57:38.331489983Z 127.0.0.1 - - [18/Nov/2026:21:57:38 +0000] "POST /ask HTTP/1.1" 200 4239 "-" "Python-urllib/3.13"
+2026-11-18T21:57:38.478805411Z [1] parse_query
+2026-11-18T21:57:38.478829232Z       in:  'suede chelsea boots'
+2026-11-18T21:57:38.478833662Z       out: description='suede chelsea boots', size=None, max_price=None
+2026-11-18T21:57:42.473842385Z [2] search_listings (via MCP)
+2026-11-18T21:57:42.473864926Z       in:  description='suede chelsea boots', size=None, max_price=None
+2026-11-18T21:57:42.473868266Z       out: 1 items: Suede Chelsea Boots — Tan
+2026-11-18T21:57:42.473870757Z       →    branch: found results, top result id=lst_028, selected id=lst_028 (Suede Chelsea Boots — Tan)
+2026-11-18T21:57:43.298393554Z [3] suggest_outfit
+2026-11-18T21:57:43.298419015Z       in:  new_item.id=lst_028 ('Suede Chelsea Boots — Tan'), wardrobe=10 items
+2026-11-18T21:57:43.298423025Z       out: Outfit One Wear the white ribbed tank top tucked into the baggy straight-leg jeans, dark wash. Layer the vinta…
+2026-11-18T21:57:43.298439696Z   [rate limit] 15 requests used this minute. Waiting 2s. This is normal.
+2026-11-18T21:57:45.97141462Z [4] create_fit_card
+2026-11-18T21:57:45.971439591Z       in:  new_item.id=lst_028 ('Suede Chelsea Boots — Tan'), outfit='Outfit One\nWear the white ribbed tank to'…
+2026-11-18T21:57:45.971443972Z       out: Scored these tan suede Chelsea boots on Poshmark for $44 and I’m obsessed with how they look paired with my ba…
+2026-11-18T21:57:45.971458663Z [request] {"ts": "2026-11-18T21:57:38.478+00:00", "request_id": "9903acf3", "route": "/ask", "query": "suede chelsea boots", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_028", "fit_card": "Scored these tan suede Chelsea boots on Poshmark for $44 and I’m obsessed with how they look paired with my baggy straight-leg jeans and black denim jacket. They give my usual earth-tone fits that perfect worn-in western edge. 🤠🤎 #thriftfinds #suedeboots", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 803, "output_tokens": 174, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7493}
+2026-11-18T21:57:45.972133248Z 127.0.0.1 - - [18/Nov/2026:21:57:45 +0000] "POST /ask HTTP/1.1" 200 3458 "-" "Python-urllib/3.13"
+2026-11-18T21:57:46.12508406Z [1] parse_query
+2026-11-18T21:57:46.12510347Z       in:  'vintage polo shirt'
+2026-11-18T21:57:46.125107591Z       out: description='vintage polo shirt', size=None, max_price=None
+2026-11-18T21:57:50.075382125Z [2] search_listings (via MCP)
+2026-11-18T21:57:50.075396675Z       in:  description='vintage polo shirt', size=None, max_price=None
+2026-11-18T21:57:50.075400485Z       out: 10 items: Vintage Polo Shirt — Forest Green, Oversized Flannel Shirt — Plaid Red/Black, Vintage Levi's 501 Jeans — Medium Wash … +7 more
+2026-11-18T21:57:50.075404076Z       →    branch: found results, top result id=lst_024, selected id=lst_024 (Vintage Polo Shirt — Forest Green)
+2026-11-18T21:57:50.91501946Z [3] suggest_outfit
+2026-11-18T21:57:50.915043501Z   [rate limit] 15 requests used this minute. Waiting 2s. This is normal.
+2026-11-18T21:57:50.915047621Z       in:  new_item.id=lst_024 ('Vintage Polo Shirt — Forest Green'), wardrobe=0 items
+2026-11-18T21:57:50.915064322Z       out: Outfit One: Skate Casual Pair the polo with loose-fitting light wash denim jeans and a beat-up pair of canvas …
+2026-11-18T21:57:54.60742719Z [4] create_fit_card
+2026-11-18T21:57:54.60744595Z       in:  new_item.id=lst_024 ('Vintage Polo Shirt — Forest Green'), outfit='Outfit One: Skate Casual\nPair the polo w'…
+2026-11-18T21:57:54.607450351Z       out: Scored this forest green Ralph Lauren polo on thredUp for just $18 and I’m obsessed. Wearing it tucked into a …
+2026-11-18T21:57:54.607456711Z [request] {"ts": "2026-11-18T21:57:46.124+00:00", "request_id": "dcd2fca5", "route": "/ask", "query": "vintage polo shirt", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 10, "selected_id": "lst_024", "fit_card": "Scored this forest green Ralph Lauren polo on thredUp for just $18 and I’m obsessed. Wearing it tucked into a pleated navy skirt with chunky leather loafers and white athletic socks for the ultimate prep school contrast 🌲👟 \n\n#thredupfinds #vintagepolo", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 593, "output_tokens": 181, "status": 200, "outcome": "ok", "error": null, "duration_ms": 8481}
+2026-11-18T21:57:54.607461842Z 127.0.0.1 - - [18/Nov/2026:21:57:54 +0000] "POST /ask HTTP/1.1" 200 5465 "-" "Python-urllib/3.13"
+2026-11-18T21:57:54.738923126Z [1] parse_query
+2026-11-18T21:57:54.738939237Z       in:  'platform sneakers'
+2026-11-18T21:57:54.738944497Z       out: description='platform sneakers', size=None, max_price=None
+2026-11-18T21:57:59.18495737Z [2] search_listings (via MCP)
+2026-11-18T21:57:59.184981871Z       in:  description='platform sneakers', size=None, max_price=None
+2026-11-18T21:57:59.184987282Z       out: 3 items: Platform Sneakers — White Chunky Sole, Platform Mary Janes — Black Patent, Low-Top Canvas Sneakers — Off-White
+2026-11-18T21:57:59.184991842Z       →    branch: found results, top result id=lst_019, selected id=lst_019 (Platform Sneakers — White Chunky Sole)
+2026-11-18T21:58:00.147526037Z [3] suggest_outfit
+2026-11-18T21:58:00.147555559Z       in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), wardrobe=0 items
+2026-11-18T21:58:00.147561659Z       out: Outfit One: Pair the sneakers with baggy light-wash denim carpenter jeans and a fitted ribbed black baby tee. …
+2026-11-18T21:58:00.147563909Z   [rate limit] 15 requests used this minute. Waiting 2s. This is normal.
+2026-11-18T21:58:03.084086694Z [4] create_fit_card
+2026-11-18T21:58:03.084106775Z       in:  new_item.id=lst_019 ('Platform Sneakers — White Chunky Sole'), outfit='Outfit One: Pair the sneakers with bagg…
+2026-11-18T21:58:03.084109995Z       out: scored these chunky platform sneakers on Poshmark for $48 and I am obsessed with the velcro straps. wore them …
+2026-11-18T21:58:03.084122906Z [request] {"ts": "2026-11-18T21:57:54.738+00:00", "request_id": "c5412c4d", "route": "/ask", "query": "platform sneakers", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_019", "fit_card": "scored these chunky platform sneakers on Poshmark for $48 and I am obsessed with the velcro straps. wore them today with my baggy light-wash denim carpenter jeans and a fitted ribbed black baby tee. 👟✨ #y2k #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 574, "output_tokens": 144, "status": 200, "outcome": "ok", "error": null, "duration_ms": 8345}
+2026-11-18T21:58:03.084732658Z 127.0.0.1 - - [18/Nov/2026:21:58:03 +0000] "POST /ask HTTP/1.1" 200 2400 "-" "Python-urllib/3.13"
+2026-11-18T21:58:03.215959594Z [1] parse_query
+2026-11-18T21:58:03.215977265Z       in:  'linen blazer'
+2026-11-18T21:58:03.215980935Z       out: description='linen blazer', size=None, max_price=None
+2026-11-18T21:58:07.381122636Z [2] search_listings (via MCP)
+2026-11-18T21:58:07.381144577Z       in:  description='linen blazer', size=None, max_price=None
+2026-11-18T21:58:07.381147807Z       out: 3 items: Vintage Linen Blazer — Cream, Wide-Leg Linen Trousers — Natural, Velvet Blazer — Emerald Green
+2026-11-18T21:58:07.381154178Z       →    branch: found results, top result id=lst_018, selected id=lst_018 (Vintage Linen Blazer — Cream)
+2026-11-18T21:58:08.589610706Z   [rate limit] 15 requests used this minute. Waiting 1s. This is normal.
+2026-11-18T21:58:08.589654048Z [3] suggest_outfit
+2026-11-18T21:58:08.589658628Z       in:  new_item.id=lst_018 ('Vintage Linen Blazer — Cream'), wardrobe=0 items
+2026-11-18T21:58:08.589661998Z       out: Outfit One: Casual Weekend. Pair the blazer with a ribbed white tank top, relaxed-fit straight-leg blue jeans,…
+2026-11-18T21:58:10.396874952Z [4] create_fit_card
+2026-11-18T21:58:10.396895733Z       in:  new_item.id=lst_018 ('Vintage Linen Blazer — Cream'), outfit='Outfit One: Casual Weekend. Pair the bla'…
+2026-11-18T21:58:10.396899044Z       out: Found this cream vintage linen blazer on thredUp for only $38 and immediately threw it on over a ribbed white …
+2026-11-18T21:58:10.396905354Z [request] {"ts": "2026-11-18T21:58:03.215+00:00", "request_id": "e77ba009", "route": "/ask", "query": "linen blazer", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_018", "fit_card": "Found this cream vintage linen blazer on thredUp for only $38 and immediately threw it on over a ribbed white tank top and blue jeans. It’s also going to look so good pushed up over a black cotton midi slip dress for dinner outside. 🤍 #thriftedstyle #secondhand", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 564, "output_tokens": 159, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7181}
+2026-11-18T21:58:10.397569799Z 127.0.0.1 - - [18/Nov/2026:21:58:10 +0000] "POST /ask HTTP/1.1" 200 2581 "-" "Python-urllib/3.13"
+2026-11-18T21:58:10.541480902Z [1] parse_query
+2026-11-18T21:58:10.541497683Z       in:  'tie-dye long sleeve'
+2026-11-18T21:58:10.541501193Z       out: description='tie-dye long sleeve', size=None, max_price=None
+2026-11-18T21:58:14.575886111Z [2] search_listings (via MCP)
+2026-11-18T21:58:14.575911323Z       in:  description='tie-dye long sleeve', size=None, max_price=None
+2026-11-18T21:58:14.575915233Z       out: 6 items: Tie-Dye Long Sleeve — Pastel, Mesh Long-Sleeve Top — Black, Henley Long Sleeve — Washed Burgundy … +3 more
+2026-11-18T21:58:14.575918343Z       →    branch: found results, top result id=lst_040, selected id=lst_040 (Tie-Dye Long Sleeve — Pastel)
+2026-11-18T21:58:15.734684509Z [3] suggest_outfit
+2026-11-18T21:58:15.734708361Z       in:  new_item.id=lst_040 ('Tie-Dye Long Sleeve — Pastel'), wardrobe=0 items
+2026-11-18T21:58:15.734712961Z       out: Outfit one leans into the oversized streetwear vibe. Pair the pastel tie-dye long sleeve with relaxed-fit ligh…
+2026-11-18T21:58:15.734741672Z   [rate limit] 15 requests used this minute. Waiting 1s. This is normal.
+2026-11-18T21:58:18.204494744Z [4] create_fit_card
+2026-11-18T21:58:18.204540757Z       in:  new_item.id=lst_040 ('Tie-Dye Long Sleeve — Pastel'), outfit='Outfit one leans into the oversized stre'…
+2026-11-18T21:58:18.204547227Z       out: Scored this pastel long sleeve on depop for just $17 and I'm obsessed. Paired it with light wash denim jeans a…
+2026-11-18T21:58:18.204558588Z [request] {"ts": "2026-11-18T21:58:10.541+00:00", "request_id": "332f7ad2", "route": "/ask", "query": "tie-dye long sleeve", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 6, "selected_id": "lst_040", "fit_card": "Scored this pastel long sleeve on depop for just $17 and I'm obsessed. Paired it with light wash denim jeans and chunky white leather sneakers for an easy streetwear day. 🌸✨ #thriftfind #streetwear", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 590, "output_tokens": 155, "status": 200, "outcome": "ok", "error": null, "duration_ms": 7663}
+2026-11-18T21:58:18.205198191Z 127.0.0.1 - - [18/Nov/2026:21:58:18 +0000] "POST /ask HTTP/1.1" 200 3645 "-" "Python-urllib/3.13"
+2026-11-18T21:58:18.341522156Z [1] parse_query
+2026-11-18T21:58:18.341545047Z       in:  'corduroy wide-leg pants'
+2026-11-18T21:58:18.341548507Z       out: description='corduroy wide-leg pants', size=None, max_price=None
+2026-11-18T21:58:22.872812618Z [2] search_listings (via MCP)
+2026-11-18T21:58:22.872834519Z       in:  description='corduroy wide-leg pants', size=None, max_price=None
+2026-11-18T21:58:22.87283921Z       out: 5 items: Corduroy Wide-Leg Pants — Rust, Wide-Leg Linen Trousers — Natural, Low-Rise Cargo Pants — Khaki … +2 more
+2026-11-18T21:58:22.87284373Z       →    branch: found results, top result id=lst_005, selected id=lst_005 (Corduroy Wide-Leg Pants — Rust)
+2026-11-18T21:58:23.979903429Z [3] suggest_outfit
+2026-11-18T21:58:23.979931281Z       in:  new_item.id=lst_005 ('Corduroy Wide-Leg Pants — Rust'), wardrobe=0 items
+2026-11-18T21:58:23.979934871Z       out: Outfit one: Tuck a fitted black ribbed turtleneck into the pants. Add a pair of dark brown leather ankle boots…
+2026-11-18T21:58:23.979951182Z   [rate limit] 15 requests used this minute. Waiting 5s. This is normal.
+2026-11-18T21:58:40.608236286Z [4] create_fit_card
+2026-11-18T21:58:40.608265658Z       in:  new_item.id=lst_005 ('Corduroy Wide-Leg Pants — Rust'), outfit='Outfit one: Tuck a fitted black ribbed t'…
+2026-11-18T21:58:40.608272308Z       out: Scored these rust cords on depop for $32 and I’m obsessed with the 70s vibe. Wore them today with a fitted bla…
+2026-11-18T21:58:40.608290389Z [request] {"ts": "2026-11-18T21:58:18.341+00:00", "request_id": "230963c1", "route": "/ask", "query": "corduroy wide-leg pants", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 5, "selected_id": "lst_005", "fit_card": "Scored these rust cords on depop for $32 and I’m obsessed with the 70s vibe. Wore them today with a fitted black ribbed turtleneck and dark brown leather ankle boots. 🍂 #thrifted #70sfashion", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 589, "output_tokens": 164, "status": 200, "outcome": "ok", "error": null, "duration_ms": 22267}
+2026-11-18T21:58:40.609003707Z 127.0.0.1 - - [18/Nov/2026:21:58:40 +0000] "POST /ask HTTP/1.1" 200 3331 "-" "Python-urllib/3.13"
+2026-11-18T21:58:40.762595033Z 127.0.0.1 - - [18/Nov/2026:21:58:40 +0000] "GET /logs?n=200 HTTP/1.1" 200 31891 "-" "Python-urllib/3.13"

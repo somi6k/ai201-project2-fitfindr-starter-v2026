@@ -566,3 +566,109 @@ At the Gemini API paid-tier price for `gemini-3.5-flash-lite` ($0.30 per 1M inpu
 - **≈ $0.00068 per run**
 
 **100 people a day, one query each:** 100 × $0.00068 = **$0.068 per day**, about $2.05 per 30-day month. Output is 64% of that cost even though it's only 18% of the tokens. On the Gemini free tier, input tokens are free, so this is the paid-tier cost. No-match and rejected requests cost $0 in API spend because they never reach the model. Hosting is $0 on Render's free tier.
+
+**Run Log and Verdicts**
+
+Criteria are in [criteria.md](criteria.md), committed in `8ee67e6 add capstone criteria` before any of these runs. All three trials ran against the live Render service on 2026-11-18, back to back, with nothing changed between them: trial 1 from 21:49:40 to 21:53:59 UTC, trial 2 from 21:53:59 to 21:56:26, and trial 3 from 21:56:27 to 21:58:41.
+
+- **Runner:** `capstone_trial.py`. It sends the same 30 requests in the same order every trial: a `/health` warm-up, 7 good queries and 3 bad ones (malformed JSON, empty query, no-match) each followed by a `/logs` call, 3 more good queries, spares only to replace a non-`ok` run under criterion 2's rule, and 5 empty-wardrobe queries. It saves every raw request and response to `results/capstone/trialN/calls.jsonl`.
+- **Render's stdout:** copied from Render's Logs tab into `results/capstone/trialN/render_stdout.txt`.
+- **Scorer:** `capstone_score.py` grades each trial against criteria.md and writes `results/capstone/trialN/score.md`. Criterion 4's title check is a word-overlap pre-check that I confirmed by eye for all 15 cards.
+
+| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Every query (7 good + 3 bad) leaves a `[request]` line in Render's log output | 10 of 10 | 9/10 | 10/10 | 10/10 | MISSED |
+| 2. Warm `ok` runs finish within 10 s (server `duration_ms`) | 9 of 10 | 2/10 | 7/10 | 10/10 | MISSED |
+| 3. `/logs` returns the latest 20 entries (or all if fewer), matching Render's stdout | 10 of 10 | 10/10 | 10/10 | 10/10 | MET |
+| 4. Fit card names the item's title, price and platform (5 different queries) | 5 of 5 | 4/5 | 5/5 | 4/5 | MISSED |
+| 5. Empty wardrobe gets general advice of at least 2 sentences | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+
+**Real output, one run per criterion**
+
+*Criterion 1, run 1.* Lines from Render's stdout (`results/capstone/trial1/render_stdout.txt`). Records are written by `request_log.py::write`, called from `serve.py::ask`. The "leather belt" request logged. The next one, "90s slip dress size M", ran past 30 s: gunicorn killed the worker and no `[request]` line was ever written. The traceback shows the worker was blocked inside `tools.py::create_fit_card` → `generate.py::generate` → `google.genai` → `httpx`, waiting for Gemini's response headers. The client got an HTML 500 after 30.9 s.
+
+```
+2026-11-18T21:50:18.489376526Z [request] {"ts": "2026-11-18T21:50:11.789+00:00", "request_id": "467682af", "route": "/ask", "query": "leather belt under $15", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 1, "selected_id": "lst_014", "fit_card": "Found this braided leather belt on thredUp for only $12 and it instantly pulled my baggy jeans and white tank look together. It adds just the right western touch to break up the denim-on-denim vibe. 🤎 #thriftfind", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 812, "output_tokens": 186, "status": 200, "outcome": "ok", "error": null, "duration_ms": 6700}
+2026-11-18T21:50:49.529595316Z [2026-11-18 21:50:49 +0000] [57] [CRITICAL] WORKER TIMEOUT (pid:58)
+2026-11-18T21:50:49.535745626Z [2026-11-18 21:50:49 +0000] [58] [ERROR] Error handling request /ask
+2026-11-18T21:50:49.536240332Z [2026-11-18 21:50:49 +0000] [58] [INFO] Worker exiting (pid: 58)
+2026-11-18T21:50:50.574918107Z [2026-11-18 21:50:50 +0000] [57] [ERROR] Worker (pid:58) was sent SIGKILL! Perhaps out of memory?
+2026-11-18T21:50:50.664320502Z [2026-11-18 21:50:50 +0000] [72] [INFO] Booting worker with pid: 72
+2026-11-18T21:51:04.327629634Z [request] {"ts": "2026-11-18T21:50:50.803+00:00", "request_id": "cf1245b6", "route": "/ask", "query": "low-rise cargo pants", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_results": 3, "selected_id": "lst_011", "fit_card": "Scored these low-rise cargo pants on Poshmark for $27 and I'm obsessed with the pockets. Threw them on with a white ribbed tank top and chunky white sneakers for an easy streetwear vibe. 👖✨ #thrifted #y2kstyle", "wait_ms": 0, "api_calls": 2, "cache_hits": 0, "prompt_tokens": 800, "output_tokens": 144, "status": 200, "outcome": "ok", "error": null, "duration_ms": 13523}
+```
+
+*Criterion 2, run 1.* From `results/capstone/trial1/score.md`. `duration_ms` comes from the log records written by `serve.py::ask`. The slip-dress 500 was replaced by the spare "velvet blazer", per the criterion's rule.
+
+```
+Warm-up: GET /health -> 200 in 243 ms (client)
+- replaced (not ok): '90s slip dress size M' status=500 error='<html>\n  <head>\n    <title>Internal Server Error</title>\n  </head>\n  <body>\n    <h1><p>Internal Serv'
+- FAIL 'vintage graphic tee under $30'      duration_ms=19823  (client 19954 ms)
+- FAIL 'oversized flannel shirt'            duration_ms=10463  (client 10596 ms)
+- PASS 'leather belt under $15'             duration_ms=6700  (client 6823 ms)
+- FAIL 'low-rise cargo pants'               duration_ms=13523  (client 13670 ms)
+- PASS 'mesh long-sleeve top size S/M'      duration_ms=7365  (client 7483 ms)
+- FAIL 'crewneck sweatshirt under $25'      duration_ms=13237  (client 13376 ms)
+- FAIL 'faded band tee'                     duration_ms=25262  (client 25512 ms)
+- FAIL 'graphic hoodie size L'              duration_ms=14957  (client 15120 ms)
+- FAIL 'suede chelsea boots'                duration_ms=16436  (client 16617 ms)
+- FAIL 'velvet blazer'                      duration_ms=16383  (client 16542 ms)
+```
+
+*Criterion 3, run 3.* The `/logs` response (`serve.py::logs`) right after the no-match request, newest 3 of the 20 records returned. Those 20 request ids are, in order, the latest 20 `[request]` lines in Render's stdout at that moment.
+
+```json
+{
+ "count_on_disk": 46,
+ "records (newest 3 of 20)": [
+  {
+   "request_id": "473fc40a",
+   "ts": "2026-11-18T21:57:19.814+00:00",
+   "query": null,
+   "body_preview": "{not json",
+   "outcome": "bad_request"
+  },
+  {
+   "request_id": "cd492b3f",
+   "ts": "2026-11-18T21:57:20.040+00:00",
+   "query": null,
+   "body_preview": "{\"query\": \"   \"}",
+   "outcome": "bad_request"
+  },
+  {
+   "request_id": "65cda8f6",
+   "ts": "2026-11-18T21:57:20.310+00:00",
+   "query": "ballgown size XXS under $2",
+   "outcome": "no_results"
+  }
+ ]
+}
+```
+
+*Criterion 4, run 3.* From `results/capstone/trial3/score.md`. Fit cards come from `tools.py::create_fit_card`, returned by `POST /ask`. The cargo-pants card names the price and platform but never says what the item is ("Scored these on Poshmark…").
+
+```
+- PASS 'vintage graphic tee under $30' -> lst_002 'Y2K Baby Tee — Butterfly Print' $18 depop
+    price=Y platform=Y TITLE CHECK (confirm by eye): words matched ['tee', 'butterfly']
+    card: Found this little butterfly tee on depop for just $18 and I'm obsessed. Paired it with baggy dark wash jeans and chunky white sneakers for an easy streetwear vibe today. 🦋 #thrifted
+- PASS 'oversized flannel shirt' -> lst_003 'Oversized Flannel Shirt — Plaid Red/Black' $22 thredUp
+    price=Y platform=Y TITLE CHECK (confirm by eye): words matched ['flannel', 'red']
+    card: Scored this Woolrich flannel on thredUp for just $22 and I'm obsessed with how it looks over my white ribbed tank and baggy jeans. Total 90s grunge mood with these combat boots. 🖤 #thrifted #grunge
+- PASS 'leather belt under $15' -> lst_014 'Leather Belt — Brown, Braided' $12 thredUp
+    price=Y platform=Y TITLE CHECK (confirm by eye): words matched ['leather', 'belt', 'braided']
+    card: Scored this braided leather belt on thredUp for just $12 and it instantly pulled my baggy jeans and black denim jacket together. Such a good little Western touch for an everyday look. 🐎✨ #thriftyfinds #ootd
+- PASS '90s slip dress size M' -> lst_013 '90s Silk Slip Dress — Floral, Midi Length' $30 depop
+    price=Y platform=Y TITLE CHECK (confirm by eye): words matched ['silk', 'slip', 'floral']
+    card: Scored this ivory floral silk slip on depop for just $30 and I’m obsessed. Layered it under my grey crewneck sweatshirt with chunky white sneakers for that 90s streetwear contrast. 🌸✨ #thrifted #90sfashion
+- FAIL 'low-rise cargo pants' -> lst_011 'Low-Rise Cargo Pants — Khaki' $27 poshmark
+    price=Y platform=Y TITLE CHECK (confirm by eye): words matched none
+    card: Scored these on Poshmark for just $27 and I'm obsessed with the pockets. Throwing on my black combat boots and cropped zip hoodie makes them feel so early 2000s. 👖✨ #thrifted #y2kstyle
+```
+
+*Criterion 5, run 2.* From `results/capstone/trial2/score.md`. The advice is `outfit_suggestion` from `tools.py::suggest_outfit`, returned by `POST /ask` with `"wardrobe": {"items": []}`. The scorer also confirms the server received an empty wardrobe and didn't fall back to the example one.
+
+```
+- PASS 'vintage polo shirt': 7 sentences, status 200, wardrobe items on server=[], error=None
+    advice: 'Outfit 1: Casual Streetwear\nPair the forest green polo with loose-fitting light wash straight-leg jeans. Tuck the polo in halfway and add a brown leather belt. Finish the look with white retro canvas sneakers and a simple silver chain necklace for an easy, everyday vibe.\n\nOutfit 2: Elevated Prep\nLayer the polo over a white cotton t-shirt so the collar peeks out, and wear it with a pleated navy blu'
+- PASS 'platform sneakers': 6 sentences, status 200, wardrobe items on server=[], error=None
+    advice: 'Outfit One: Cargo pants in army green or beige, a fitted black baby tee, and a nylon shoulder bag. The chunky white sneakers balance the utility pockets of the pants, and the fitted top keeps the silhouette from looking too bulky. Add silver hoop earrings to finish the Y2K look.\n\nOutfit Two: An oversized grey graphic hoodie worn as a dress with sheer black tights. The platform sneakers anchor the '
+```
