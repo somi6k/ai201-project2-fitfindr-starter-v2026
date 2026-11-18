@@ -154,3 +154,49 @@ An empty wardrobe results in descriptive general fashion advice in 5 out of 5 tr
      A number you missed stays where it is, gets diagnosed, and gets a fix
      attempted. That's where the points are.
      ───────────────────────────────────────────────────────────────────────── -->
+
+---
+
+## Capstone criteria
+
+<!-- Written by me before any capstone test runs. Shape A: deploy + instrument.
+     At least 3 must be about the extension; at least 1 about the bad path. -->
+
+### 1. Every query leaves a record in Render's log output
+
+10 out of 10 queries, 7 good and 3 bad (malformed JSON, empty query and no-match), result in a `[request]` entry in Render's log output.
+
+**Why this target:** Queries which make it to the API should be logged every time.
+
+### 2. Warm queries return within 10 seconds
+
+9 out of 10 queries with an `ok` outcome finish within 10 seconds, after the api is "warmed up" using a /health check, measured by the server's `duration_ms`. If a run is not 'ok' it is replaced for the criteria test.
+
+**Why this target:** 10 seconds is the maximum reasonable wait time for a user so 9 out of 10 times this should be achieved. There may be times of server lag or Gemini lag which is why it isn't 10 out of 10.
+
+### 3. Requests to /logs return a full log
+
+10 out of 10 requests to the `/logs` endpoint produce a log with the latest 20 entries, unless the log does not have 20 entries in which case it sends whatever it has. These are the latest entries as compared against Render's stdout.
+
+**Why this target:** Every query to this API should result in the logs being returned because this is the only way to retrieve logs before Render wipes the disk clean.
+
+### 4. The deployed fit card names the item's title, price and platform
+
+When I send 5 different queries that all receive a matching listing to the deployed `POST /ask` on Render, the fit card in the response contains the incorporated item's title, price and platform in 5 out of 5 tries.
+
+*(Carried over from unit 3 criterion 4, now tested through the hosted service instead of the CLI.)*
+
+**Why this target:** To be useful to the user, the fit card should identify relevant information in order to facilitate the actual purchase. It should still hold now that it's deployed: `serve.py` hands the request to the same `run_agent()`.
+
+**How I'm scoring it:** "Title" means the item is named recognisably (e.g. "platform sneakers"), not the verbatim listing title. The price can be numeric ($48) or spelled out ("forty-eight bucks"). The platform must be named. I check the `fit_card` and `selected_id` fields of the log record for each request against that listing in `data/`.
+
+### 5. An empty wardrobe gets general advice from the deployed service
+
+When I send a query to the deployed `POST /ask` on Render with an empty wardrobe (`"wardrobe": {"items": []}` in the request body), the response contains general fashion advice of at least 2 sentences in 5 out of 5 tries.
+
+*(Carried over from unit 3 criterion 5, now tested through the hosted service instead of the CLI.)*
+
+**Why this target:** A user should be able to use this tool when just starting out building their wardrobe, and not encounter failure messages and instead receive the general advice provided by suggest_outfit. That applies to someone calling the hosted service, not only to me on my laptop.
+
+<!-- Note: if "wardrobe" is left out of the body, or isn't a JSON object, serve.py silently uses the
+     example wardrobe instead — so the body must contain {"items": []} for this test to mean anything. -->
