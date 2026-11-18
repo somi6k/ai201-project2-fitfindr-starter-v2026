@@ -1,0 +1,8 @@
+{
+  "trial": 4,
+  "base": "https://ai201-project2-fitfindr-v2026.onrender.com",
+  "started": "2026-11-18T22:28:57.357+00:00",
+  "finished": "2026-11-18T22:31:01.506+00:00",
+  "requests": 30,
+  "ok_runs_for_c2": 10
+}

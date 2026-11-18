@@ -698,3 +698,65 @@ Warm-up: GET /health -> 200 in 243 ms (client)
 - criterion 2 is Gemini's latency variance
 
 Only the run 3 cargo-pants caption has a separate cause, the prompt. The Gemini call is the one stage I don't control, and my system had no limit on how long it waited for it.
+
+**The Improvement**
+
+**What I changed:** I added a 12-second deadline to every Gemini call. It's one setting, `MODEL_TIMEOUT_S = 12` in `config.py`, passed to the client in `generate.py::_get_client` as `HttpOptions(timeout=12000)`. I also added a clearer message for that case in `generate.py::_explain`. It's committed in `3f12ef3`. Nothing else changed: same prompts, same agent, same start command, same trial script and requests.
+
+**Why this, from the diagnosis:** three of my four misses traced to the Gemini call, and the worst one (criterion 1) happened because the call had no limit. gunicorn's 30 s timeout killed the worker before `serve.py::ask` could write its record. A per-call deadline turns a hang into an ordinary exception inside `run_agent()`. `serve.py` already catches exceptions, returns a JSON 500 and logs the record. The budget is about 4 s of parsing and MCP search (from the no-match runs) plus 2 × 12 s, at most 28 s, which is under gunicorn's 30. Gemini rejects deadlines under 10 s.
+
+**Checking the mechanism directly:** to find out what really happens, I pointed the client at a local server that accepts the connection and never answers.
+- **SDK behavior:** one attempt, `httpx.ReadTimeout` at 12.01 s, no hidden retries.
+- **Through `serve.py`** (Flask test client), the request now leaves this record instead of a killed worker and nothing:
+
+```json
+{"ts": "2026-11-18T22:25:06.163+00:00", "request_id": "a7f31d78", "route": "/ask", "query": "leather belt under $15", "tools_run": [], "n_results": null, "selected_id": null, "fit_card": null, "wait_ms": 1, "api_calls": 1, "cache_hits": 0, "prompt_tokens": 0, "output_tokens": 0, "status": 500, "outcome": "exception", "error": "ModelUnavailable: The model didn't answer within 12 s, so this request stopped instead of hanging. Try again in a moment.", "duration_ms": 13648}
+```
+
+**Run Log — After.** Same script and requests, three trials against the redeployed service on 2026-11-18, 22:28:57–22:35:15 UTC. Saved in `results/capstone/trial4` to `trial6`, with Render's stdout pasted into each.
+
+| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Every query (7 good + 3 bad) leaves a `[request]` line in Render's log output | 10 of 10 | 10/10 | 10/10 | 10/10 | MET |
+| 2. Warm `ok` runs finish within 10 s (server `duration_ms`) | 9 of 10 | 8/10 | 7/10 | 7/10 | MISSED |
+| 3. `/logs` returns the latest 20 entries (or all if fewer), matching Render's stdout | 10 of 10 | 10/10 | 10/10 | 10/10 | MET |
+| 4. Fit card names the item's title, price and platform (5 different queries) | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Empty wardrobe gets general advice of at least 2 sentences | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+
+**Before and after**
+
+| Criterion | Target | Before (runs 1 / 2 / 3) | Verdict | After (runs 1 / 2 / 3) | Verdict |
+|---|---|---|---|---|---|
+| 1. Every query logged | 10 of 10 | 9 / 10 / 10 | MISSED | 10 / 10 / 10 | MET |
+| 2. Warm `ok` within 10 s | 9 of 10 | 2 / 7 / 10 | MISSED | 8 / 7 / 7 | MISSED |
+| 3. `/logs` matches stdout | 10 of 10 | 10 / 10 / 10 | MET | 10 / 10 / 10 | MET |
+| 4. Fit card title, price, platform | 5 of 5 | 4 / 5 / 4 | MISSED | 5 / 5 / 5 | MET |
+| 5. Empty wardrobe advice | 5 of 5 | 5 / 5 / 5 | MET | 5 / 5 / 5 | MET |
+
+Real output from the after-run. Criterion 2, run 3 (`results/capstone/trial6/score.md`, `duration_ms` from `serve.py::ask`'s records):
+
+```
+Warm-up: GET /health -> 200 in 145 ms (client)
+- FAIL 'vintage graphic tee under $30'      duration_ms=10482  (client 10630 ms)
+- PASS 'oversized flannel shirt'            duration_ms=9936  (client 10046 ms)
+- PASS 'leather belt under $15'             duration_ms=6565  (client 6739 ms)
+- PASS '90s slip dress size M'              duration_ms=6412  (client 6613 ms)
+- PASS 'low-rise cargo pants'               duration_ms=6143  (client 6257 ms)
+- PASS 'mesh long-sleeve top size S/M'      duration_ms=6548  (client 6768 ms)
+- PASS 'crewneck sweatshirt under $25'      duration_ms=5798  (client 5907 ms)
+- PASS 'faded band tee'                     duration_ms=6157  (client 6282 ms)
+- FAIL 'graphic hoodie size L'              duration_ms=10739  (client 10877 ms)
+- FAIL 'suede chelsea boots'                duration_ms=10237  (client 10358 ms)
+```
+
+Criterion 1: Render's stdout starts with the redeploy, and the first record follows:
+
+```
+2026-11-18T22:28:18.547324375Z ==> Your service is live 🎉
+2026-11-18T22:29:14.415052571Z [request] {"ts": "2026-11-18T22:28:57.878+00:00", "request_id": "f72ae724", "route": "/ask", "query": "vintage graphic tee under $30", "tools_run": ["parse_query", "search_listings", "suggest_outfit", "create_fit_card"], "n_resul…
+```
+
+**Did it help?**
+- **Criteria 1 and 4 went from MISSED to MET, but I can't credit the fix for that.** No call in the after-run came near 12 s. All 54 `/ask` requests returned 200 or the expected 400, with no timeouts and no `WORKER TIMEOUT` in Render's stdout. So the deadline never fired. Those two criteria passed because Gemini didn't stall this time, and in run 3 the caption happened to name the cargo pants. What shows the fix works is the forced-hang test above, not these trials. The honest result: the failure that cost criterion 1 now leaves a record (shown directly), but the live after-run never reproduced it.
+- **Criterion 2 is still MISSED, and the fix wasn't aimed at it.** A deadline can't make Gemini faster. The after-run was steadier than before (worst run 7/10 instead of 2/10), but that's Gemini's speed at the time, not my change. No runs were replaced, so the deadline didn't flatter this criterion by dropping slow runs.
+- **The trade-off:** a model call between 12 s and roughly 26 s, which used to finish slowly, now fails with a 500 at 12 s. Before the fix, trial 1's "faded band tee" succeeded in 25.3 s, and with the deadline it could have been an error. I chose a fast, logged failure over a slow success or a silent kill, because a run that leaves no record can't be diagnosed, and a user waiting 25 s has usually left anyway. It also means criterion 2's "replace non-`ok` runs" rule could hide slow runs in a future test, so the replacement count needs to be reported next to criterion 2.
