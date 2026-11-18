@@ -4,6 +4,67 @@ Everything about how the starter works and how to use it.
 
 ---
 
+## Capstone: where it runs (Path A, hosted)
+
+**URL:** https://ai201-project2-fitfindr-v2026.onrender.com
+**Platform:** Render, free web service, deployed from `main` of this repo. Every push redeploys.
+
+| Route | What it does |
+|---|---|
+| `GET /health` | `{"status": "ok"}` if the service is awake |
+| `POST /ask` | `{"query": "..."}` → the agent's session as JSON. Every call writes one structured log record |
+| `GET /logs?n=20` | The last `n` log records (max 200). Pull these and commit them; Render wipes the file when the service sleeps |
+
+**Render settings** (Dashboard → the service → Settings / Environment):
+
+| Setting | Value |
+|---|---|
+| Runtime | Python 3, version from [.python-version](.python-version) (`3.13`) |
+| Build command | `pip install -r requirements.txt` |
+| Start command | `gunicorn serve:app` (default sync worker, which is required; see "Running it somewhere else" below) |
+| Env var `GEMINI_API_KEY` | your key (set in Render, never committed) |
+| Env var `AI201_CACHE` | `0`, so every request is a real model call and the logged tokens are the real cost |
+
+**Try it:**
+
+```bash
+curl https://ai201-project2-fitfindr-v2026.onrender.com/health
+curl -X POST https://ai201-project2-fitfindr-v2026.onrender.com/ask -H 'Content-Type: application/json' -d '{"query": "vintage graphic tee under $30"}'
+curl "https://ai201-project2-fitfindr-v2026.onrender.com/logs?n=10"
+```
+
+The `/ask` line above is for bash, zsh and Git Bash. Windows shells quote differently:
+
+```bat
+:: cmd.exe — single quotes aren't quotes here, so use escaped double quotes
+curl -X POST https://ai201-project2-fitfindr-v2026.onrender.com/ask -H "Content-Type: application/json" -d "{\"query\": \"vintage graphic tee under $30\"}"
+```
+
+```powershell
+# PowerShell — `curl` is an alias here, and passing quotes to curl.exe isn't reliable; use the built-in
+Invoke-RestMethod -Method Post -Uri https://ai201-project2-fitfindr-v2026.onrender.com/ask -ContentType 'application/json' -Body '{"query": "vintage graphic tee under $30"}'
+```
+
+If you see `Could not resolve host: application` with `Send JSON with a 'query' field`, you ran the bash version in cmd.exe.
+
+Things to know about the free tier:
+- **It sleeps after about 15 minutes idle.** The first request after that takes about a minute while it wakes. A warm `/ask` took 18.4 s in my first check, and `/health` took 0.2 s.
+- **The disk is wiped on sleep and on every redeploy**, which takes `logs/requests.jsonl` with it. Records are also printed to stdout (prefixed `[request]`) and show up in Render's Logs tab, and `/logs` returns them over HTTP. Copy them into the README the same session.
+
+**Running the same thing locally** (Python 3.13):
+
+```bash
+py -3.13 -m venv .venv            # macOS/Linux: python3.13 -m venv .venv
+source .venv/Scripts/activate     # macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env              # then paste your GEMINI_API_KEY into .env
+AI201_CACHE=0 python serve.py     # listens on http://localhost:5000
+python request_log.py tail 10     # last 10 log records
+python request_log.py summary     # outcomes, latency percentiles, tokens per run
+```
+
+---
+
 ## Before your first class
 
 Setup happens **before class**. The [environment setup page](../pages/ide_setup)

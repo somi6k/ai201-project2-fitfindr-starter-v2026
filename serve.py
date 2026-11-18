@@ -102,6 +102,23 @@ def health():
     return jsonify({"status": "ok"})
 
 
+@app.get("/logs")
+def logs():
+    """
+    The last N structured log records (default 20, max 200), oldest first.
+
+    The host wipes logs/requests.jsonl when the free instance sleeps, so this
+    is how records get pulled off the server and committed before they vanish.
+    Read-only, and it only returns what request_log.py already wrote.
+    """
+    try:
+        n = max(1, min(200, int(request.args.get("n", 20))))
+    except ValueError:
+        n = 20
+    records = request_log.read_all()
+    return jsonify({"count_on_disk": len(records), "records": records[-n:]})
+
+
 @app.post("/ask")
 def ask():
     """
