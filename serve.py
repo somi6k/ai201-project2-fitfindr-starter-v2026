@@ -27,15 +27,18 @@ web server has to be. The reason is worth reading before you deploy: see the
 note above `_one_at_a_time` below — it also decides which gunicorn worker you
 can use.
 
-⚠️ There is deliberately NO logging, NO timing and NO request counting in this
-file. That is unit 9's follow-along: you instrument this yourself, first, and
-then deploy it. A structured log you were handed teaches you nothing about
-what belongs in one — and the timing field is the one everybody skips.
+Capstone instrumentation: every /ask request, including a rejected or failed
+one, writes one JSON record to logs/requests.jsonl (and to stdout) through
+request_log.py. It records timing, outcome, tools run, and per-request token
+counts. `python request_log.py summary` reads the log back.
 """
 
 import os
 import sys
 import threading
+import time
+import uuid
+from datetime import datetime, timezone
 
 # config first, and before anything that talks to the model: it loads your .env
 # and fixes the Windows console encoding for every module that imports it.
@@ -43,6 +46,8 @@ import config  # noqa: F401
 
 from flask import Flask, jsonify, request
 
+import generate
+import request_log
 from agent import run_agent
 from utils.data_loader import get_example_wardrobe
 
@@ -107,12 +112,30 @@ def ask():
                                                 example wardrobe the CLI uses.
     Out:  the session dict from run_agent(), as JSON.
     """
-    payload = request.get_json(silent=True) or {}
-    query = (payload.get("query") or "").strip()
+    started = time.perf_counter()
+    record = {
+        "ts": datetime.now(timezone.utc).isoformat(timespec="milliseconds"),
+        "request_id": uuid.uuid4().hex[:8],
+        "route": "/ask",
+        "query": None,
+    }
+
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        payload = {}
+    raw_query = payload.get("query")
+    query = raw_query.strip() if isinstance(raw_query, str) else ""
     if not query:
         # 400 rather than a stack trace: the caller can act on this one.
-        return jsonify({"error": "Send JSON with a 'query' field, e.g. "
-                                 '{"query": "vintage graphic tee under $30"}'}), 400
+        message = ("Send JSON with a 'query' field, e.g. "
+                   '{"query": "vintage graphic tee under $30"}')
+        record["body_preview"] = request.get_data(as_text=True)[:200]
+        record.update(_empty_run_fields())
+        record.update(status=400, outcome="bad_request", error=message,
+                      duration_ms=_ms_since(started))
+        request_log.write(record)
+        return jsonify({"error": message}), 400
+    record["query"] = query
 
     wardrobe = payload.get("wardrobe")
     if not isinstance(wardrobe, dict):
@@ -139,17 +162,80 @@ def ask():
     failure = None
     session = None
     with _one_at_a_time:
+        # Inside the lock, so the before/after token snapshot covers this
+        # request only. generate.py's counters are process-wide running totals.
+        wait_ms = _ms_since(started)
+        before = _usage_snapshot()
         try:
             session = run_agent(query, wardrobe)
         except Exception as exc:  # noqa: BLE001 — a 500 with a sentence beats a hang
             failure = f"{type(exc).__name__}: {exc}"
+        after = _usage_snapshot()
 
     # Outside the lock: building a response is not work the next caller should
     # be waiting on.
+    record.update(_run_fields(session))
+    record["wait_ms"] = wait_ms
+    record.update({k: after[k] - before[k] for k in before})
+    if failure is not None:
+        record.update(status=500, outcome="exception", error=failure)
+    elif session.get("error"):
+        # The agent stopped early on purpose (e.g. nothing matched). Still a 200.
+        outcome = "no_results" if not session.get("search_results") else "agent_error"
+        record.update(status=200, outcome=outcome, error=session["error"])
+    else:
+        record.update(status=200, outcome="ok", error=None)
+    record["duration_ms"] = _ms_since(started)
+    request_log.write(record)
+
     if failure is not None:
         return jsonify({"error": failure}), 500
 
     return jsonify(session)
+
+
+# ── instrumentation helpers ───────────────────────────────────────────────────
+
+def _ms_since(t0: float) -> int:
+    return round((time.perf_counter() - t0) * 1000)
+
+
+def _usage_snapshot() -> dict:
+    tokens = generate.token_counts()
+    return {
+        "api_calls": generate.call_count(),
+        "cache_hits": generate._cache_hits,
+        "prompt_tokens": tokens["prompt"],
+        "output_tokens": tokens["output"],
+    }
+
+
+def _empty_run_fields() -> dict:
+    return {"tools_run": [], "n_results": None, "selected_id": None, "fit_card": None,
+            "wait_ms": 0, "api_calls": 0, "cache_hits": 0,
+            "prompt_tokens": 0, "output_tokens": 0}
+
+
+def _run_fields(session: dict | None) -> dict:
+    """What the agent got through, read from the session it returned."""
+    if not session:
+        return {"tools_run": [], "n_results": None, "selected_id": None, "fit_card": None}
+    tools = []
+    if session.get("parsed"):
+        tools.append("parse_query")
+    if session.get("selected_item") is not None or session.get("error"):
+        tools.append("search_listings")
+    if session.get("outfit_suggestion"):
+        tools.append("suggest_outfit")
+    if session.get("fit_card"):
+        tools.append("create_fit_card")
+    item = session.get("selected_item") or {}
+    return {
+        "tools_run": tools,
+        "n_results": len(session.get("search_results") or []),
+        "selected_id": item.get("id"),
+        "fit_card": session.get("fit_card"),
+    }
 
 
 if __name__ == "__main__":
